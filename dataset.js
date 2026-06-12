@@ -19,10 +19,10 @@ fetch("./data/datasets.json")
     }
 
     document.getElementById("title").innerText = d.title;
-    document.getElementById("desc").innerText = d.description;
+    document.getElementById("description").innerText = d.description;
 
     document.getElementById("meta").innerHTML = `
-      <p><b>Category:</b> ${d.category}</p>
+      <p><b>Agency:</b> ${d.agency}</p>
       <p><b>Updated:</b> ${d.updated}</p>
     `;
 

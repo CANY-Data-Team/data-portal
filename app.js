@@ -1,7 +1,7 @@
 let datasets = [];
 let state = {
   search: "",
-  category: null,
+  agency: null,
   tag: null
 };
 
@@ -30,7 +30,7 @@ function scoreDataset(d, query) {
   ).toLowerCase();
 
   if (d.title.toLowerCase().includes(query)) score += 5;
-  if (d.category.toLowerCase().includes(query)) score += 3;
+  if (d.agency.toLowerCase().includes(query)) score += 3;
   if (text.includes(query)) score += 1;
 
   return score;
@@ -39,7 +39,7 @@ function scoreDataset(d, query) {
 function render() {
   let results = datasets
     .filter(d => {
-      if (state.category && d.category !== state.category) return false;
+      if (state.agency && d.agency !== state.agency) return false;
       if (state.tag && !d.tags.includes(state.tag)) return false;
       return true;
     })
@@ -68,7 +68,7 @@ function render() {
       <p>${d.description}</p>
 
       <div class="meta">
-        ${d.category} • Updated ${d.updated}
+        ${d.agency} | Updated ${d.updated}
       </div>
 
       <div class="tags">
@@ -81,12 +81,12 @@ function render() {
 }
 
 function buildFilters() {
-  const categories = [...new Set(datasets.map(d => d.category))];
+  const agencies = [...new Set(datasets.map(d => d.agency))];
   const tags = [...new Set(datasets.flatMap(d => d.tags))];
 
-  document.getElementById("categoryFilters").innerHTML =
-    categories.map(c =>
-      `<button onclick="setCategory('${c}')">${c}</button>`
+  document.getElementById("agencyFilters").innerHTML =
+    agencies.map(c =>
+      `<button onclick="setAgency('${c}')">${c}</button>`
     ).join("");
 
   document.getElementById("tagFilters").innerHTML =
@@ -95,8 +95,8 @@ function buildFilters() {
     ).join("");
 }
 
-window.setCategory = (c) => {
-  state.category = c;
+window.setAgency = (c) => {
+  state.agency = c;
   render();
 };
 
@@ -104,3 +104,24 @@ window.setTag = (t) => {
   state.tag = t;
   render();
 };
+
+document.getElementById("clear-all").addEventListener("click", () => {
+
+  // reset state
+  state.tag = null;
+  state.agency = null;
+  state.search = "";
+
+  // reset search input
+  const searchInput = document.getElementById("search");
+  if (searchInput) searchInput.value = "";
+
+  // clear active UI states
+  document.querySelectorAll(".active")
+    .forEach(el => el.classList.remove("active"));
+
+  // re-render results
+  render();
+});
+
+

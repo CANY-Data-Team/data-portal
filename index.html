@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8" />
   <title>Data Portal</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="search-page">
 
 <div class="layout">
 
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar">
 
-    <h3>Categories</h3>
-    <div id="categoryFilters"></div>
+    <h3>Agencies</h3>
+    <div id="agencyFilters"></div>
 
     <h3>Tags</h3>
     <div id="tagFilters"></div>
+
+    
+    <button id="clear-all" class="clear-btn clear-all">Clear all filters</button>
+    
 
   </aside>
 
@@ -25,7 +30,7 @@
 
     <h1>Data Portal</h1>
 
-    <input id="search" placeholder="Search datasets..." />
+    <input id="search" type="text" placeholder="Search datasets..." />
 
     <div id="resultsMeta"></div>
 

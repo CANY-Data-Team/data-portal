@@ -3,7 +3,7 @@
     "id": "facility-population",
     "title": "Facility Population Counts",
     "description": "Monthly facility population by facility and security level.",
-    "category": "Population",
+    "agency": "DOCCS",
     "tags": ["population", "monthly", "facilities"],
     "updated": "2026-06-01",
 
@@ -16,6 +16,26 @@
       { "name": "report_date", "label": "Report Date", "type": "date" },
       { "name": "facility", "label": "Facility", "type": "string" },
       { "name": "population", "label": "Population", "type": "number" }
+    ]
+  },
+
+  {
+    "id": "omh-self-harm",
+    "title": "OMH Self-Harm",
+    "description": "Monthly data from OMH on self-harm incidents in DOCCS facilities.",
+    "agency": "OMH",
+    "tags": ["mental health", "monthly", "facilities"],
+    "updated": "2026-05-01",
+
+    "source": {
+      "type": "csv",
+      "url": "https://your-blob-storage/population2.csv"
+    },
+
+    "fields": [
+      { "name": "report_date", "label": "Report Date", "type": "date" },
+      { "name": "facility", "label": "Facility", "type": "string" },
+      { "name": "self_harm_incidents", "label": "Incident Count", "type": "number" }
     ]
   }
 ]

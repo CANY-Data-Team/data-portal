@@ -6,18 +6,37 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="dataset-page">
 
 <div class="container">
 
-  <a href="index.html">← Back</a>
+  <a href="index.html" class="back-link">← Back</a>
 
+  <!-- Title -->
+  <h1 id="title"></h1>
+
+  <!-- Description card -->
+  <div class="card">
   <h1 id="title"></h1>
   <p id="description"></p>
+  <p id="meta"></p>
 
-  <div id="meta"></div>
+  <div >
+    <a id="download" href="#" class="button">Download Data</a>
+  </div>
+</div>
 
-  <a id="download" href="#">Download Data</a>
+  <!-- Fields table card -->
+  <div class="card">
+    <h2>Fields</h2>
+    <table id="fields"></table>
+  </div>
+
+  <!-- Preview card -->
+  <div class="card">
+    <h2>Preview</h2>
+    <div id="preview"></div>
+  </div>
 
 </div>
 
