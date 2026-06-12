@@ -2,19 +2,20 @@
   {
     "id": "facility-population",
     "title": "Facility Population Counts",
+    "description": "Monthly facility population by facility and security level.",
     "category": "Population",
-    "description": "Monthly facility population data by correctional facility and security level.",
+    "tags": ["population", "monthly", "facilities"],
     "updated": "2026-06-01",
-    "tags": ["population", "facilities", "monthly"],
-    "download_url": "https://example.com/population.csv"
-  },
-  {
-    "id": "unusual-incidents",
-    "title": "Unusual Incident Reports",
-    "category": "Incidents",
-    "description": "Monthly unusual incidents reported by facility.",
-    "updated": "2026-05-01",
-    "tags": ["incidents", "safety"],
-    "download_url": "https://example.com/incidents.csv"
+
+    "source": {
+      "type": "csv",
+      "url": "https://your-blob-storage/population.csv"
+    },
+
+    "fields": [
+      { "name": "report_date", "label": "Report Date", "type": "date" },
+      { "name": "facility", "label": "Facility", "type": "string" },
+      { "name": "population", "label": "Population", "type": "number" }
+    ]
   }
 ]

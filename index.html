@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <title>CANY Data Portal</title>
+  <title>Data Portal</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="container">
+<div class="layout">
 
-    <h1>CANY Data Portal</h1>
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+
+    <h3>Categories</h3>
+    <div id="categoryFilters"></div>
+
+    <h3>Tags</h3>
+    <div id="tagFilters"></div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <h1>Data Portal</h1>
 
     <input id="search" placeholder="Search datasets..." />
 
-    <div id="filters"></div>
+    <div id="resultsMeta"></div>
 
     <div id="datasetList"></div>
 
-  </div>
+  </main>
 
-  <script src="app.js"></script>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
