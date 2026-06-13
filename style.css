@@ -1,36 +1,51 @@
-/* ===== Base ===== */
+/* =========================================================
+   BASE RESET + GLOBAL SETTINGS
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #fff;
+  background: #ffffff;
   color: #1f2937;
   line-height: 1.5;
 }
 
-/* ===== Dataset Page container ===== */
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+h1 {
+  font-size: 28px;
+  margin: 0 0 10px;
+}
+
+h2 {
+  font-size: 20px;
+  margin: 30px 0 10px;
+}
+
+/* =========================================================
+   PAGE LAYOUTS
+========================================================= */
+
+/* Dataset detail page */
 .dataset-page {
-  background: #f5f7fb;
+  background: #fff;
 }
 
 .dataset-page .container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 24px;
 }
 
-
-/* ===== Typography ===== */
-h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  margin-top: 30px;
-  font-size: 20px;
-}
-
-/* ===== Search page stuff ===== */
+/* Search / catalog page */
 .search-page .layout {
   display: flex;
   gap: 20px;
@@ -50,7 +65,10 @@ h2 {
   min-width: 0;
 }
 
-/* ===== Search box input ===== */
+/* =========================================================
+   SEARCH INPUT
+========================================================= */
+
 #search {
   width: 100%;
   padding: 14px 18px;
@@ -58,11 +76,9 @@ h2 {
 
   border: 1px solid #d1d5db;
   border-radius: 14px;
-
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-  box-sizing: border-box;
 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
   outline: none;
 }
 
@@ -71,22 +87,96 @@ h2 {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-* {
-  box-sizing: border-box;
+/* =========================================================
+   FILTER SYSTEM (SIDEBAR FACETS)
+========================================================= */
+
+#agencyFilters,
+#tagFilters {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
 }
 
+/* Filter item (default state) */
+.search-page .filter-item {
+  display: block;
+  padding: 8px 10px;
 
-/* ===== Card style (key design element) ===== */
+  background: #e5e7eb;
+  color: #111827;
+
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+/* Hover state */
+.search-page .filter-item:hover {
+  background: #dbeafe;
+}
+
+/* Active / selected state */
+.search-page .filter-item.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* Keep active stable on hover */
+.search-page .filter-item.active:hover {
+  background: #2563eb;
+}
+
+/* =========================================================
+   BUTTONS (GLOBAL ACTIONS ONLY)
+========================================================= */
+
+.search-page button {
+  background: #2563eb;
+  color: white;
+
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   NAV LINKS (e.g. Clear filters)
+========================================================= */
+
+.nav-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   DATA CARDS (SEARCH RESULTS)
+========================================================= */
+
 .card {
   width: 100%;
   background: #fff;
+
   border-radius: 14px;
+  border: 1px solid #c9d0dd;
 
   padding: 16px 18px;
   margin: 14px 0;
 
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  border: 1px solid #c9d0dd;
+
+  overflow:hidden;
 }
 
 .card h1,
@@ -95,56 +185,86 @@ h2 {
 }
 
 .card p {
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
 
+/* =========================================================
+   DATASET PAGE LINKS
+========================================================= */
 
-/* ===== Buttons / links ===== */
-a {
+.dataset-page a {
   color: #2563eb;
   text-decoration: none;
 }
 
-a:hover {
+.dataset-page a:hover {
   text-decoration: underline;
 }
 
-button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+/* =========================================================
+   TABLES (DATA PREVIEW)
+========================================================= */
 
-/* ===== Table styling ===== */
-    /* ===== Table base ===== */
-table {
+.fields-wrapper table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-th, td {
+.fields-wrapper th,
+.fields-wrapper td {
   padding: 10px 12px;
-  border-bottom: 1px solid #dbe2ea; /* visible, soft gray */
+  border-bottom: 1px solid #dbe2ea;
+  text-align: left;
+
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
-th {
-  background: #f9fafb;
-  font-weight: 600;
-  color: #a1a8b3;
+.fields-wrapper td:nth-child(1) {
+  width: 25%;
+}
+
+.fields-wrapper td:nth-child(2) {
+  width: 65%;
+}
+
+.fields-wrapper td:nth-child(3) {
+  width: 10%;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrapper table {
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 600px; /* force overflow if needed */
 }
 
 
-/* ===== Code / preview block ===== */
+.table-wrapper th,
+.table-wrapper td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #dbe2ea;
+  text-align: left;
+  white-space: nowrap;  /* keep preview horizontal scroll */
+}
+
+/* =========================================================
+   CODE / RAW PREVIEW BLOCKS
+========================================================= */
+
 pre {
   background: #0b1220;
   color: #e5e7eb;
+
   padding: 14px;
   border-radius: 12px;
+
   overflow-x: auto;
   font-size: 12px;
 }

@@ -1,43 +1,82 @@
+
+/* =========================================================
+   STATE
+========================================================= */
+
 let datasets = [];
-let state = {
+
+const state = {
   search: "",
   agency: null,
   tag: null
 };
 
-fetch("./data/datasets.json")
-  .then(r => r.json())
-  .then(data => {
-    datasets = data;
-    render();
-    buildFilters();
-  });
+/* =========================================================
+   BOOTSTRAP
+========================================================= */
 
-document.getElementById("search").addEventListener("input", (e) => {
-  state.search = e.target.value.toLowerCase();
-  render();
-});
+init();
 
-function scoreDataset(d, query) {
-  let score = 0;
-
-  if (!query) return 1;
-
-  const text = (
-    d.title + " " +
-    d.description + " " +
-    d.tags.join(" ")
-  ).toLowerCase();
-
-  if (d.title.toLowerCase().includes(query)) score += 5;
-  if (d.agency.toLowerCase().includes(query)) score += 3;
-  if (text.includes(query)) score += 1;
-
-  return score;
+function init() {
+  loadData();
+  bindEvents();
 }
 
-function render() {
-  let results = datasets
+/* =========================================================
+   DATA LOADING
+========================================================= */
+
+async function loadData() {
+  const res = await fetch("./data/datasets.json");
+  datasets = await res.json();
+
+  renderAll();
+}
+
+/* =========================================================
+   EVENT BINDING
+========================================================= */
+
+function bindEvents() {
+  const searchInput = document.getElementById("search");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      state.search = e.target.value.toLowerCase();
+      renderResults();
+    });
+  }
+
+  const clearBtn = document.getElementById("clear-all");
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      resetState();
+      renderAll();
+    });
+  }
+}
+
+/* =========================================================
+   STATE MANAGEMENT
+========================================================= */
+
+function resetState() {
+  state.search = "";
+  state.agency = null;
+  state.tag = null;
+
+  const searchInput = document.getElementById("search");
+  if (searchInput) searchInput.value = "";
+}
+
+/* =========================================================
+   FILTERING + SCORING
+========================================================= */
+
+function getFilteredResults() {
+  return datasets
     .filter(d => {
       if (state.agency && d.agency !== state.agency) return false;
       if (state.tag && !d.tags.includes(state.tag)) return false;
@@ -49,11 +88,45 @@ function render() {
     }))
     .filter(d => d.score > 0)
     .sort((a, b) => b.score - a.score);
+}
 
-  document.getElementById("resultsMeta").innerText =
-    `${results.length} datasets`;
+function scoreDataset(d, query) {
+  if (!query) return 1;
+
+  const text = (
+    d.title + " " +
+    d.description + " " +
+    d.contextstatement + " " +
+    d.tags.join(" ")
+  ).toLowerCase();
+
+  let score = 0;
+
+  if (d.title.toLowerCase().includes(query)) score += 5;
+  if (d.agency.toLowerCase().includes(query)) score += 3;
+  if (text.includes(query)) score += 1;
+
+  return score;
+}
+
+/* =========================================================
+   RENDER PIPELINE
+========================================================= */
+
+function renderAll() {
+  renderResults();
+  renderFilters();
+}
+
+function renderResults() {
+  const results = getFilteredResults();
+
+  const meta = document.getElementById("resultsMeta");
+  if (meta) meta.innerText = `${results.length} dataset(s)`;
 
   const container = document.getElementById("datasetList");
+  if (!container) return;
+
   container.innerHTML = "";
 
   results.forEach(d => {
@@ -67,12 +140,17 @@ function render() {
 
       <p>${d.description}</p>
 
-      <div class="meta">
-        ${d.agency} | Updated ${d.updated}
+      <div class="agency">
+        Agency: ${d.agency}
+      </div>
+
+      <div class="updatedt">
+        Updated: ${d.updatedt}
       </div>
 
       <div class="tags">
-        ${d.tags.map(t => `<span class="tag">${t}</span>`).join(" ")}
+      Tags:
+        ${d.tags.map(t => `<span class="tag">${t}</span>`).join(" | ")}
       </div>
     `;
 
@@ -80,48 +158,53 @@ function render() {
   });
 }
 
-function buildFilters() {
+/* =========================================================
+   FILTER RENDERING
+========================================================= */
+
+function renderFilters() {
   const agencies = [...new Set(datasets.map(d => d.agency))];
   const tags = [...new Set(datasets.flatMap(d => d.tags))];
 
-  document.getElementById("agencyFilters").innerHTML =
-    agencies.map(c =>
-      `<button onclick="setAgency('${c}')">${c}</button>`
-    ).join("");
-
-  document.getElementById("tagFilters").innerHTML =
-    tags.map(t =>
-      `<button onclick="setTag('${t}')">${t}</button>`
-    ).join("");
+  renderFilterGroup("agencyFilters", agencies, state.agency, setAgency);
+  renderFilterGroup("tagFilters", tags, state.tag, setTag);
 }
 
-window.setAgency = (c) => {
-  state.agency = c;
-  render();
-};
+function renderFilterGroup(containerId, items, activeValue, handler) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
-window.setTag = (t) => {
-  state.tag = t;
-  render();
-};
+  container.innerHTML = items.map(item => `
+    <div class="filter-item ${activeValue === item ? "active" : ""}"
+         data-value="${item}">
+      ${item}
+    </div>
+  `).join("");
 
-document.getElementById("clear-all").addEventListener("click", () => {
+  // event delegation (cleaner than inline onclick)
+  container.querySelectorAll(".filter-item").forEach(el => {
+    el.addEventListener("click", () => {
+      handler(el.dataset.value);
+    });
+  });
+}
 
-  // reset state
-  state.tag = null;
-  state.agency = null;
-  state.search = "";
+/* =========================================================
+   FILTER ACTIONS
+========================================================= */
 
-  // reset search input
-  const searchInput = document.getElementById("search");
-  if (searchInput) searchInput.value = "";
+function setAgency(value) {
+  state.agency = (state.agency === value) ? null : value;
+  renderAll();
+}
 
-  // clear active UI states
-  document.querySelectorAll(".active")
-    .forEach(el => el.classList.remove("active"));
+function setTag(value) {
+  state.tag = (state.tag === value) ? null : value;
+  renderAll();
+}
 
-  // re-render results
-  render();
-});
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
 
-
+renderAll();

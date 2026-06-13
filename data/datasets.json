@@ -1,41 +1,176 @@
 [
   {
-    "id": "facility-population",
-    "title": "Facility Population Counts",
-    "description": "Monthly facility population by facility and security level.",
+    "id": "under-custody",
+    "title": "Under Custody",
+    "description": "Monthly snapshot data of incarcerated individuals under custody starting June 2014.",
+    "whatsincluded": "    Monthly snapshot data of incarcerated individuals under custody starting June 2014. The dataset enumerates the number of people incarcerated at DOCCS facilities on the first of each month and includes information on the demographics of each incarcerated individual in addition to their facility, commitment county, crime of conviction, and parole board eligibility. \n    To ensure compliance with Correction Law §9 and to align with the New York State Committee on Open Government's advisory opinion on case FOI-AO-18823, CANY has deidentified the source data by (1) removing the names and departmental identification numbers of the individuals in custody, (2) sharing only a selection of the fields available in the source data, and (3) altering select fields to be less granular (for example, changing “date of birth” to “age range”).",
+    "howitsgenerated": "This data is derived from DOCCS’ incarcerated individual movement system, which the agency employs for operational purposes, including transfers.CANY obtains the data through a monthly data-sharing agreement with DOCCS. ",
+    "limitations":"Because this dataset consists of snapshot data, rows representing the same individuals will be repeated from month to month. The data does not include individuals who are adjudicated as youth or individuals who are housed in DOCCS facilities as incarcerated parolees.",
+    "whypublish":"By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many people are incarcerated in the state? Where are they incarcerated? What are the characteristics of the individuals who are incarcerated? What charges were they convicted of? And how have these answers changed over time?",
+    "relatedlinks": "    - DOCCS Under Custody Profile: A monthly report on the under custody population by facility, disaggregated by characteristics such as age, religious affiliation, and education level. \n    - DOCCS Open Data NY Data Portal: Annual data on DOCCS admissions, releases, recidivism, and the under custody population from 2008 onwards, published in a downloadable format. \n    - CANY Prison Map: An interactive map of operational and recently closed prisons in New York State, with information on each facility including population, capacity, and staff vacancy rates. \n    - CANY Distance Analysis: An analysis of distance between incarcerated people’s facilities and commitment counties using under custody data. \n    - Data Collaborative for Justice: Trends in the New York State Prison Population: An analysis of the DOCCS under custody population between 2008 and 2023, including trends by latest admission type, commitment county, and demographic categories.",
     "agency": "DOCCS",
-    "tags": ["population", "monthly", "facilities"],
-    "updated": "2026-06-01",
+    "tags": ["Updated Quarterly", "Population", "Snapshot"],
+    "updatedt": "2026-01-01",
 
     "source": {
       "type": "csv",
-      "url": "https://your-blob-storage/population.csv"
+      "url": "https://canystorage.blob.core.windows.net/cany-data-portal/DEATHS-IN-CUSTODY-EXTRACT.CSV?sp=r&st=2026-06-12T20:42:08Z&se=2027-06-13T04:57:08Z&spr=https&sv=2026-02-06&sr=b&sig=5xpFVwDs%2F7Z53ffXIF2RlQyYJNQldhQCwCSZ7yquF%2FA%3D"
     },
 
     "fields": [
-      { "name": "report_date", "label": "Report Date", "type": "date" },
-      { "name": "facility", "label": "Facility", "type": "string" },
-      { "name": "population", "label": "Population", "type": "number" }
-    ]
+  {
+    "name": "REPORT_DATE",
+    "type": "date",
+    "label": "Date at which dataset population is defined (month-year level; defaulted to first of month)"
+  },
+  {
+    "name": "FACILITY_NAME",
+    "type": "string",
+    "label": "Facility name based on first two digits of DOCCS facility code; excludes unit/building-level detail present in RAW_FACILITY_NAME"
+  },
+  {
+    "name": "FACILITY_CODE",
+    "type": "string",
+    "label": "DOCCS facility code; first two digits identify facility and third digit may indicate unit/building"
+  },
+  {
+    "name": "RAW_FACILITY_NAME",
+    "type": "string",
+    "label": "Original facility name as reported in DOCCS under custody data, including unit/building-level detail when present"
+  },
+  {
+    "name": "FACILITY_REGION_NAME",
+    "type": "string",
+    "label": "DOCCS-defined facility region grouping adjacent counties"
+  },
+  {
+    "name": "FACILITY_HUB_NAME",
+    "type": "string",
+    "label": "DOCCS-defined operational hub grouping of geographically proximate facilities"
+  },
+  {
+    "name": "FACILITY_SECURITY_LEVEL",
+    "type": "string",
+    "label": "Highest security classification of facility (Minimum, Medium, Maximum, Drug Treatment Center) based on DOCCS reporting or NYCRR Title 7"
+  },
+  {
+    "name": "FACILITY_STATUS",
+    "type": "string",
+    "label": "Operational status of facility (Open or Closed) at time of data publication"
+  },
+  {
+    "name": "FACILITY_GENDER",
+    "type": "string",
+    "label": "Gender designation of facility population (Male, Female, Mixed) per NYCRR Title 7 or DOCCS reporting"
+  },
+  {
+    "name": "SEX",
+    "type": "string",
+    "label": "Sex of incarcerated individual (Male, Female)"
+  },
+  {
+    "name": "AGE_RANGE",
+    "type": "string",
+    "label": "Age range of incarcerated individual at report date (inclusive bounds)"
+  },
+  {
+    "name": "ETHNIC_GROUP",
+    "type": "string",
+    "label": "Ethnicity classification (Hispanic, Not Hispanic, Unknown)"
+  },
+  {
+    "name": "RACE",
+    "type": "string",
+    "label": "Race classification (White, Black, American Indian or Alaskan Native, Asian or Pacific Islander, Other, Unknown)"
+  },
+  {
+    "name": "CRIME_1_TYPE",
+    "type": "string",
+    "label": "Type of primary offense (longest sentence), grouped into categories such as VFO, CVO, PDO, MIS, VIO"
+  },
+  {
+    "name": "CRIME_1_CLASS",
+    "type": "string",
+    "label": "Legal class of primary offense (A1–E felonies, misdemeanor, unspecified)"
+  },
+  {
+    "name": "CRIME_1_COMMITMENT_COUNTY",
+    "type": "string",
+    "label": "County of conviction for primary offense (longest sentence)"
+  },
+  {
+    "name": "CRIME_1_COUNTY_IS_NYC",
+    "type": "integer",
+    "label": "Indicator if conviction county is in NYC (1 = NYC, 0 = outside NYC)"
+  },
+  {
+    "name": "TIME_SINCE_LATEST_RECEPTION_DATE",
+    "type": "string",
+    "label": "Time since latest reception date; proxy for time served"
+  },
+  {
+    "name": "TIME_TO_EARLIEST_RELEASE_DATE",
+    "type": "string",
+    "label": "Time until earliest possible release date; proxy for minimum remaining sentence time"
+  },
+  {
+    "name": "MOST_SERIOUS_PRIOR",
+    "type": "string",
+    "label": "Most serious prior conviction category (Felony, Misdemeanor conviction, Arrest, Missing/None)"
+  },
+  {
+    "name": "TOTAL_CRIMES_RANGE",
+    "type": "string",
+    "label": "Range of number of crimes in current sentence (inclusive)"
+  },
+  {
+    "name": "POPULATION_IN_CUSTODY",
+    "type": "integer",
+    "label": "Total incarcerated population in custody"
+  }
+]
   },
 
   {
     "id": "omh-self-harm",
     "title": "OMH Self-Harm",
-    "description": "Monthly data from OMH on self-harm incidents in DOCCS facilities.",
+    "description": "Data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm, suicide attempts, and deaths from suicide.",
+    "whatsincluded": "The dashboard below includes statistical data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm, suicide attempts, and deaths from suicide. OMH defines self-harm as 'self-injurious behavior with a nonfatal outcome with no evidence (either explicit or implicit) that the person intended to die.' OMH defines suicide attempt as 'self-injurious behavior with a nonfatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die, which may require medical and/or security intervention to reduce likelihood of death or serious injury.' Lastly, OMH defies suicide as 'self-injurious behavior with a fatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die.'\nData on self-harm is monthly starting in 2020, data on suicide attempts is monthly starting from January 2014, and data on suicides is annual starting in 2014.",
+    "howitsgenerated": "OMH classifies incidents based on clinical assessment and review of documentation from both OMH and the Department of Corrections and Community Supervision (DOCCS). In some cases, OMH consults with the Central New York Psychiatric Center (CNYPC) Suicide Prevention Department. Final classifications are reviewed and compiled by the OMH Suicide Prevention Workgroup (SPWG).",
+    "limitations":"OMH and DOCCS maintain separate classification systems for self-injury, the numbers shown here are from OMH. Although DOCCS may defer to OMH’s clinical determinations in some cases, it does not revise Unusual Incident Repoorts (UIRs) to reflect those reclassifications, resulting in discrepancies in the number of incidents between the two data sources. For suicides, OMH and DOCCS classifications typically align.",
+    "whypublish":"By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many instances of self-harm, suicide attempts, and completed suicides occurred across New York State prisons? What facilities did these incidents take place in? Which methods were used? And how have these answers changed over time?",
+    "relatedlinks": "    - New York State Office of Mental Health – 988 Suicide and Crisis Lifeline Report (2023–2024):  Documents a rise in crisis call volume and mobile crisis referrals, reflecting increased demands for suicide prevention and emergency mental health response across NYS. Incarcerated individuals may be able to access this lifeline, depending on facility policy. \n    - New York State Office of Mental Health – 2024 Suicide Prevention Report : Outlines targeted initiatives to reduce suicide risk among high-need populations, including expanded crisis infrastructure and clinical training efforts within and beyond carceral settings \n    - NYS Attorney General’s Office of Special Investigation (OSI) Annual Reports: Annual reports on the OSI’s investigations into deaths potentially caused by police officers and corrections officers. Data tables accompanying the reports, which include data on deaths by suicide, are available here. \n    - Correctional Association of New York – Unusual Incident Reports Dashboard: presents data reported by DOCCS on a range of incidents in NYS prisons, including violence, self-injury, and other events that may reflect mental health concerns. Note that this data does not necessarily reflect the same number of incidents of self-harm reported by OMH. \n    - New York State Department of Corrections and Community Supervision – 2023 Annual Mortality Report: Provides data on deaths in custody by cause and facility, with classifications based on preliminary autopsy findings ",
     "agency": "OMH",
-    "tags": ["mental health", "monthly", "facilities"],
-    "updated": "2026-05-01",
+    "tags": ["Updated Quarterly", "Incident Reporting"],
+    "updatedt": "2026-05-01",
 
     "source": {
       "type": "csv",
-      "url": "https://your-blob-storage/population2.csv"
+      "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-self-harm-extract?sp=r&st=2026-06-12T20:50:29Z&se=2027-06-13T05:05:29Z&spr=https&sv=2026-02-06&sr=b&sig=RvWJDoF9s1qFXsuiJgH8BNX29FZwYa2qUe%2BaEYh%2FPJU%3D"
     },
 
     "fields": [
-      { "name": "report_date", "label": "Report Date", "type": "date" },
-      { "name": "facility", "label": "Facility", "type": "string" },
-      { "name": "self_harm_incidents", "label": "Incident Count", "type": "number" }
-    ]
+  { "name": "RAW_FACILITY_OR_UNIT_NAME", "label": "Name of facility and unit (if applicable) in which the incident of self-harm took place, as it appears on the report.", "type": "string" },
+  { "name": "FACILITY_NAME", "label": "Facility in which the incarcerated individual was housed at the time of the incident, defined using the first two digits of the DOCCS facility code. This name represents the commonplace naming for facilities and excludes references to specific buildings or units seen in RAW_FACILITY_OR_UNIT_NAME.", "type": "string" },
+  { "name": "FACILITY_REGION_NAME", "label": "Facility region, with regions defined by DOCCS as groups of adjacent counties.", "type": "string" },
+  { "name": "FACILITY_HUB_NAME", "label": "Facility hub, with hubs defined by DOCCS as groups of facilities which are in close proximity. Hubs have an administrative function in DOCCS operations.", "type": "string" },
+  { "name": "FACILITY_SECURITY_LEVEL", "label": "Security level of the facility, as designated in DOCCS public reporting or, if unavailable, in the NY Codes Rules and Regulations, Title 7. If there are multiple security levels for a given facility, the highest is reported here (Minimum, Medium, Maximum, Drug Treatment Center).", "type": "string" },
+  { "name": "FACILITY_STATUS", "label": "Indicates if a facility is open or closed as of the publication of this data (Open, Closed).", "type": "string" },
+  { "name": "FACILITY_GENDER", "label": "Gender-designation for the facility (Male, Female, Mixed).", "type": "string" },
+  { "name": "INCIDENT_MONTH_YEAR_D", "label": "Month and year in which the incident took place, in the format YYYY-MM.", "type": "string" },
+  { "name": "LOCATION", "label": "Location in which the incident took place", "type": "string" },
+  { "name": "METHOD", "label": "Method used by the individual to commit self-harm.", "type": "string" },
+  { "name": "LAST_MH_CONTACT_DATE", "label": "Date of most recent contact with mental health providers.", "type": "date" },
+  { "name": "IS_METHOD_LACERATION", "label": "Boolean indicator for whether the method of self-harm was laceration (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_SUPERFICIAL_CUTTING", "label": "Boolean indicator for whether the method of self-harm was superficial cutting (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_BURNING_FIRE_SETTING", "label": "Boolean indicator for whether the method of self-harm was fire setting (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_HANGING", "label": "Boolean indicator for whether the method of self-harm was hanging (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_STRANGULATION", "label": "Boolean indicator for whether the method of self-harm was strangulation (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_SUFFOCATION", "label": "Boolean indicator for whether the method of self-harm was suffocation or asphyxiation (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_OVERDOSE", "label": "Boolean indicator for whether the method of self-harm was an overdose (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_INGEST_FOREIGN_SUBSTANCE_BODY", "label": "Boolean indicator for whether the method of self-harm was ingestion of a foreign body or substance (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_INSERT_FOREIGN_SUBSTANCE_BODY", "label": "Boolean indicator for whether the method of self-harm was insertion of a foreign body or substance (1 = Yes, 0 = No, -99 = Missing).", "type": "number" },
+  { "name": "IS_METHOD_OTHER", "label": "Boolean indicator for whether the method of self-harm was not one of the aforementioned categories (1 = Yes, 0 = No, -99 = Missing).", "type": "number" }
+]
   }
 ]
