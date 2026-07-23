@@ -1,5 +1,5 @@
 [
-  {
+    {
     "id": "under-custody",
     "title": "Under Custody",
     "description": "Monthly snapshot data of incarcerated individuals under custody starting June 2014.",
@@ -9,7 +9,8 @@
     "whypublish":"By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many people are incarcerated in the state? Where are they incarcerated? What are the characteristics of the individuals who are incarcerated? What charges were they convicted of? And how have these answers changed over time?",
     "relatedlinks": "    - DOCCS Under Custody Profile: A monthly report on the under custody population by facility, disaggregated by characteristics such as age, religious affiliation, and education level. \n    - DOCCS Open Data NY Data Portal: Annual data on DOCCS admissions, releases, recidivism, and the under custody population from 2008 onwards, published in a downloadable format. \n    - CANY Prison Map: An interactive map of operational and recently closed prisons in New York State, with information on each facility including population, capacity, and staff vacancy rates. \n    - CANY Distance Analysis: An analysis of distance between incarcerated people’s facilities and commitment counties using under custody data. \n    - Data Collaborative for Justice: Trends in the New York State Prison Population: An analysis of the DOCCS under custody population between 2008 and 2023, including trends by latest admission type, commitment county, and demographic categories.",
     "agency": "DOCCS",
-    "tags": ["Updated Quarterly", "Population", "Snapshot"],
+    "unit": "Individual",
+    "tags": ["Updated Quarterly", "Population", "Snapshot", "Sentencing", "Crime Type"],
     "updatedt": "2026-01-01",
 
     "source": {
@@ -141,7 +142,8 @@
     "whypublish":"By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many instances of self-harm, suicide attempts, and completed suicides occurred across New York State prisons? What facilities did these incidents take place in? Which methods were used? And how have these answers changed over time?",
     "relatedlinks": "    - New York State Office of Mental Health – 988 Suicide and Crisis Lifeline Report (2023–2024):  Documents a rise in crisis call volume and mobile crisis referrals, reflecting increased demands for suicide prevention and emergency mental health response across NYS. Incarcerated individuals may be able to access this lifeline, depending on facility policy. \n    - New York State Office of Mental Health – 2024 Suicide Prevention Report : Outlines targeted initiatives to reduce suicide risk among high-need populations, including expanded crisis infrastructure and clinical training efforts within and beyond carceral settings \n    - NYS Attorney General’s Office of Special Investigation (OSI) Annual Reports: Annual reports on the OSI’s investigations into deaths potentially caused by police officers and corrections officers. Data tables accompanying the reports, which include data on deaths by suicide, are available here. \n    - Correctional Association of New York – Unusual Incident Reports Dashboard: presents data reported by DOCCS on a range of incidents in NYS prisons, including violence, self-injury, and other events that may reflect mental health concerns. Note that this data does not necessarily reflect the same number of incidents of self-harm reported by OMH. \n    - New York State Department of Corrections and Community Supervision – 2023 Annual Mortality Report: Provides data on deaths in custody by cause and facility, with classifications based on preliminary autopsy findings ",
     "agency": "OMH",
-    "tags": ["Updated Quarterly", "Incident Reporting"],
+    "unit": "Facility",
+    "tags": ["Updated Quarterly", "Incident Reporting", "Mental Health"],
     "updatedt": "2026-05-01",
 
     "source": {

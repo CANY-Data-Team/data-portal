@@ -92,6 +92,7 @@ h2 {
 ========================================================= */
 
 #agencyFilters,
+#unitFilters,
 #tagFilters {
   display: flex;
   flex-direction: column;

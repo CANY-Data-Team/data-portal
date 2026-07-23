@@ -8,7 +8,8 @@ let datasets = [];
 const state = {
   search: "",
   agency: null,
-  tag: null
+  unit: null,
+  tag: []
 };
 
 /* =========================================================
@@ -65,7 +66,8 @@ function bindEvents() {
 function resetState() {
   state.search = "";
   state.agency = null;
-  state.tag = null;
+  state.tag = [];
+  state.unit = null;
 
   const searchInput = document.getElementById("search");
   if (searchInput) searchInput.value = "";
@@ -79,7 +81,9 @@ function getFilteredResults() {
   return datasets
     .filter(d => {
       if (state.agency && d.agency !== state.agency) return false;
-      if (state.tag && !d.tags.includes(state.tag)) return false;
+      if (state.unit && d.unit !== state.unit) return false;
+      if (state.tag.length > 0 && !state.tag.every(t => d.tags.includes(t))) return false;
+
       return true;
     })
     .map(d => ({
@@ -163,25 +167,32 @@ function renderResults() {
 ========================================================= */
 
 function renderFilters() {
+/*insert universal tags here?*/
   const agencies = [...new Set(datasets.map(d => d.agency))];
   const tags = [...new Set(datasets.flatMap(d => d.tags))];
+  const units = [...new Set(datasets.map(d => d.unit))]; 
 
   renderFilterGroup("agencyFilters", agencies, state.agency, setAgency);
+  renderFilterGroup("unitFilters", units, state.unit, setUnit);
   renderFilterGroup("tagFilters", tags, state.tag, setTag);
+
 }
 
 function renderFilterGroup(containerId, items, activeValue, handler) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  const isActive = (item) => Array.isArray(activeValue)
+    ? activeValue.includes(item)
+    : activeValue === item;
+
   container.innerHTML = items.map(item => `
-    <div class="filter-item ${activeValue === item ? "active" : ""}"
+    <div class="filter-item ${isActive(item) ? "active" : ""}"
          data-value="${item}">
       ${item}
     </div>
   `).join("");
 
-  // event delegation (cleaner than inline onclick)
   container.querySelectorAll(".filter-item").forEach(el => {
     el.addEventListener("click", () => {
       handler(el.dataset.value);
@@ -198,11 +209,19 @@ function setAgency(value) {
   renderAll();
 }
 
-function setTag(value) {
-  state.tag = (state.tag === value) ? null : value;
+function setUnit(value) {
+  state.unit = (state.unit === value) ? null : value;
   renderAll();
 }
 
+function setTag(value) {
+  if (state.tag.includes(value)) {
+    state.tag = state.tag.filter(t => t !== value);   // remove if already selected
+  } else {
+    state.tag = [...state.tag, value];                // add if not selected
+  }
+  renderAll();
+}
 /* =========================================================
    INITIAL RENDER
 ========================================================= */
