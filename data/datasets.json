@@ -1,6 +1,11 @@
 [
   {
     "id": "under-custody",
+    "dashboard": {
+    "title": "Under Custody Dashboard",
+    "embedUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjc2ZTcwMzEtZjU5Mi00MWVmLWI2OTMtOWU3MTM1ZThmMjQ4IiwidCI6IjJhMGI0MjMwLTRkZGUtNDAyMC05ZTlkLWYyYTMyYmE4ZTBhNyIsImMiOjN9",
+    "pageUrl": "https://www.correctionalassociation.org/data/dashboard-under-custody"
+    },
     "title": "Under Custody",
     "description": "Monthly snapshot data of incarcerated individuals under custody starting June 2014.",
     "whatsincluded": "    Monthly snapshot data of incarcerated individuals under custody starting June 2014. The dataset enumerates the number of people incarcerated at DOCCS facilities on the first of each month and includes information on the demographics of each incarcerated individual in addition to their facility, commitment county, crime of conviction, and parole board eligibility. \n    To ensure compliance with Correction Law §9 and to align with the New York State Committee on Open Government's advisory opinion on case FOI-AO-18823, CANY has deidentified the source data by (1) removing the names and departmental identification numbers of the individuals in custody, (2) sharing only a selection of the fields available in the source data, and (3) altering select fields to be less granular (for example, changing “date of birth” to “age range”).",
@@ -133,6 +138,10 @@
 
   {
     "id": "omh-self-harm",
+    "dashboard": {
+    "title": "Self-Harm Dashboard",
+    "embedUrl": "https://app.powerbi.com/view?r=eyJrIjoiNWE4MjhlY2QtNzAyZS00NjE0LTgyM2MtYWZlODQ4NjZmNWQ1IiwidCI6IjJhMGI0MjMwLTRkZGUtNDAyMC05ZTlkLWYyYTMyYmE4ZTBhNyIsImMiOjN9",
+    "pageUrl": "https://www.correctionalassociation.org/data/dashboard-self-harm-data"},
     "title": "OMH Self-Harm",
     "description": "Data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm, suicide attempts, and deaths from suicide.",
     "whatsincluded": "The dashboard below includes statistical data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm, suicide attempts, and deaths from suicide. OMH defines self-harm as 'self-injurious behavior with a nonfatal outcome with no evidence (either explicit or implicit) that the person intended to die.' OMH defines suicide attempt as 'self-injurious behavior with a nonfatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die, which may require medical and/or security intervention to reduce likelihood of death or serious injury.' Lastly, OMH defies suicide as 'self-injurious behavior with a fatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die.'\nData on self-harm is monthly starting in 2020, data on suicide attempts is monthly starting from January 2014, and data on suicides is annual starting in 2014.",
