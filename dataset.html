@@ -1,78 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Dataset</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="dataset-page">
 
-<div class="container">
+  <div class="container">
 
-  <a href="index.html" class="back-link">← Back</a>
+    <!-- =====================================================
+         DATASET HEADER
+    ====================================================== -->
 
-  <!-- Title -->
-  <h1 id="title"></h1>
+    <header class="dataset-top">
 
-  <!-- Description card -->
-  <div class="card">
-    <h1 id="title"></h1>
-    <p id="agency"></p>
-    <p id="updatedt"></p>
+      <a href="index.html" class="back-link">
+        ← Back to datasets
+      </a>
 
-  <div>
-    <a id="download" href="#" class="button">Download Data</a>
+      <div class="dataset-heading">
+
+        <div class="dataset-heading-text">
+          <h1 id="title"></h1>
+
+          <p id="description"></p>
+
+          <div class="dataset-metadata">
+            <div id="agency"></div>
+            <div id="updatedt"></div>
+          </div>
+        </div>
+
+        <a
+          id="download"
+          href="#"
+          class="button download-button"
+          download
+        >
+          Download Data
+        </a>
+
+      </div>
+
+      <!-- Dataset navigation tabs -->
+
+      <nav class="dataset-tabs" aria-label="Dataset sections">
+
+        <button
+          type="button"
+          class="tab active"
+          data-tab="about"
+          aria-controls="about"
+        >
+          About
+        </button>
+
+        <button
+          type="button"
+          class="tab"
+          data-tab="data"
+          aria-controls="data"
+        >
+          Data
+        </button>
+
+        <button
+          type="button"
+          class="tab"
+          data-tab="related"
+          aria-controls="related"
+        >
+          Related Content
+        </button>
+
+      </nav>
+
+    </header>
+
+    <!-- =====================================================
+         ABOUT TAB
+    ====================================================== -->
+
+    <section
+      id="about"
+      class="tab-content active"
+      aria-label="About this dataset"
+    >
+
+      <div class="methodology-section">
+
+        <div class="accordion">
+
+          <details class="accordion-item">
+            <summary>
+              <span>01 — What's included in this dataset</span>
+            </summary>
+
+            <div class="accordion-content">
+              <p id="whatsincluded"></p>
+            </div>
+          </details>
+
+          <details class="accordion-item">
+            <summary>
+              <span>02 — How this data is generated</span>
+            </summary>
+
+            <div class="accordion-content">
+              <p id="howitsgenerated"></p>
+            </div>
+          </details>
+
+          <details class="accordion-item">
+            <summary>
+              <span>03 — Limitations &amp; guidelines for use</span>
+            </summary>
+
+            <div class="accordion-content">
+              <p id="limitations"></p>
+            </div>
+          </details>
+
+          <details class="accordion-item">
+            <summary>
+              <span>04 — Why we publish this data</span>
+            </summary>
+
+            <div class="accordion-content">
+              <p id="whypublish"></p>
+            </div>
+          </details>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================================
+         DATA TAB
+    ====================================================== -->
+
+    <section
+      id="data"
+      class="tab-content"
+      aria-label="Dataset fields and preview"
+    >
+
+      <!-- Fields and data dictionary -->
+
+      <div class="data-section">
+
+        <h2>Fields / Data Dictionary</h2>
+
+        <p class="section-introduction">
+          Definitions and data types for the fields included in this dataset.
+        </p>
+
+        <div class="fields-wrapper">
+          <table id="fields"></table>
+        </div>
+
+      </div>
+
+      <!-- Data preview -->
+
+      <div class="data-section">
+
+        <h2>Data Preview</h2>
+
+        <p class="section-introduction">
+          A preview of the first rows in the downloadable dataset.
+        </p>
+
+        <div class="table-wrapper">
+          <table id="preview"></table>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =====================================================
+         RELATED CONTENT TAB
+    ====================================================== -->
+
+ <section
+  id="related"
+  class="tab-content"
+  aria-label="Related content"
+>
+  <div class="related-section">
+
+    <div
+      id="relatedlinks"
+      class="related-links"
+    ></div>
+
   </div>
-</div>
+</section>
 
-  <!-- Whats Included card -->
-  <div class="card">
-    <h2>What's included in this data</h2>
-    <p id="whatsincluded"></p>
   </div>
 
-  <!-- How Its Generated table card -->
-  <div class="card">
-    <h2>How this data is generated</h2>
-    <p id="howitsgenerated"></p>
-  </div>
+  <script src="dataset.js"></script>
 
-    <!-- Limitations & Guidelines table card -->
-  <div class="card">
-    <h2>Limitations & guidelines for use</h2>
-    <p id="limitations"></p>
-  </div>
-
-    <!-- Why we publish table card -->
-  <div class="card">
-    <h2>Why we publish this data</h2>
-    <p id="whypublish"></p>
-  </div>
-
-    <!-- related links & research table card -->
-  <div class="card">
-    <h2>Related data, research, and analysis</h2>
-    <p id="relatedlinks"></p>
-  </div>
-
-  <!-- Fields table card -->
-  <div class="card">
-    <h2>Fields</h2>
-    <div class="fields-wrapper">
-      <table id="fields"></table>
-    </div>
-  </div>
-
-  <!-- Preview card -->
-  <div class="card">
-    <h2>Fields</h2>
-    <div class="table-wrapper">
-      <table id="preview"></table>
-    </div>
-  </div>
-</div>
-
-<script src="dataset.js"></script>
 </body>
 </html>

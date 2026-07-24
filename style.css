@@ -1,5 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap");
+
 /* =========================================================
-   BASE RESET + GLOBAL SETTINGS
+   COLOR VARIABLES
+========================================================= */
+
+:root {
+  --teal-left: #3f5e62;
+  --teal-middle: #34636b;
+  --teal-right: #26798a;
+
+  --teal: #3690aa;
+  --teal-dark: #2c7c94;
+  --teal-light: #a9e0ec;
+
+  --page-gray: #e3e9eb;
+  --light-gray: #f5f7f8;
+
+  --card-teal: rgba(31, 77, 86, 0.88);
+  --card-teal-hover: rgba(42, 102, 114, 0.95);
+
+  --dark-text: #172326;
+  --white: #ffffff;
+  --black: #000000;
+  --border-gray: #bcc7ca;
+}
+
+/* =========================================================
+   BASE RESET
 ========================================================= */
 
 *,
@@ -8,263 +35,1062 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #ffffff;
-  color: #1f2937;
-  line-height: 1.5;
+
+  font-family:
+    "Work Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background: var(--page-gray);
+  color: var(--dark-text);
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 /* =========================================================
    TYPOGRAPHY
 ========================================================= */
 
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+}
+
 h1 {
-  font-size: 28px;
-  margin: 0 0 10px;
+  margin: 0 0 16px;
+  font-size: clamp(34px, 5vw, 62px);
+  font-weight: 700;
 }
 
 h2 {
+  margin: 0 0 24px;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700;
+}
+
+h3 {
+  margin: 0 0 14px;
   font-size: 20px;
-  margin: 30px 0 10px;
+  font-weight: 700;
+}
+
+p {
+  margin-top: 0;
+}
+
+a {
+  color: inherit;
 }
 
 /* =========================================================
-   PAGE LAYOUTS
+   GENERAL BUTTONS
 ========================================================= */
 
-/* Dataset detail page */
-.dataset-page {
-  background: #fff;
+.button {
+  display: inline-block;
+  padding: 13px 22px;
+
+  background: var(--teal);
+  color: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 6px;
+
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
-.dataset-page .container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 24px;
+.button:hover {
+  background: var(--teal-dark);
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
-/* Search / catalog page */
+/* =========================================================
+   SEARCH / CATALOG PAGE
+========================================================= */
+
+.search-page {
+  min-height: 100vh;
+  background: var(--page-gray);
+}
+
+/* =========================================================
+   CATALOG HEADER
+========================================================= */
+
+.catalog-hero {
+  width: 100%;
+  padding: 60px 5vw;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--teal-left) 0%,
+      var(--teal-middle) 50%,
+      var(--teal-right) 100%
+    );
+
+  color: var(--white);
+}
+
+.catalog-hero-inner {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.catalog-hero h1 {
+  max-width: 900px;
+  margin: 0;
+
+  color: var(--white);
+
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+/* =========================================================
+   SEARCH AREA
+========================================================= */
+
+.search-container {
+  width: min(1200px, calc(100% - 100px));
+  margin: 38px auto 30px;
+}
+
+.search-label {
+  display: block;
+  margin-bottom: 8px;
+
+  color: var(--dark-text);
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#search {
+  display: block;
+  width: 100%;
+  padding: 17px 24px;
+
+  background: var(--white);
+  color: var(--dark-text);
+
+  border: 1px solid var(--black);
+  border-radius: 6px;
+
+  font-size: 17px;
+
+  box-shadow: none;
+  outline: none;
+}
+
+#search::placeholder {
+  color: #657174;
+}
+
+#search:focus {
+  border-color: var(--teal-dark);
+  box-shadow: 0 0 0 3px rgba(54, 144, 170, 0.22);
+}
+
+/* =========================================================
+   CATALOG LAYOUT
+========================================================= */
+
 .search-page .layout {
   display: flex;
-  gap: 20px;
   align-items: flex-start;
-  padding: 0 20px;
+  gap: 28px;
+
+  width: min(1200px, calc(100% - 100px));
+  margin: 0 auto;
+  padding: 0 0 60px;
 }
 
 .search-page .sidebar {
   width: 240px;
   flex-shrink: 0;
   padding: 24px;
+
+  background: var(--card-teal);
+  color: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 4px;
+}
+
+.search-page .sidebar h3 {
+  margin-top: 24px;
+}
+
+.search-page .sidebar h3:first-child {
+  margin-top: 0;
 }
 
 .search-page main {
   flex: 1;
-  padding: 24px;
   min-width: 0;
 }
 
-/* =========================================================
-   SEARCH INPUT
-========================================================= */
-
-#search {
-  width: 100%;
-  padding: 14px 18px;
-  font-size: 16px;
-
-  border: 1px solid #d1d5db;
-  border-radius: 14px;
-  background: #fff;
-
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-  outline: none;
+.search-page main > h2 {
+  margin-bottom: 12px;
+  font-size: clamp(28px, 3.2vw, 42px);
 }
 
-#search:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+#resultsMeta {
+  margin-bottom: 18px;
+  color: #4b575a;
+  font-weight: 500;
 }
 
 /* =========================================================
-   FILTER SYSTEM (SIDEBAR FACETS)
+   FILTERS
 ========================================================= */
 
 #agencyFilters,
 #tagFilters {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 18px;
+  gap: 7px;
+
+  margin-bottom: 20px;
 }
 
-/* Filter item (default state) */
-.search-page .filter-item {
+.filter-item {
   display: block;
-  padding: 8px 10px;
+  width: 100%;
+  padding: 9px 11px;
 
-  background: #e5e7eb;
-  color: #111827;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
 
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 4px;
+
+  font-size: 14px;
+  text-align: left;
+
   cursor: pointer;
-  font-size: 13px;
-
   user-select: none;
-  transition: background 0.15s ease;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
-/* Hover state */
-.search-page .filter-item:hover {
-  background: #dbeafe;
+.filter-item:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
-/* Active / selected state */
-.search-page .filter-item.active {
-  background: #2563eb;
-  color: #ffffff;
+.filter-item.active {
+  background: var(--white);
+  color: var(--dark-text);
+  border-color: var(--black);
 }
 
-/* Keep active stable on hover */
-.search-page .filter-item.active:hover {
-  background: #2563eb;
+.filter-item.active:hover {
+  background: var(--white);
 }
-
-/* =========================================================
-   BUTTONS (GLOBAL ACTIONS ONLY)
-========================================================= */
-
-.search-page button {
-  background: #2563eb;
-  color: white;
-
-  border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-
-  cursor: pointer;
-}
-
-/* =========================================================
-   NAV LINKS (e.g. Clear filters)
-========================================================= */
 
 .nav-link {
-  color: #0066cc;
-  text-decoration: none;
+  color: var(--white);
+
   font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .nav-link:hover {
-  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 /* =========================================================
-   DATA CARDS (SEARCH RESULTS)
+   DATASET CATALOG CARDS
 ========================================================= */
 
-.card {
+#datasetList {
+  display: grid;
+  gap: 18px;
+}
+
+.search-page .card {
   width: 100%;
-  background: #fff;
+  padding: 24px;
 
-  border-radius: 14px;
-  border: 1px solid #c9d0dd;
+  background: var(--card-teal);
+  color: var(--white);
 
-  padding: 16px 18px;
-  margin: 14px 0;
+  border: 1px solid var(--black);
+  border-radius: 4px;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  box-shadow: none;
 
-  overflow:hidden;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
-.card h1,
-.card h2 {
-  margin-top: 0;
+.search-page .card:hover {
+  background: var(--card-teal-hover);
+  transform: translateY(-2px);
 }
 
-.card p {
-  margin: 0 0 10px;
+.search-page .card h2,
+.search-page .card h3 {
+  margin: 0 0 12px;
+
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.search-page .card p {
+  margin: 0 0 12px;
+}
+
+.search-page .card a {
+  color: var(--white);
+
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.search-page .card a:hover {
+  text-decoration-thickness: 2px;
 }
 
 /* =========================================================
-   DATASET PAGE LINKS
+   DATASET DETAIL PAGE
 ========================================================= */
 
-.dataset-page a {
-  color: #2563eb;
+.dataset-page {
+  min-height: 100vh;
+  background: var(--page-gray);
+}
+
+.dataset-page .container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================================
+   DATASET HEADER
+========================================================= */
+
+.dataset-top {
+  position: relative;
+
+  width: 100%;
+  padding:
+    34px
+    max(5vw, calc((100vw - 1200px) / 2))
+    0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--teal-left) 0%,
+      var(--teal-middle) 50%,
+      var(--teal-right) 100%
+    );
+
+  color: var(--white);
+}
+
+.dataset-top::after {
+  content: "";
+
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 40px;
+
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 38px;
+
+  color: var(--white);
+
+  font-weight: 600;
   text-decoration: none;
 }
 
-.dataset-page a:hover {
+.back-link:hover {
   text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.dataset-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+
+  width: min(1200px, 100%);
+}
+
+.dataset-heading-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.dataset-heading h1 {
+  max-width: 900px;
+
+  color: var(--white);
+
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+#description {
+  max-width: 850px;
+  margin-bottom: 18px;
+
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.dataset-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 30px;
+
+  margin-top: 18px;
+}
+
+.dataset-metadata p {
+  margin: 0;
+}
+
+.download-button {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+
+  background: var(--teal);
+  color: var(--white);
+
+  border-color: var(--black);
 }
 
 /* =========================================================
-   TABLES (DATA PREVIEW)
+   DATASET NAVIGATION TABS
 ========================================================= */
+
+.dataset-tabs {
+  display: flex;
+  gap: 8px;
+
+  width: min(1200px, 100%);
+  margin-top: 42px;
+}
+
+.dataset-tabs .tab {
+  position: relative;
+
+  padding: 14px 24px;
+
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+
+  border: 0;
+  border-bottom: 4px solid transparent;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.dataset-tabs .tab:hover {
+  color: var(--white);
+}
+
+.dataset-tabs .tab.active {
+  color: var(--white);
+  border-bottom-color: var(--white);
+}
+
+/* =========================================================
+   TAB CONTENT
+========================================================= */
+
+.tab-content {
+  display: none;
+
+  width: min(1200px, calc(100% - 100px));
+  margin: 0 auto;
+  padding: 58px 0 80px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* =========================================================
+   ACCORDION
+========================================================= */
+
+.methodology-section,
+.accordion {
+  width: 100%;
+}
+
+.accordion {
+  border-top: 1px solid var(--white);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--white);
+}
+
+.accordion-item summary {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 126px;
+  padding: 28px 65px 28px 0;
+
+  color: var(--black);
+
+  font-size: clamp(21px, 2.25vw, 34px);
+  font-weight: 700;
+  line-height: 1.25;
+
+  cursor: pointer;
+  list-style: none;
+}
+
+.accordion-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-item summary::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  right: 10px;
+
+  width: 22px;
+  height: 22px;
+
+  border-right: 4px solid var(--black);
+  border-bottom: 4px solid var(--black);
+
+  transform:
+    translateY(-65%)
+    rotate(45deg);
+
+  transition: transform 0.2s ease;
+}
+
+.accordion-item[open] summary::after {
+  transform:
+    translateY(-30%)
+    rotate(225deg);
+}
+
+.accordion-item summary:hover {
+  color: var(--teal-dark);
+}
+
+.accordion-content {
+  max-width: 1050px;
+  padding: 0 60px 34px 40px;
+
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.accordion-content p {
+  margin: 0;
+}
+
+/* =========================================================
+   DATA SECTION
+========================================================= */
+
+.data-section {
+  margin-bottom: 54px;
+}
+
+.data-section:last-child {
+  margin-bottom: 0;
+}
+
+.data-section h2 {
+  margin-bottom: 12px;
+  color: #465e62;
+}
+
+.section-introduction {
+  max-width: 800px;
+  margin-bottom: 22px;
+
+  font-size: 17px;
+}
+
+/* =========================================================
+   FIELDS / DATA DICTIONARY TABLE
+========================================================= */
+
+.fields-wrapper {
+  width: 100%;
+  height: 400px;
+
+  overflow-x: auto;
+  overflow-y: auto;
+
+  background: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 4px;
+}
 
 .fields-wrapper table {
   width: 100%;
-  table-layout: fixed;
+  min-width: 700px;
+
   border-collapse: collapse;
-  font-size: 13px;
+  table-layout: fixed;
+
+  font-size: 14px;
 }
 
-.fields-wrapper th,
-.fields-wrapper td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #dbe2ea;
+.fields-wrapper thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.fields-wrapper th {
+  padding: 13px 14px;
+
+  background: var(--teal-dark);
+  color: var(--white);
+
+  border-bottom: 1px solid var(--black);
+
+  font-weight: 700;
   text-align: left;
+}
+
+.fields-wrapper td {
+  padding: 12px 14px;
+
+  background: var(--white);
+
+  border-bottom: 1px solid #d4dcde;
+
+  text-align: left;
+  vertical-align: top;
 
   white-space: normal;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
+.fields-wrapper tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.fields-wrapper th:nth-child(1),
 .fields-wrapper td:nth-child(1) {
   width: 25%;
 }
 
+.fields-wrapper th:nth-child(2),
 .fields-wrapper td:nth-child(2) {
-  width: 65%;
+  width: 60%;
 }
 
+.fields-wrapper th:nth-child(3),
 .fields-wrapper td:nth-child(3) {
-  width: 10%;
-}
-
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.table-wrapper table {
-  border-collapse: collapse;
-  font-size: 13px;
-  min-width: 600px; /* force overflow if needed */
-}
-
-
-.table-wrapper th,
-.table-wrapper td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #dbe2ea;
-  text-align: left;
-  white-space: nowrap;  /* keep preview horizontal scroll */
+  width: 15%;
 }
 
 /* =========================================================
-   CODE / RAW PREVIEW BLOCKS
+   DATA PREVIEW TABLE
+========================================================= */
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  background: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 4px;
+}
+
+.table-wrapper table,
+#preview {
+  width: 100%;
+  min-width: 800px;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+}
+
+.table-wrapper th,
+.table-wrapper td,
+#preview th,
+#preview td {
+  padding: 11px 13px;
+
+  border-bottom: 1px solid #d4dcde;
+
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table-wrapper th,
+#preview th {
+  background: var(--teal-dark);
+  color: var(--white);
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   RELATED CONTENT
+========================================================= */
+
+.related-section {
+  width: 100%;
+}
+
+.related-links {
+  max-width: 1050px;
+
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.related-links-list {
+  margin: 0;
+  padding-left: 28px;
+}
+
+.related-links-list li {
+  margin-bottom: 14px;
+  padding-left: 8px;
+}
+
+.related-links-list li:last-child {
+  margin-bottom: 0;
+}
+
+.related-links-list li::marker {
+  color: var(--teal-dark);
+}
+
+/* Dashboard appears as the first bulleted link */
+
+.dashboard-list-link {
+  font-weight: 700;
+}
+
+.related-links-list a {
+  color: var(--teal-dark);
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.related-links-list a:hover {
+  color: var(--dark-text);
+}
+
+/* =========================================================
+   ERROR STATES
+========================================================= */
+
+.dataset-page .container > h1:first-child {
+  width: min(1200px, calc(100% - 100px));
+  margin: 60px auto 20px;
+}
+
+.dataset-page .container > h1:first-child ~ p,
+.dataset-page .container > h1:first-child ~ .back-link {
+  display: block;
+
+  width: min(1200px, calc(100% - 100px));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.dataset-page .container > h1:first-child ~ .back-link {
+  margin-top: 25px;
+  color: var(--teal-dark);
+}
+
+/* =========================================================
+   CODE BLOCKS
 ========================================================= */
 
 pre {
+  padding: 16px;
+
   background: #0b1220;
   color: #e5e7eb;
 
-  padding: 14px;
-  border-radius: 12px;
+  border-radius: 4px;
 
   overflow-x: auto;
-  font-size: 12px;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   TABLE SCROLLBARS
+========================================================= */
+
+.fields-wrapper,
+.table-wrapper {
+  scrollbar-color: var(--teal-dark) #d3dcde;
+  scrollbar-width: thin;
+}
+
+.fields-wrapper::-webkit-scrollbar,
+.table-wrapper::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.fields-wrapper::-webkit-scrollbar-track,
+.table-wrapper::-webkit-scrollbar-track {
+  background: #d3dcde;
+}
+
+.fields-wrapper::-webkit-scrollbar-thumb,
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--teal-dark);
+
+  border: 2px solid #d3dcde;
+  border-radius: 8px;
+}
+
+/* =========================================================
+   TABLET RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 850px) {
+  .catalog-hero {
+    padding: 52px 24px;
+  }
+
+  .catalog-hero h1 {
+    font-size: clamp(38px, 8vw, 56px);
+  }
+
+  .search-container {
+    width: calc(100% - 48px);
+  }
+
+  .search-page .layout {
+    flex-direction: column;
+    width: calc(100% - 48px);
+  }
+
+  .search-page .sidebar {
+    width: 100%;
+  }
+
+  .dataset-top {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .dataset-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .download-button {
+    margin-bottom: 0;
+  }
+
+  .dataset-tabs {
+    overflow-x: auto;
+  }
+
+  .dataset-tabs .tab {
+    flex-shrink: 0;
+  }
+
+  .tab-content {
+    width: calc(100% - 48px);
+  }
+
+  .accordion-item summary {
+    min-height: 105px;
+    padding-right: 55px;
+  }
+
+  .accordion-content {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+/* =========================================================
+   MOBILE RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 560px) {
+  .catalog-hero {
+    padding: 44px 20px;
+  }
+
+  .catalog-hero h1 {
+    font-size: 37px;
+  }
+
+  .search-container {
+    width: calc(100% - 32px);
+    margin: 26px auto 24px;
+  }
+
+  .search-page .layout {
+    width: calc(100% - 32px);
+    padding-bottom: 35px;
+  }
+
+  .search-page .sidebar,
+  .search-page .card {
+    padding: 19px;
+  }
+
+  .search-page main > h2 {
+    font-size: 30px;
+  }
+
+  .search-page .card h2,
+  .search-page .card h3 {
+    font-size: 25px;
+  }
+
+  .dataset-top {
+    padding: 25px 18px 0;
+  }
+
+  .back-link {
+    margin-bottom: 28px;
+  }
+
+  .dataset-heading h1 {
+    font-size: 36px;
+  }
+
+  #description {
+    font-size: 16px;
+  }
+
+  .dataset-metadata {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .dataset-tabs {
+    gap: 0;
+    margin-top: 30px;
+  }
+
+  .dataset-tabs .tab {
+    padding: 13px 15px;
+    font-size: 14px;
+  }
+
+  .tab-content {
+    width: calc(100% - 32px);
+    padding: 40px 0 55px;
+  }
+
+  .accordion-item summary {
+    min-height: 94px;
+    padding: 22px 48px 22px 0;
+
+    font-size: 21px;
+  }
+
+  .accordion-item summary::after {
+    right: 7px;
+
+    width: 17px;
+    height: 17px;
+
+    border-width: 3px;
+  }
+
+  .accordion-content {
+    padding: 0 5px 26px;
+
+    font-size: 16px;
+  }
+
+  .fields-wrapper {
+    height: 350px;
+  }
+
+  .related-links {
+    font-size: 16px;
+  }
 }

@@ -1,43 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
   <title>Data Portal</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="search-page">
 
-<div class="layout">
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
 
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
+  <header class="catalog-hero">
 
-    <h3>Agencies</h3>
-    <div id="agencyFilters"></div>
+    <div class="catalog-hero-inner">
 
-    <h3>Tags</h3>
-    <div id="tagFilters"></div>
+      <h1>Data and documentation for download</h1>
 
-    
-    <p><a href="#" id="clear-all" class="nav-link">Clear all filters</a></p>
-    
+    </div>
 
-  </aside>
+  </header>
 
-  <!-- MAIN -->
-  <main>
+  <!-- =====================================================
+       SEARCH
+  ====================================================== -->
 
-    <input id="search" type="text" placeholder="Search datasets..." />
+  <div class="search-container">
 
-    <div id="resultsMeta"></div>
+    <label for="search" class="search-label">
+      Search datasets
+    </label>
 
-    <div id="datasetList"></div>
+    <input
+      id="search"
+      type="search"
+      placeholder="Search datasets..."
+      autocomplete="off"
+    />
 
-  </main>
+  </div>
 
-</div>
+  <!-- =====================================================
+       CATALOG CONTENT
+  ====================================================== -->
 
-<script src="app.js"></script>
+  <div class="layout">
+
+    <!-- Left sidebar -->
+
+    <aside class="sidebar">
+
+      <h3>Agencies</h3>
+
+      <div id="agencyFilters"></div>
+
+      <h3>Tags</h3>
+
+      <div id="tagFilters"></div>
+
+      <p>
+        <a
+          href="#"
+          id="clear-all"
+          class="nav-link"
+        >
+          Clear all filters
+        </a>
+      </p>
+
+    </aside>
+
+    <!-- Dataset results -->
+
+    <main>
+
+      <h2>Available Datasets</h2>
+
+      <div
+        id="resultsMeta"
+        aria-live="polite"
+      ></div>
+
+      <div id="datasetList"></div>
+
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+
 </body>
 </html>
