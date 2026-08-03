@@ -1,4 +1,3 @@
-
 /* =========================================================
    STATE
 ========================================================= */
@@ -9,7 +8,8 @@ const state = {
   search: "",
   agency: null,
   unit: null,
-  tag: []
+  tag: [],
+  universalTag: []
 };
 
 /* =========================================================
@@ -67,6 +67,7 @@ function resetState() {
   state.search = "";
   state.agency = null;
   state.tag = [];
+  state.universalTag = [];
   state.unit = null;
 
   const searchInput = document.getElementById("search");
@@ -83,6 +84,7 @@ function getFilteredResults() {
       if (state.agency && d.agency !== state.agency) return false;
       if (state.unit && d.unit !== state.unit) return false;
       if (state.tag.length > 0 && !state.tag.every(t => d.tags.includes(t))) return false;
+      if (state.universalTag.length > 0 && !state.universalTag.every(t => (d.universalTags || []).includes(t))) return false;
 
       return true;
     })
@@ -167,15 +169,15 @@ function renderResults() {
 ========================================================= */
 
 function renderFilters() {
-/*insert universal tags here?*/
   const agencies = [...new Set(datasets.map(d => d.agency))];
   const tags = [...new Set(datasets.flatMap(d => d.tags))];
-  const units = [...new Set(datasets.map(d => d.unit))]; 
+  const units = [...new Set(datasets.map(d => d.unit))];
+  const universalTags = [...new Set(datasets.flatMap(d => d.universalTags || []))];
 
   renderFilterGroup("agencyFilters", agencies, state.agency, setAgency);
   renderFilterGroup("unitFilters", units, state.unit, setUnit);
+  renderFilterGroup("universalTagFilters", universalTags, state.universalTag, setUniversalTag);
   renderFilterGroup("tagFilters", tags, state.tag, setTag);
-
 }
 
 function renderFilterGroup(containerId, items, activeValue, handler) {
@@ -222,6 +224,16 @@ function setTag(value) {
   }
   renderAll();
 }
+
+function setUniversalTag(value) {
+  if (state.universalTag.includes(value)) {
+    state.universalTag = state.universalTag.filter(t => t !== value);
+  } else {
+    state.universalTag = [...state.universalTag, value];
+  }
+  renderAll();
+}
+
 /* =========================================================
    INITIAL RENDER
 ========================================================= */
