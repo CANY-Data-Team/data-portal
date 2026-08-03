@@ -8,25 +8,23 @@
   --teal-left: #3f5e62;
   --teal-middle: #34636b;
   --teal-right: #26798a;
-
   --teal: #3690aa;
   --teal-dark: #2c7c94;
   --teal-light: #a9e0ec;
 
-  --page-gray: #e3e9eb;
-  --light-gray: #f5f7f8;
-
-  --card-teal: rgba(31, 77, 86, 0.88);
-  --card-teal-hover: rgba(42, 102, 114, 0.95);
+  --page-gray: #f3f5f5;
+  --light-gray: #f7f8f8;
+  --medium-gray: #e1e5e6;
 
   --dark-text: #172326;
+  --muted-text: #5d696c;
   --white: #ffffff;
   --black: #000000;
-  --border-gray: #bcc7ca;
+  --border-gray: #cbd2d4;
 }
 
 /* =========================================================
-   BASE RESET
+   BASE
 ========================================================= */
 
 *,
@@ -42,6 +40,9 @@ html {
 body {
   margin: 0;
 
+  background: var(--page-gray);
+  color: var(--dark-text);
+
   font-family:
     "Work Sans",
     -apple-system,
@@ -50,8 +51,6 @@ body {
     Arial,
     sans-serif;
 
-  background: var(--page-gray);
-  color: var(--dark-text);
   line-height: 1.6;
 }
 
@@ -69,6 +68,21 @@ img {
 
 [hidden] {
   display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+
+  white-space: nowrap;
+  border: 0;
 }
 
 /* =========================================================
@@ -108,7 +122,7 @@ a {
 }
 
 /* =========================================================
-   GENERAL BUTTONS
+   GENERAL BUTTON
 ========================================================= */
 
 .button {
@@ -119,7 +133,7 @@ a {
   color: var(--white);
 
   border: 1px solid var(--black);
-  border-radius: 6px;
+  border-radius: 5px;
 
   font-weight: 700;
   text-align: center;
@@ -139,7 +153,7 @@ a {
 }
 
 /* =========================================================
-   SEARCH / CATALOG PAGE
+   CATALOG PAGE
 ========================================================= */
 
 .search-page {
@@ -153,7 +167,7 @@ a {
 
 .catalog-hero {
   width: 100%;
-  padding: 60px 5vw;
+  padding: 52px 5vw;
 
   background:
     linear-gradient(
@@ -167,232 +181,745 @@ a {
 }
 
 .catalog-hero-inner {
-  width: min(1200px, 100%);
+  width: min(1280px, 100%);
   margin: 0 auto;
 }
 
 .catalog-hero h1 {
-  max-width: 900px;
+  max-width: 950px;
   margin: 0;
 
   color: var(--white);
 
-  font-size: clamp(38px, 5vw, 64px);
+  font-size: clamp(38px, 5vw, 60px);
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.025em;
 }
 
-/* =========================================================
-   SEARCH AREA
-========================================================= */
+.catalog-hero-description {
+  max-width: 780px;
+  margin: 18px 0 0;
 
-.search-container {
-  width: min(1200px, calc(100% - 100px));
-  margin: 38px auto 30px;
-}
+  color: rgba(255, 255, 255, 0.9);
 
-.search-label {
-  display: block;
-  margin-bottom: 8px;
-
-  color: var(--dark-text);
-
-  font-size: 16px;
-  font-weight: 700;
-}
-
-#search {
-  display: block;
-  width: 100%;
-  padding: 17px 24px;
-
-  background: var(--white);
-  color: var(--dark-text);
-
-  border: 1px solid var(--black);
-  border-radius: 6px;
-
-  font-size: 17px;
-
-  box-shadow: none;
-  outline: none;
-}
-
-#search::placeholder {
-  color: #657174;
-}
-
-#search:focus {
-  border-color: var(--teal-dark);
-  box-shadow: 0 0 0 3px rgba(54, 144, 170, 0.22);
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 /* =========================================================
    CATALOG LAYOUT
 ========================================================= */
 
-.search-page .layout {
-  display: flex;
-  align-items: flex-start;
-  gap: 28px;
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 255px minmax(0, 1fr);
+  align-items: start;
 
-  width: min(1200px, calc(100% - 100px));
-  margin: 0 auto;
-  padding: 0 0 60px;
+  width: min(1380px, calc(100% - 80px));
+  margin: 38px auto 0;
+  padding-bottom: 75px;
+
+  background: var(--white);
+
+  border: 1px solid var(--border-gray);
+  border-radius: 3px;
+
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
 }
 
-.search-page .sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  padding: 24px;
-
-  background: var(--card-teal);
-  color: var(--white);
-
-  border: 1px solid var(--black);
-  border-radius: 4px;
-}
-
-.search-page .sidebar h3 {
-  margin-top: 24px;
-}
-
-.search-page .sidebar h3:first-child {
-  margin-top: 0;
-}
-
-.search-page main {
-  flex: 1;
+.catalog-main {
   min-width: 0;
-}
-
-.search-page main > h2 {
-  margin-bottom: 12px;
-  font-size: clamp(28px, 3.2vw, 42px);
-}
-
-#resultsMeta {
-  margin-bottom: 18px;
-  color: #4b575a;
-  font-weight: 500;
+  padding: 34px 38px 48px;
 }
 
 /* =========================================================
-   FILTERS
+   CATALOG SIDEBAR
 ========================================================= */
+
+.catalog-sidebar {
+  align-self: stretch;
+
+  min-height: 100%;
+  padding-bottom: 32px;
+
+  background: var(--white);
+  color: var(--dark-text);
+
+  border-right: 1px solid var(--border-gray);
+}
+
+.sidebar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  min-height: 72px;
+  padding: 19px 24px;
+
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.sidebar-heading h2 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.mobile-filter-toggle {
+  display: none;
+  padding: 4px 8px;
+
+  background: transparent;
+  color: var(--teal-dark);
+
+  border: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+#filter-content {
+  padding: 24px;
+}
+
+.filter-group {
+  margin-bottom: 30px;
+}
+
+.filter-group h3 {
+  margin: 0 0 13px;
+
+  color: var(--dark-text);
+
+  font-size: 17px;
+  font-weight: 700;
+}
 
 #agencyFilters,
 #tagFilters {
   display: flex;
   flex-direction: column;
   gap: 7px;
-
-  margin-bottom: 20px;
 }
 
+/* =========================================================
+   FILTER ITEMS
+========================================================= */
+
 .filter-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
   width: 100%;
-  padding: 9px 11px;
+  padding: 7px 4px;
 
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--white);
+  background: transparent;
+  color: #334145;
 
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 4px;
+  border: 0;
+  border-radius: 3px;
 
   font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
   text-align: left;
 
   cursor: pointer;
-  user-select: none;
 
   transition:
-    background 0.15s ease,
-    border-color 0.15s ease;
+    color 0.15s ease,
+    background 0.15s ease;
 }
 
 .filter-item:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: #edf3f4;
+  color: var(--teal-dark);
+}
+
+.filter-circle {
+  position: relative;
+
+  display: block;
+  flex-shrink: 0;
+
+  width: 21px;
+  height: 21px;
+
+  background: var(--white);
+
+  border: 2px solid #788589;
+  border-radius: 50%;
 }
 
 .filter-item.active {
-  background: var(--white);
-  color: var(--dark-text);
-  border-color: var(--black);
+  color: var(--teal-dark);
+  font-weight: 700;
 }
 
-.filter-item.active:hover {
-  background: var(--white);
+.filter-item.active .filter-circle {
+  border-color: var(--teal-middle);
 }
 
-.nav-link {
-  color: var(--white);
+.filter-item.active .filter-circle::after {
+  content: "";
+
+  position: absolute;
+  inset: 4px;
+
+  background: var(--teal-middle);
+
+  border-radius: 50%;
+}
+
+.filter-item:focus-visible {
+  outline: 3px solid rgba(54, 144, 170, 0.22);
+  outline-offset: 2px;
+}
+
+.filter-item-label {
+  overflow-wrap: anywhere;
+}
+
+.clear-filters-link {
+  display: inline-block;
+
+  color: var(--teal-dark);
 
   font-size: 14px;
+  font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.nav-link:hover {
+.clear-filters-link:hover {
+  color: var(--dark-text);
   text-decoration-thickness: 2px;
 }
 
 /* =========================================================
-   DATASET CATALOG CARDS
+   CATALOG TOOLBAR
 ========================================================= */
 
-#datasetList {
-  display: grid;
-  gap: 18px;
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  margin-bottom: 36px;
 }
 
-.search-page .card {
+.catalog-title {
+  flex-shrink: 0;
+}
+
+.catalog-title h2 {
+  margin: 0 0 5px;
+
+  color: var(--dark-text);
+
+  font-size: clamp(31px, 3vw, 40px);
+  font-weight: 500;
+}
+
+.catalog-title p {
+  margin: 0;
+
+  color: var(--muted-text);
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   CATALOG SEARCH
+========================================================= */
+
+.catalog-search {
+  position: relative;
+  width: min(470px, 48%);
+}
+
+.catalog-search .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+
+  color: #657174;
+
+  font-size: 18px;
+  line-height: 1;
+
+  pointer-events: none;
+
+  transform: translateY(-50%);
+}
+
+#search {
+  display: block;
+
   width: 100%;
-  padding: 24px;
+  padding: 13px 20px 13px 48px;
 
-  background: var(--card-teal);
-  color: var(--white);
+  background: var(--white);
+  color: var(--dark-text);
 
-  border: 1px solid var(--black);
-  border-radius: 4px;
+  border: 1px solid #9ba5a8;
+  border-radius: 28px;
+
+  font-size: 16px;
 
   box-shadow: none;
+  outline: none;
+}
+
+#search::placeholder {
+  color: #697477;
+}
+
+#search:hover {
+  border-color: #69777b;
+}
+
+#search:focus {
+  border-color: var(--teal-dark);
+  box-shadow: 0 0 0 3px rgba(54, 144, 170, 0.18);
+}
+
+#search::-webkit-search-decoration {
+  display: none;
+}
+
+/* =========================================================
+   RESULTS TOOLBAR
+========================================================= */
+
+.results-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px 20px;
+
+  min-height: 44px;
+  margin-bottom: 22px;
+}
+
+.results-count {
+  color: #3f4d51;
+
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.results-count strong {
+  color: var(--dark-text);
+  font-size: 18px;
+}
+
+.active-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  min-height: 34px;
+  padding: 5px 12px;
+
+  background: var(--white);
+  color: var(--teal-dark);
+
+  border: 1px solid var(--teal-dark);
+  border-radius: 18px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
 
   transition:
     background 0.15s ease,
-    transform 0.15s ease;
+    color 0.15s ease;
 }
 
-.search-page .card:hover {
-  background: var(--card-teal-hover);
-  transform: translateY(-2px);
-}
-
-.search-page .card h2,
-.search-page .card h3 {
-  margin: 0 0 12px;
-
-  font-size: clamp(24px, 2.6vw, 34px);
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-.search-page .card p {
-  margin: 0 0 12px;
-}
-
-.search-page .card a {
+.active-filter-pill:hover {
+  background: var(--teal-dark);
   color: var(--white);
+}
 
+.remove-filter-icon {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 0.8;
+}
+
+.clear-results-link {
+  color: var(--teal-dark);
+
+  font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.clear-results-link:hover {
+  color: var(--dark-text);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.search-page .card a:hover {
-  text-decoration-thickness: 2px;
+/* =========================================================
+   DATASET CATALOG RESULTS
+========================================================= */
+
+.dataset-list,
+#datasetList {
+  display: grid;
+  gap: 20px;
+}
+
+.catalog-card {
+  overflow: hidden;
+  width: 100%;
+
+  background: var(--white);
+  color: var(--dark-text);
+
+  border: 1px solid var(--border-gray);
+  border-radius: 4px;
+
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%);
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.catalog-card:hover {
+  border-color: #78989e;
+
+  box-shadow: 0 5px 14px rgb(0 0 0 / 9%);
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   CATALOG CARD HEADER
+========================================================= */
+
+.catalog-card-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  min-height: 70px;
+  padding: 16px 22px;
+
+  background: #fbfcfc;
+
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.catalog-dataset-icon {
+  display: grid;
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+
+  place-items: center;
+
+  background: var(--teal-middle);
+  color: var(--white);
+
+  border-radius: 3px;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.catalog-card-title {
+  color: #254f56;
+
+  font-size: clamp(21px, 2.1vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.catalog-card-title:hover {
+  color: var(--teal-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.catalog-card-title:focus-visible {
+  outline: 3px solid rgba(54, 144, 170, 0.25);
+  outline-offset: 3px;
+}
+
+.catalog-card-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  margin-left: 3px;
+}
+
+.type-badge,
+.agency-badge {
+  display: inline-block;
+  padding: 4px 9px;
+
+  border-radius: 14px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.025em;
+}
+
+.type-badge {
+  background: var(--teal-middle);
+  color: var(--white);
+
+  text-transform: uppercase;
+}
+
+.agency-badge {
+  background: #e4edef;
+  color: #365c62;
+
+  border: 1px solid #c3d1d3;
+}
+
+/* =========================================================
+   CATALOG CARD BODY
+========================================================= */
+
+.catalog-card-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+}
+
+.catalog-card-description {
+  min-width: 0;
+  padding: 24px 25px;
+
+  border-right: 1px solid var(--border-gray);
+}
+
+.catalog-card-description p {
+  display: -webkit-box;
+
+  margin: 0 0 18px;
+
+  overflow: hidden;
+
+  color: #334246;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.view-dataset-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--teal-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.view-dataset-link:hover {
+  color: var(--dark-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.view-dataset-link span {
+  font-size: 19px;
+  line-height: 1;
+}
+
+/* =========================================================
+   CATALOG CARD METADATA
+========================================================= */
+
+.catalog-card-metadata {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+
+  margin: 0;
+  padding: 24px 22px;
+
+  background: #fbfcfc;
+}
+
+.metadata-item {
+  margin: 0;
+}
+
+.metadata-item dt {
+  margin: 0 0 1px;
+
+  color: #687579;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.metadata-item dd {
+  margin: 0;
+
+  color: var(--dark-text);
+
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   CATALOG CARD FOOTER
+========================================================= */
+
+.catalog-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  min-height: 62px;
+  padding: 13px 24px;
+
+  background: #fbfcfc;
+
+  border-top: 1px solid var(--border-gray);
+}
+
+.tags-label {
+  flex-shrink: 0;
+
+  color: #3d4b4f;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.catalog-card-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.dataset-tag {
+  display: inline-block;
+  padding: 4px 10px;
+
+  background: var(--white);
+  color: var(--teal-dark);
+
+  border: 1px solid var(--teal-dark);
+  border-radius: 15px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.dataset-tag:hover {
+  background: var(--teal-dark);
+  color: var(--white);
+}
+
+.dataset-tag:focus-visible {
+  outline: 3px solid rgba(54, 144, 170, 0.22);
+  outline-offset: 2px;
+}
+
+.no-tags {
+  color: #778286;
+
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* =========================================================
+   CATALOG EMPTY AND ERROR STATES
+========================================================= */
+
+.empty-results {
+  padding: 42px 28px;
+
+  background: var(--white);
+
+  border: 1px solid var(--border-gray);
+  border-radius: 4px;
+
+  text-align: center;
+}
+
+.empty-results h3 {
+  margin: 0 0 9px;
+
+  color: var(--dark-text);
+  font-size: 23px;
+}
+
+.empty-results p {
+  margin: 0 0 20px;
+  color: var(--muted-text);
+}
+
+.empty-clear-button {
+  display: inline-block;
+  padding: 9px 16px;
+
+  background: var(--teal-middle);
+  color: var(--white);
+
+  border: 1px solid var(--teal-middle);
+  border-radius: 4px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.empty-clear-button:hover {
+  background: var(--teal-left);
+}
+
+.error-message {
+  border-left: 5px solid #9c3e3e;
 }
 
 /* =========================================================
@@ -401,7 +928,7 @@ a {
 
 .dataset-page {
   min-height: 100vh;
-  background: var(--page-gray);
+  background: #e3e9eb;
 }
 
 .dataset-page .container {
@@ -411,7 +938,7 @@ a {
 }
 
 /* =========================================================
-   DATASET HEADER
+   DATASET DETAIL HEADER
 ========================================================= */
 
 .dataset-top {
@@ -438,6 +965,7 @@ a {
   content: "";
 
   display: block;
+
   width: 100%;
   height: 1px;
   margin-top: 40px;
@@ -470,7 +998,7 @@ a {
 }
 
 .dataset-heading-text {
-  flex: 1;
+  flex: 1 1 480px;
   min-width: 0;
 }
 
@@ -493,7 +1021,7 @@ a {
   line-height: 1.65;
 }
 
-.dataset-metadata {
+.dataset-page .dataset-metadata {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 30px;
@@ -501,22 +1029,103 @@ a {
   margin-top: 18px;
 }
 
-.dataset-metadata p {
+.dataset-page .dataset-metadata p {
   margin: 0;
 }
 
-.download-button {
-  flex-shrink: 0;
-  margin-bottom: 4px;
+/* =========================================================
+   DATASET HEADER ACTION BUTTONS
+========================================================= */
 
-  background: var(--teal);
+.dataset-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  max-width: 620px;
+  margin-bottom: 5px;
+}
+
+.dataset-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 52px;
+  padding: 13px 22px;
+
+  background: transparent;
   color: var(--white);
 
-  border-color: var(--black);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.dataset-action-button:hover {
+  background: var(--white);
+  color: var(--teal-left);
+
+  border-color: var(--white);
+
+  text-decoration: none;
+
+  box-shadow: 0 5px 12px rgb(0 0 0 / 18%);
+  transform: translateY(-2px);
+}
+
+.dataset-action-button:focus-visible {
+  outline: 3px solid var(--teal-light);
+  outline-offset: 3px;
+}
+
+.primary-action {
+  min-height: 58px;
+  padding: 16px 29px;
+
+  background: var(--white);
+  color: var(--teal-left);
+
+  border-color: var(--white);
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.primary-action:hover {
+  background: var(--teal-light);
+  color: var(--dark-text);
+
+  border-color: var(--teal-light);
+}
+
+.secondary-action {
+  background: transparent;
+  color: var(--white);
+
+  border-color: rgba(255, 255, 255, 0.9);
 }
 
 /* =========================================================
-   DATASET NAVIGATION TABS
+   DATASET TABS
 ========================================================= */
 
 .dataset-tabs {
@@ -556,6 +1165,11 @@ a {
   border-bottom-color: var(--white);
 }
 
+.dataset-tabs .tab:focus-visible {
+  outline: 3px solid var(--teal-light);
+  outline-offset: 2px;
+}
+
 /* =========================================================
    TAB CONTENT
 ========================================================= */
@@ -573,86 +1187,72 @@ a {
 }
 
 /* =========================================================
-   ACCORDION
+   EXPANDED ABOUT SECTIONS
 ========================================================= */
 
-.methodology-section,
-.accordion {
+.about-sections {
   width: 100%;
-}
 
-.accordion {
   border-top: 1px solid var(--white);
 }
 
-.accordion-item {
+.about-section {
+  width: 100%;
+  padding: 38px 0 42px;
+
   border-bottom: 1px solid var(--white);
 }
 
-.accordion-item summary {
-  position: relative;
-
+.about-section h2 {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
 
-  min-height: 126px;
-  padding: 28px 65px 28px 0;
+  margin: 0 0 20px;
 
-  color: var(--black);
+  color: var(--dark-text);
 
-  font-size: clamp(21px, 2.25vw, 34px);
+  font-size: clamp(23px, 2.4vw, 33px);
   font-weight: 700;
-  line-height: 1.25;
-
-  cursor: pointer;
-  list-style: none;
 }
 
-.accordion-item summary::-webkit-details-marker {
-  display: none;
-}
+.section-number {
+  flex-shrink: 0;
 
-.accordion-item summary::after {
-  content: "";
-
-  position: absolute;
-  top: 50%;
-  right: 10px;
-
-  width: 22px;
-  height: 22px;
-
-  border-right: 4px solid var(--black);
-  border-bottom: 4px solid var(--black);
-
-  transform:
-    translateY(-65%)
-    rotate(45deg);
-
-  transition: transform 0.2s ease;
-}
-
-.accordion-item[open] summary::after {
-  transform:
-    translateY(-30%)
-    rotate(225deg);
-}
-
-.accordion-item summary:hover {
   color: var(--teal-dark);
+
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
-.accordion-content {
+.about-section-content {
   max-width: 1050px;
-  padding: 0 60px 34px 40px;
+  padding-left: 48px;
 
-  font-size: 18px;
+  color: var(--dark-text);
+
+  font-size: 17px;
   line-height: 1.8;
 }
 
-.accordion-content p {
-  margin: 0;
+.about-section-content p {
+  margin-top: 0;
+}
+
+.about-section-content > p:last-child {
+  margin-bottom: 0;
+}
+
+.data-dictionary-section .about-section-content {
+  max-width: none;
+}
+
+.data-dictionary-section .section-introduction {
+  margin-bottom: 22px;
+  padding: 0;
+
+  color: var(--muted-text);
 }
 
 /* =========================================================
@@ -680,7 +1280,7 @@ a {
 }
 
 /* =========================================================
-   FIELDS / DATA DICTIONARY TABLE
+   FIELDS / DATA DICTIONARY
 ========================================================= */
 
 .fields-wrapper {
@@ -758,7 +1358,7 @@ a {
 }
 
 /* =========================================================
-   DATA PREVIEW TABLE
+   DATA PREVIEW
 ========================================================= */
 
 .table-wrapper {
@@ -835,12 +1435,6 @@ a {
   color: var(--teal-dark);
 }
 
-/* Dashboard appears as the first bulleted link */
-
-.dashboard-list-link {
-  font-weight: 700;
-}
-
 .related-links-list a {
   color: var(--teal-dark);
 
@@ -853,7 +1447,7 @@ a {
 }
 
 /* =========================================================
-   ERROR STATES
+   DETAIL-PAGE ERROR STATES
 ========================================================= */
 
 .dataset-page .container > h1:first-child {
@@ -928,44 +1522,108 @@ pre {
 }
 
 /* =========================================================
-   TABLET RESPONSIVE DESIGN
+   SMALL DESKTOP / TABLET
 ========================================================= */
 
-@media (max-width: 850px) {
-  .catalog-hero {
-    padding: 52px 24px;
-  }
-
-  .catalog-hero h1 {
-    font-size: clamp(38px, 8vw, 56px);
-  }
-
-  .search-container {
+@media (max-width: 950px) {
+  .catalog-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
     width: calc(100% - 48px);
   }
 
-  .search-page .layout {
+  .catalog-main {
+    padding: 28px 25px 40px;
+  }
+
+  .catalog-toolbar {
+    align-items: flex-start;
     flex-direction: column;
-    width: calc(100% - 48px);
+    gap: 20px;
   }
 
-  .search-page .sidebar {
+  .catalog-search {
     width: 100%;
   }
 
-  .dataset-top {
-    padding-right: 24px;
-    padding-left: 24px;
+  .catalog-card-body {
+    grid-template-columns: minmax(0, 1fr) 190px;
   }
 
   .dataset-heading {
     align-items: flex-start;
     flex-direction: column;
-    gap: 24px;
+    gap: 28px;
   }
 
-  .download-button {
+  .dataset-heading-text {
+    flex: none;
+    width: 100%;
+  }
+
+  .dataset-actions {
+    justify-content: flex-start;
+
+    width: 100%;
+    max-width: none;
     margin-bottom: 0;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+  .catalog-hero {
+    padding: 46px 24px;
+  }
+
+  .catalog-hero h1 {
+    font-size: clamp(37px, 8vw, 52px);
+  }
+
+  .catalog-hero-description {
+    font-size: 17px;
+  }
+
+  .catalog-layout {
+    display: block;
+
+    width: calc(100% - 48px);
+    margin-top: 26px;
+  }
+
+  .catalog-sidebar {
+    min-height: 0;
+
+    border-right: 0;
+    border-bottom: 1px solid var(--border-gray);
+  }
+
+  .mobile-filter-toggle {
+    display: inline-block;
+  }
+
+  .catalog-main {
+    padding: 28px 24px 40px;
+  }
+
+  .catalog-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-card-description {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-gray);
+  }
+
+  .catalog-card-metadata {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dataset-top {
+    padding-right: 24px;
+    padding-left: 24px;
   }
 
   .dataset-tabs {
@@ -979,53 +1637,108 @@ pre {
   .tab-content {
     width: calc(100% - 48px);
   }
-
-  .accordion-item summary {
-    min-height: 105px;
-    padding-right: 55px;
-  }
-
-  .accordion-content {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
 }
 
 /* =========================================================
-   MOBILE RESPONSIVE DESIGN
+   MOBILE
 ========================================================= */
 
-@media (max-width: 560px) {
+@media (max-width: 520px) {
   .catalog-hero {
-    padding: 44px 20px;
+    padding: 38px 18px;
   }
 
   .catalog-hero h1 {
-    font-size: 37px;
+    font-size: 35px;
   }
 
-  .search-container {
-    width: calc(100% - 32px);
-    margin: 26px auto 24px;
+  .catalog-hero-description {
+    font-size: 16px;
   }
 
-  .search-page .layout {
-    width: calc(100% - 32px);
-    padding-bottom: 35px;
+  .catalog-layout {
+    width: calc(100% - 28px);
+    margin-top: 18px;
+    padding-bottom: 0;
   }
 
-  .search-page .sidebar,
-  .search-page .card {
-    padding: 19px;
+  .sidebar-heading {
+    min-height: 62px;
+    padding: 16px 18px;
   }
 
-  .search-page main > h2 {
-    font-size: 30px;
+  .sidebar-heading h2 {
+    font-size: 23px;
   }
 
-  .search-page .card h2,
-  .search-page .card h3 {
-    font-size: 25px;
+  #filter-content {
+    padding: 20px 18px;
+  }
+
+  .catalog-main {
+    padding: 24px 16px 34px;
+  }
+
+  .catalog-title h2 {
+    font-size: 31px;
+  }
+
+  .catalog-title p {
+    font-size: 13px;
+  }
+
+  .catalog-toolbar {
+    margin-bottom: 25px;
+  }
+
+  .results-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .catalog-card-header {
+    align-items: flex-start;
+    padding: 15px 16px;
+  }
+
+  .catalog-dataset-icon {
+    width: 29px;
+    height: 29px;
+
+    font-size: 17px;
+  }
+
+  .catalog-card-title {
+    flex: 1;
+    min-width: calc(100% - 45px);
+
+    font-size: 21px;
+  }
+
+  .catalog-card-badges {
+    width: 100%;
+    margin-left: 39px;
+  }
+
+  .catalog-card-description {
+    padding: 20px 18px;
+  }
+
+  .catalog-card-description p {
+    font-size: 15px;
+  }
+
+  .catalog-card-metadata {
+    grid-template-columns: 1fr;
+    padding: 19px 18px;
+  }
+
+  .catalog-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 15px 18px;
   }
 
   .dataset-top {
@@ -1044,9 +1757,26 @@ pre {
     font-size: 16px;
   }
 
-  .dataset-metadata {
+  .dataset-page .dataset-metadata {
     flex-direction: column;
     gap: 4px;
+  }
+
+  .dataset-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 100%;
+  }
+
+  .dataset-action-button {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  .primary-action {
+    min-height: 58px;
   }
 
   .dataset-tabs {
@@ -1056,6 +1786,7 @@ pre {
 
   .dataset-tabs .tab {
     padding: 13px 15px;
+
     font-size: 14px;
   }
 
@@ -1064,24 +1795,25 @@ pre {
     padding: 40px 0 55px;
   }
 
-  .accordion-item summary {
-    min-height: 94px;
-    padding: 22px 48px 22px 0;
-
-    font-size: 21px;
+  .about-section {
+    padding: 29px 0 32px;
   }
 
-  .accordion-item summary::after {
-    right: 7px;
+  .about-section h2 {
+    align-items: flex-start;
+    gap: 10px;
 
-    width: 17px;
-    height: 17px;
-
-    border-width: 3px;
+    font-size: 22px;
   }
 
-  .accordion-content {
-    padding: 0 5px 26px;
+  .section-number {
+    padding-top: 4px;
+
+    font-size: 13px;
+  }
+
+  .about-section-content {
+    padding-left: 0;
 
     font-size: 16px;
   }

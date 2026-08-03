@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Dataset</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>Dataset | CANY Data Catalog</title>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -19,43 +24,93 @@
 
     <header class="dataset-top">
 
-      <a href="index.html" class="back-link">
+      <a
+        href="index.html"
+        class="back-link"
+      >
         ← Back to datasets
       </a>
 
       <div class="dataset-heading">
 
+        <!-- Dataset title and metadata -->
+
         <div class="dataset-heading-text">
+
           <h1 id="title"></h1>
 
           <p id="description"></p>
 
           <div class="dataset-metadata">
+
             <div id="agency"></div>
+
             <div id="updatedt"></div>
+
           </div>
+
         </div>
 
-        <a
-          id="download"
-          href="#"
-          class="button download-button"
-          download
-        >
-          Download Data
-        </a>
+        <!-- Dataset action links -->
+
+        <div class="dataset-actions">
+
+          <a
+            id="download"
+            href="#"
+            class="dataset-action-button primary-action"
+            download
+          >
+            <span aria-hidden="true">↓</span>
+
+            <span>Download Data</span>
+          </a>
+
+          <a
+            id="dashboard-link"
+            href="#"
+            class="dataset-action-button secondary-action"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>View Dashboard</span>
+
+            <span aria-hidden="true">↗</span>
+          </a>
+
+          <a
+            id="source-data-download"
+            href="#"
+            class="dataset-action-button secondary-action"
+            download
+          >
+            <span aria-hidden="true">↓</span>
+
+            <span>Source Data</span>
+          </a>
+
+        </div>
 
       </div>
 
-      <!-- Dataset navigation tabs -->
+      <!-- ===================================================
+           DATASET NAVIGATION TABS
+      ==================================================== -->
 
-      <nav class="dataset-tabs" aria-label="Dataset sections">
+      <nav
+        class="dataset-tabs"
+        aria-label="Dataset sections"
+        role="tablist"
+      >
 
         <button
           type="button"
           class="tab active"
+          id="about-tab"
           data-tab="about"
           aria-controls="about"
+          aria-selected="true"
+          role="tab"
         >
           About
         </button>
@@ -63,8 +118,11 @@
         <button
           type="button"
           class="tab"
+          id="data-tab"
           data-tab="data"
           aria-controls="data"
+          aria-selected="false"
+          role="tab"
         >
           Data
         </button>
@@ -72,8 +130,11 @@
         <button
           type="button"
           class="tab"
+          id="related-tab"
           data-tab="related"
           aria-controls="related"
+          aria-selected="false"
+          role="tab"
         >
           Related Content
         </button>
@@ -89,54 +150,133 @@
     <section
       id="about"
       class="tab-content active"
-      aria-label="About this dataset"
+      aria-labelledby="about-tab"
+      role="tabpanel"
     >
 
-      <div class="methodology-section">
+      <div class="about-sections">
 
-        <div class="accordion">
+        <!-- What's included -->
 
-          <details class="accordion-item">
-            <summary>
-              <span>01 — What's included in this dataset</span>
-            </summary>
+        <section class="about-section">
 
-            <div class="accordion-content">
-              <p id="whatsincluded"></p>
+          <h2>
+            <span class="section-number">
+              01
+            </span>
+
+            <span>
+              What's included in this dataset
+            </span>
+          </h2>
+
+          <div class="about-section-content">
+
+            <p id="whatsincluded"></p>
+
+          </div>
+
+        </section>
+
+        <!-- How the data is generated -->
+
+        <section class="about-section">
+
+          <h2>
+            <span class="section-number">
+              02
+            </span>
+
+            <span>
+              How this data is generated
+            </span>
+          </h2>
+
+          <div class="about-section-content">
+
+            <p id="howitsgenerated"></p>
+
+          </div>
+
+        </section>
+
+        <!-- Limitations -->
+
+        <section class="about-section">
+
+          <h2>
+            <span class="section-number">
+              03
+            </span>
+
+            <span>
+              Limitations &amp; guidelines for use
+            </span>
+          </h2>
+
+          <div class="about-section-content">
+
+            <p id="limitations"></p>
+
+          </div>
+
+        </section>
+
+        <!-- Why CANY publishes the data -->
+
+        <section class="about-section">
+
+          <h2>
+            <span class="section-number">
+              04
+            </span>
+
+            <span>
+              Why we publish this data
+            </span>
+          </h2>
+
+          <div class="about-section-content">
+
+            <p id="whypublish"></p>
+
+          </div>
+
+        </section>
+
+        <!-- Fields and data dictionary -->
+
+        <section class="about-section data-dictionary-section">
+
+          <h2>
+            <span class="section-number">
+              05
+            </span>
+
+            <span>
+              Fields / Data Dictionary
+            </span>
+          </h2>
+
+          <div class="about-section-content">
+
+            <p class="section-introduction">
+              Definitions and data types for the fields included
+              in this dataset.
+            </p>
+
+            <div class="fields-wrapper">
+
+              <table
+                id="fields"
+                aria-label="Dataset field definitions"
+              ></table>
+
             </div>
-          </details>
 
-          <details class="accordion-item">
-            <summary>
-              <span>02 — How this data is generated</span>
-            </summary>
+          </div>
 
-            <div class="accordion-content">
-              <p id="howitsgenerated"></p>
-            </div>
-          </details>
-
-          <details class="accordion-item">
-            <summary>
-              <span>03 — Limitations &amp; guidelines for use</span>
-            </summary>
-
-            <div class="accordion-content">
-              <p id="limitations"></p>
-            </div>
-          </details>
-
-          <details class="accordion-item">
-            <summary>
-              <span>04 — Why we publish this data</span>
-            </summary>
-
-            <div class="accordion-content">
-              <p id="whypublish"></p>
-            </div>
-          </details>
-
-        </div>
+        </section>
 
       </div>
 
@@ -149,26 +289,10 @@
     <section
       id="data"
       class="tab-content"
-      aria-label="Dataset fields and preview"
+      aria-labelledby="data-tab"
+      role="tabpanel"
+      hidden
     >
-
-      <!-- Fields and data dictionary -->
-
-      <div class="data-section">
-
-        <h2>Fields / Data Dictionary</h2>
-
-        <p class="section-introduction">
-          Definitions and data types for the fields included in this dataset.
-        </p>
-
-        <div class="fields-wrapper">
-          <table id="fields"></table>
-        </div>
-
-      </div>
-
-      <!-- Data preview -->
 
       <div class="data-section">
 
@@ -179,7 +303,12 @@
         </p>
 
         <div class="table-wrapper">
-          <table id="preview"></table>
+
+          <table
+            id="preview"
+            aria-label="Dataset preview"
+          ></table>
+
         </div>
 
       </div>
@@ -190,24 +319,29 @@
          RELATED CONTENT TAB
     ====================================================== -->
 
- <section
-  id="related"
-  class="tab-content"
-  aria-label="Related content"
->
-  <div class="related-section">
+    <section
+      id="related"
+      class="tab-content"
+      aria-labelledby="related-tab"
+      role="tabpanel"
+      hidden
+    >
 
-    <div
-      id="relatedlinks"
-      class="related-links"
-    ></div>
+      <div class="related-section">
 
-  </div>
-</section>
+        <div
+          id="relatedlinks"
+          class="related-links"
+        ></div>
+
+      </div>
+
+    </section>
 
   </div>
 
   <script src="dataset.js"></script>
 
 </body>
+
 </html>

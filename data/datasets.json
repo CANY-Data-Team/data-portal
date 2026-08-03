@@ -22,6 +22,11 @@
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/DEATHS-IN-CUSTODY-EXTRACT.CSV?sp=r&st=2026-06-12T20:42:08Z&se=2027-06-13T04:57:08Z&spr=https&sv=2026-02-06&sr=b&sig=5xpFVwDs%2F7Z53ffXIF2RlQyYJNQldhQCwCSZ7yquF%2FA%3D"
     },
 
+    "sourceData": {
+      "type": "zip",
+      "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/DAILY-POP-CAPACITY_FAC_ZIP.zip"
+    },
+
     "fields": [
   {
     "name": "REPORT_DATE",
@@ -156,6 +161,11 @@
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-self-harm-extract?sp=r&st=2026-06-12T20:50:29Z&se=2027-06-13T05:05:29Z&spr=https&sv=2026-02-06&sr=b&sig=RvWJDoF9s1qFXsuiJgH8BNX29FZwYa2qUe%2BaEYh%2FPJU%3D"
+    },
+
+    "sourceData": {
+      "type": "zip",
+      "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/SELF-INJURY_REC_ZIP.zip"
     },
 
     "fields": [

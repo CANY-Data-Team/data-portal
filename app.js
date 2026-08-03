@@ -1,50 +1,47 @@
-
 /* =========================================================
    STATE
 ========================================================= */
 
 let datasets = [];
-// This is an 'array'; equivalent to a list 
 
 const state = {
   search: "",
   agency: null,
   tag: null
 };
-// This is an object; update property by state.search = "hello"
 
 /* =========================================================
-   BOOTSTRAP
+   START APPLICATION
 ========================================================= */
 
-init(); // Calls the init function to start setting up the webpage
+init();
 
-function init() { // Defines the init function; this code runs whenever init() is called
-  loadData();     // Calls loadData() to retrieve the dataset and display its contents
-  bindEvents();   // Calls bindEvents() to make the page respond to user actions
-}                // Ends the init function
+function init() {
+  bindEvents();
+  loadData();
+}
 
 /* =========================================================
-   DATA LOADING
+   LOAD DATA
 ========================================================= */
 
-async function loadData() { 
-  // Defines an asynchronous function named loadData.
-  // "async" allows the function to use "await."
+async function loadData() {
+  try {
+    const response = await fetch("./data/datasets.json");
 
-  const res = await fetch("./data/datasets.json"); 
-  // Requests the datasets.json file.
-  // "await" pauses this function until the response arrives.
-  // The response is stored in the constant named res.
+    if (!response.ok) {
+      throw new Error(
+        `Unable to load datasets: ${response.status}`
+      );
+    }
 
-  datasets = await res.json(); 
-  // Reads the response and converts the JSON into JavaScript data.
-  // "await" pauses until that conversion is complete.
-  // The converted data is assigned to the previously declared datasets variable.
+    datasets = await response.json();
 
-  renderAll(); 
-  // Calls renderAll() after the data is ready.
-  // This displays or updates the webpage using the loaded datasets.
+    renderAll();
+  } catch (error) {
+    console.error("Dataset loading error:", error);
+    renderLoadError();
+  }
 }
 
 /* =========================================================
@@ -52,24 +49,78 @@ async function loadData() {
 ========================================================= */
 
 function bindEvents() {
+  bindSearch();
+  bindClearButtons();
+  bindMobileFilterToggle();
+}
+
+function bindSearch() {
   const searchInput = document.getElementById("search");
 
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      state.search = e.target.value.toLowerCase();
-      renderResults();
-    });
+  if (!searchInput) {
+    return;
   }
 
-  const clearBtn = document.getElementById("clear-all");
+  searchInput.addEventListener("input", event => {
+    state.search = event.target.value
+      .trim()
+      .toLowerCase();
 
-  if (clearBtn) {
-    clearBtn.addEventListener("click", (e) => {
-      e.preventDefault();
+    renderResults();
+    renderActiveFilters();
+  });
+}
+
+function bindClearButtons() {
+  const clearButtonIds = [
+    "clear-all",
+    "clear-all-results"
+  ];
+
+  clearButtonIds.forEach(buttonId => {
+    const button = document.getElementById(buttonId);
+
+    if (!button) {
+      return;
+    }
+
+    button.addEventListener("click", event => {
+      event.preventDefault();
+
       resetState();
       renderAll();
     });
+  });
+}
+
+function bindMobileFilterToggle() {
+  const toggleButton = document.getElementById(
+    "mobile-filter-toggle"
+  );
+
+  const filterContent = document.getElementById(
+    "filter-content"
+  );
+
+  if (!toggleButton || !filterContent) {
+    return;
   }
+
+  toggleButton.addEventListener("click", () => {
+    const isExpanded =
+      toggleButton.getAttribute("aria-expanded") === "true";
+
+    toggleButton.setAttribute(
+      "aria-expanded",
+      String(!isExpanded)
+    );
+
+    filterContent.hidden = isExpanded;
+
+    toggleButton.textContent = isExpanded
+      ? "Show"
+      : "Hide";
+  });
 }
 
 /* =========================================================
@@ -82,113 +133,94 @@ function resetState() {
   state.tag = null;
 
   const searchInput = document.getElementById("search");
-  if (searchInput) searchInput.value = "";
+
+  if (searchInput) {
+    searchInput.value = "";
+  }
 }
 
 /* =========================================================
-   FILTERING + SCORING
+   FILTERING AND SEARCH SCORING
 ========================================================= */
 
-// Defines a function that filters and ranks the datasets.
 function getFilteredResults() {
-
-  // Returns the final array produced by the filtering, mapping, and sorting steps.
   return datasets
 
-    // Starts by filtering datasets according to the selected agency and tag.
-    .filter(d => {
+    // Apply agency and tag filters.
+    .filter(dataset => {
+      if (
+        state.agency &&
+        dataset.agency !== state.agency
+      ) {
+        return false;
+      }
 
-      // If an agency is selected and the dataset has a different agency,
-      // removes the dataset from the results.
-      if (state.agency && d.agency !== state.agency) return false;
+      if (
+        state.tag &&
+        !getDatasetTags(dataset).includes(state.tag)
+      ) {
+        return false;
+      }
 
-      // If a tag is selected and the dataset does not include that tag,
-      // removes the dataset from the results.
-      if (state.tag && !d.tags.includes(state.tag)) return false;
-
-      // Keeps the dataset if it passes both filter checks.
       return true;
     })
 
-    // Creates a new version of every remaining dataset object.
-    .map(d => ({
-
-      // Copies all properties from the original dataset into the new object.
-      ...d,
-
-      // Adds a score property based on how well the dataset matches the search.
-      score: scoreDataset(d, state.search)
+    // Add a search score.
+    .map(dataset => ({
+      ...dataset,
+      score: scoreDataset(dataset, state.search)
     }))
 
-    // Keeps only datasets with a search-match score greater than zero.
-    .filter(d => d.score > 0)
+    // Remove datasets that do not match.
+    .filter(dataset => dataset.score > 0)
 
-    // Sorts the datasets from the highest score to the lowest score.
-    .sort((a, b) => b.score - a.score);
+    // Sort strongest matches first.
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      return String(a.title || "").localeCompare(
+        String(b.title || "")
+      );
+    });
 }
 
+function scoreDataset(dataset, query) {
+  if (!query) {
+    return 1;
+  }
 
-/* Although it looks like it returns datasets immediately, JavaScript treats the connected lines as one long expression: 
-return datasets.filter(...).map(...).filter(...).sort(...);
-The process is: 
+  const title = String(dataset.title || "");
+  const agency = String(dataset.agency || "");
+  const description = String(dataset.description || "");
+  const context = String(
+    dataset.contextstatement || ""
+  );
+  const tags = getDatasetTags(dataset).join(" ");
 
-datasets
-   ↓
-.filter()   removes datasets with the wrong agency or tag
-   ↓
-.map()      adds a search score to each remaining dataset
-   ↓
-.filter()   removes datasets with a score of 0
-   ↓
-.sort()     orders datasets from highest to lowest score
-   ↓
-return      sends the final array back
+  const searchableText = `
+    ${title}
+    ${agency}
+    ${description}
+    ${context}
+    ${tags}
+  `.toLowerCase();
 
-
-*/
-function scoreDataset(d, query) {
-  // If the search box is empty, give every dataset a score of 1.
-  // This prevents all datasets from being removed later by:
-  // .filter(d => d.score > 0)
-  if (!query) return 1;
-
-  // Combine several dataset fields into one searchable string.
-  const text = (
-    d.title + " " +
-    d.description + " " +
-    d.contextstatement + " " +
-
-    // d.tags is an array, such as:
-    // ["prisons", "population"]
-    // .join(" ") turns it into:
-    // "prisons population"
-    d.tags.join(" ")
-  )
-
-  // Convert the combined text to lowercase so the search
-  // does not depend on capitalization.
-  .toLowerCase();
-
-  // Start this dataset's search score at zero.
   let score = 0;
 
-  // If the query appears in the dataset title, add 5 points.
-  if (d.title.toLowerCase().includes(query)) {
+  if (title.toLowerCase().includes(query)) {
     score += 5;
   }
 
-  // If the query appears in the agency name, add 3 points.
-  if (d.agency.toLowerCase().includes(query)) {
+  if (agency.toLowerCase().includes(query)) {
     score += 3;
   }
 
-  // If the query appears anywhere in the combined text,
-  // add 1 additional point.
-  if (text.includes(query)) {
+  if (searchableText.includes(query)) {
     score += 1;
   }
 
-  // Send the final score back to the code that called this function.
   return score;
 }
 
@@ -199,76 +231,535 @@ function scoreDataset(d, query) {
 function renderAll() {
   renderResults();
   renderFilters();
+  renderActiveFilters();
 }
+
+/* =========================================================
+   DATASET RESULTS
+========================================================= */
 
 function renderResults() {
   const results = getFilteredResults();
-
-  const meta = document.getElementById("resultsMeta");
-  if (meta) meta.innerText = `${results.length} dataset(s)`;
-
   const container = document.getElementById("datasetList");
-  if (!container) return;
+
+  renderResultsCount(results.length);
+
+  if (!container) {
+    return;
+  }
 
   container.innerHTML = "";
 
-  results.forEach(d => {
-    const el = document.createElement("div");
-    el.className = "card";
+  if (results.length === 0) {
+    renderEmptyResults(container);
+    return;
+  }
 
-    el.innerHTML = `
-      <a href="dataset.html?id=${d.id}">
-        <h2>${d.title}</h2>
+  results.forEach(dataset => {
+    const card = createDatasetCard(dataset);
+    container.appendChild(card);
+  });
+}
+
+function renderResultsCount(numberOfResults) {
+  const resultsMeta = document.getElementById(
+    "resultsMeta"
+  );
+
+  if (!resultsMeta) {
+    return;
+  }
+
+  const resultWord =
+    numberOfResults === 1
+      ? "result"
+      : "results";
+
+  resultsMeta.innerHTML = `
+    <strong>${numberOfResults}</strong>
+    ${resultWord}
+  `;
+}
+
+/* =========================================================
+   CREATE DATASET CARD
+========================================================= */
+
+function createDatasetCard(dataset) {
+  const card = document.createElement("article");
+
+  card.className = "catalog-card";
+
+  const datasetURL =
+    `dataset.html?id=${encodeURIComponent(dataset.id)}`;
+
+  const title = escapeHTML(
+    dataset.title || "Untitled dataset"
+  );
+
+  const description = escapeHTML(
+    dataset.description || "No description available."
+  );
+
+  const agency = escapeHTML(
+    dataset.agency || "Agency not specified"
+  );
+
+  const updatedDate = formatDate(dataset.updatedt);
+  const format = getDatasetFormat(dataset);
+  const tags = getDatasetTags(dataset);
+
+  const fieldCount = Array.isArray(dataset.fields)
+    ? dataset.fields.length
+    : null;
+
+  const coverageMarkup = dataset.coverage
+    ? `
+      <div class="metadata-item">
+        <dt>Coverage</dt>
+        <dd>${escapeHTML(dataset.coverage)}</dd>
+      </div>
+    `
+    : "";
+
+  const fieldCountMarkup = fieldCount !== null
+    ? `
+      <div class="metadata-item">
+        <dt>Fields</dt>
+        <dd>${fieldCount}</dd>
+      </div>
+    `
+    : "";
+
+  const formatMarkup = format
+    ? `
+      <div class="metadata-item">
+        <dt>Format</dt>
+        <dd>${escapeHTML(format)}</dd>
+      </div>
+    `
+    : "";
+
+  const tagMarkup = createTagMarkup(tags);
+
+  const actionLinksMarkup =
+    createCatalogActionLinks(dataset);
+
+  card.innerHTML = `
+    <!-- Dataset card header -->
+
+    <header class="catalog-card-header">
+
+      <div
+        class="catalog-dataset-icon"
+        aria-hidden="true"
+      >
+        ▦
+      </div>
+
+      <a
+        class="catalog-card-title"
+        href="${datasetURL}"
+      >
+        ${title}
       </a>
 
-      <p>${d.description}</p>
+      <div class="catalog-card-badges">
 
-      <div class="agency">
-        Agency: ${d.agency}
+        <span class="type-badge">
+          Dataset
+        </span>
+
+        <span class="agency-badge">
+          ${agency}
+        </span>
+
       </div>
 
-      <div class="updatedt">
-        Updated: ${d.updatedt}
+    </header>
+
+    <!-- Dataset card body -->
+
+    <div class="catalog-card-body">
+
+      <div class="catalog-card-description">
+
+        <p>
+          ${description}
+        </p>
+
+        <!-- Explanation of the detail page -->
+
+        <div class="dataset-details-notice">
+
+          <div class="details-notice-text">
+
+            <strong>
+              Dataset detail page
+            </strong>
+
+            <span>
+              View methodology, limitations, field definitions,
+              a data preview, and related resources.
+            </span>
+
+          </div>
+
+          <a
+            class="dataset-details-link"
+            href="${datasetURL}"
+          >
+            Explore dataset
+
+            <span aria-hidden="true">
+              →
+            </span>
+          </a>
+
+        </div>
+
+        <!-- Direct resource links -->
+
+        <div class="catalog-card-actions">
+          ${actionLinksMarkup}
+        </div>
+
       </div>
 
-      <div class="tags">
-      Tags:
-        ${d.tags.map(t => `<span class="tag">${t}</span>`).join(" | ")}
+      <!-- Dataset metadata -->
+
+      <dl class="catalog-card-metadata">
+
+        <div class="metadata-item">
+          <dt>Last updated</dt>
+          <dd>${updatedDate}</dd>
+        </div>
+
+        ${fieldCountMarkup}
+        ${coverageMarkup}
+        ${formatMarkup}
+
+      </dl>
+
+    </div>
+
+    <!-- Dataset tags -->
+
+    <footer class="catalog-card-footer">
+
+      <span class="tags-label">
+        Tags
+      </span>
+
+      <div class="catalog-card-tags">
+        ${tagMarkup}
       </div>
+
+    </footer>
+  `;
+
+  bindCardTagButtons(card);
+
+  return card;
+}
+
+/* =========================================================
+   CATALOG CARD ACTION LINKS
+========================================================= */
+
+function createCatalogActionLinks(dataset) {
+  const dashboardURL =
+    dataset.dashboard?.pageUrl ||
+    dataset.dashboard?.embedUrl;
+
+  const dataDownloadURL = dataset.source?.url;
+  const sourceDataURL = dataset.sourceData?.url;
+
+  const links = [];
+
+  if (dashboardURL) {
+    links.push(`
+      <a
+        class="catalog-action-link dashboard-action"
+        href="${escapeHTML(dashboardURL)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Dashboard
+
+        <span aria-hidden="true">
+          ↗
+        </span>
+      </a>
+    `);
+  }
+
+  if (dataDownloadURL) {
+    links.push(`
+      <a
+        class="catalog-action-link download-action"
+        href="${escapeHTML(dataDownloadURL)}"
+        download
+      >
+        <span aria-hidden="true">
+          ↓
+        </span>
+
+        Download Data
+      </a>
+    `);
+  }
+
+  if (sourceDataURL) {
+    links.push(`
+      <a
+        class="catalog-action-link source-action"
+        href="${escapeHTML(sourceDataURL)}"
+        download
+      >
+        <span aria-hidden="true">
+          ↓
+        </span>
+
+        Source Data
+      </a>
+    `);
+  }
+
+  return links.join("");
+}
+
+/* =========================================================
+   TAG MARKUP
+========================================================= */
+
+function createTagMarkup(tags) {
+  if (!tags.length) {
+    return `
+      <span class="no-tags">
+        No tags available
+      </span>
     `;
+  }
 
-    container.appendChild(el);
+  return tags
+    .map(tag => {
+      return `
+        <button
+          type="button"
+          class="dataset-tag"
+          data-tag="${escapeHTML(tag)}"
+          aria-label="Filter by ${escapeHTML(tag)}"
+        >
+          ${escapeHTML(tag)}
+        </button>
+      `;
+    })
+    .join("");
+}
+
+function bindCardTagButtons(card) {
+  const tagButtons = card.querySelectorAll(
+    ".dataset-tag"
+  );
+
+  tagButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      setTag(button.dataset.tag);
+    });
   });
 }
 
 /* =========================================================
-   FILTER RENDERING
+   ACTIVE FILTER PILLS
+========================================================= */
+
+function renderActiveFilters() {
+  const container = document.getElementById(
+    "activeFilters"
+  );
+
+  const clearResultsLink = document.getElementById(
+    "clear-all-results"
+  );
+
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = "";
+
+  const activeFilters = [];
+
+  if (state.agency) {
+    activeFilters.push({
+      type: "agency",
+      label: `Agency: ${state.agency}`
+    });
+  }
+
+  if (state.tag) {
+    activeFilters.push({
+      type: "tag",
+      label: `Tag: ${state.tag}`
+    });
+  }
+
+  if (state.search) {
+    activeFilters.push({
+      type: "search",
+      label: `Search: ${state.search}`
+    });
+  }
+
+  activeFilters.forEach(filter => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "active-filter-pill";
+
+    button.innerHTML = `
+      <span>
+        ${escapeHTML(filter.label)}
+      </span>
+
+      <span
+        class="remove-filter-icon"
+        aria-hidden="true"
+      >
+        ×
+      </span>
+    `;
+
+    button.setAttribute(
+      "aria-label",
+      `Remove ${filter.label} filter`
+    );
+
+    button.addEventListener("click", () => {
+      removeActiveFilter(filter.type);
+    });
+
+    container.appendChild(button);
+  });
+
+  if (clearResultsLink) {
+    clearResultsLink.hidden =
+      activeFilters.length === 0;
+  }
+}
+
+function removeActiveFilter(filterType) {
+  if (filterType === "agency") {
+    state.agency = null;
+  }
+
+  if (filterType === "tag") {
+    state.tag = null;
+  }
+
+  if (filterType === "search") {
+    state.search = "";
+
+    const searchInput = document.getElementById(
+      "search"
+    );
+
+    if (searchInput) {
+      searchInput.value = "";
+    }
+  }
+
+  renderAll();
+}
+
+/* =========================================================
+   SIDEBAR FILTERS
 ========================================================= */
 
 function renderFilters() {
-  const agencies = [...new Set(datasets.map(d => d.agency))];
-  const tags = [...new Set(datasets.flatMap(d => d.tags))];
+  const agencies = [
+    ...new Set(
+      datasets
+        .map(dataset => dataset.agency)
+        .filter(Boolean)
+    )
+  ].sort();
 
-  renderFilterGroup("agencyFilters", agencies, state.agency, setAgency);
-  renderFilterGroup("tagFilters", tags, state.tag, setTag);
+  const tags = [
+    ...new Set(
+      datasets.flatMap(dataset => {
+        return getDatasetTags(dataset);
+      })
+    )
+  ].sort();
+
+  renderFilterGroup(
+    "agencyFilters",
+    agencies,
+    state.agency,
+    setAgency
+  );
+
+  renderFilterGroup(
+    "tagFilters",
+    tags,
+    state.tag,
+    setTag
+  );
 }
 
-function renderFilterGroup(containerId, items, activeValue, handler) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+function renderFilterGroup(
+  containerId,
+  items,
+  activeValue,
+  handler
+) {
+  const container = document.getElementById(
+    containerId
+  );
 
-  container.innerHTML = items.map(item => `
-    <div class="filter-item ${activeValue === item ? "active" : ""}"
-         data-value="${item}">
-      ${item}
-    </div>
-  `).join("");
+  if (!container) {
+    return;
+  }
 
-  // event delegation (cleaner than inline onclick)
-  container.querySelectorAll(".filter-item").forEach(el => {
-    el.addEventListener("click", () => {
-      handler(el.dataset.value);
+  container.innerHTML = "";
+
+  items.forEach(item => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "filter-item";
+    button.dataset.value = item;
+
+    button.innerHTML = `
+      <span
+        class="filter-circle"
+        aria-hidden="true"
+      ></span>
+
+      <span class="filter-item-label">
+        ${escapeHTML(item)}
+      </span>
+    `;
+
+    const isActive = activeValue === item;
+
+    button.classList.toggle(
+      "active",
+      isActive
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(isActive)
+    );
+
+    button.addEventListener("click", () => {
+      handler(item);
     });
+
+    container.appendChild(button);
   });
 }
 
@@ -277,17 +768,163 @@ function renderFilterGroup(containerId, items, activeValue, handler) {
 ========================================================= */
 
 function setAgency(value) {
-  state.agency = (state.agency === value) ? null : value;
+  state.agency =
+    state.agency === value
+      ? null
+      : value;
+
   renderAll();
 }
 
 function setTag(value) {
-  state.tag = (state.tag === value) ? null : value;
+  state.tag =
+    state.tag === value
+      ? null
+      : value;
+
   renderAll();
 }
 
 /* =========================================================
-   INITIAL RENDER
+   DATASET HELPERS
 ========================================================= */
 
-renderAll();
+function getDatasetTags(dataset) {
+  return Array.isArray(dataset.tags)
+    ? dataset.tags
+    : [];
+}
+
+function getDatasetFormat(dataset) {
+  if (dataset.format) {
+    return String(dataset.format).toUpperCase();
+  }
+
+  if (dataset.source?.type) {
+    return String(
+      dataset.source.type
+    ).toUpperCase();
+  }
+
+  if (dataset.source?.format) {
+    return String(
+      dataset.source.format
+    ).toUpperCase();
+  }
+
+  return "";
+}
+
+/* =========================================================
+   DATE FORMATTING
+========================================================= */
+
+function formatDate(dateValue) {
+  if (!dateValue) {
+    return "Not specified";
+  }
+
+  const originalValue = String(dateValue);
+
+  const normalizedValue =
+    /^\d{4}-\d{2}-\d{2}$/.test(originalValue)
+      ? `${originalValue}T00:00:00`
+      : originalValue;
+
+  const date = new Date(normalizedValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return escapeHTML(originalValue);
+  }
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
+
+/* =========================================================
+   EMPTY RESULTS
+========================================================= */
+
+function renderEmptyResults(container) {
+  container.innerHTML = `
+    <div class="empty-results">
+
+      <h3>No datasets found</h3>
+
+      <p>
+        Try changing your search or clearing
+        the selected filters.
+      </p>
+
+      <button
+        type="button"
+        class="empty-clear-button"
+      >
+        Clear all filters
+      </button>
+
+    </div>
+  `;
+
+  const clearButton = container.querySelector(
+    ".empty-clear-button"
+  );
+
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      resetState();
+      renderAll();
+    });
+  }
+}
+
+/* =========================================================
+   LOAD ERROR
+========================================================= */
+
+function renderLoadError() {
+  const resultsMeta = document.getElementById(
+    "resultsMeta"
+  );
+
+  const container = document.getElementById(
+    "datasetList"
+  );
+
+  if (resultsMeta) {
+    resultsMeta.textContent =
+      "Datasets could not be loaded";
+  }
+
+  if (container) {
+    container.innerHTML = `
+      <div class="empty-results error-message">
+
+        <h3>
+          Unable to load the data catalog
+        </h3>
+
+        <p>
+          Please refresh the page and try again.
+        </p>
+
+      </div>
+    `;
+  }
+}
+
+/* =========================================================
+   HTML SAFETY
+========================================================= */
+
+function escapeHTML(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}

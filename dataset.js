@@ -34,13 +34,19 @@ async function loadDataset(id) {
       loadPreview(dataset.source.url);
     }
   } catch (error) {
-    console.error("Unable to load the dataset:", error);
+    console.error(
+      "Unable to load the dataset:",
+      error
+    );
+
     renderLoadError();
   }
 }
 
 async function fetchDatasets() {
-  const response = await fetch("./data/datasets.json");
+  const response = await fetch(
+    "./data/datasets.json"
+  );
 
   if (!response.ok) {
     throw new Error(
@@ -84,37 +90,63 @@ function renderDataset(dataset) {
   setMetadata(
     "updatedt",
     "Updated:",
-    dataset.updatedt
+    formatDate(dataset.updatedt)
   );
 
-  configureDownloadLink(dataset.source?.url);
+  // Processed CANY dataset download
+  configureDownloadLink(
+    dataset.source?.url
+  );
+
+  // CANY dashboard
+  configureDashboardLink(
+    dataset.dashboard?.pageUrl ||
+    dataset.dashboard?.embedUrl
+  );
+
+  // Original source-data ZIP archive
+  configureSourceDataLink(
+    dataset.sourceData?.url
+  );
+
   renderFieldsTable(dataset.fields);
 
-  renderRelatedContent(
-    dataset.dashboard,
-    dataset.relatedlinks
-  );
+  // Dashboard is no longer passed into Related Content.
+  renderRelatedContent(dataset.relatedlinks);
 }
 
 /* =========================================================
    DATASET METADATA
 ========================================================= */
 
-function setMetadata(elementId, label, value) {
-  const element = document.getElementById(elementId);
+function setMetadata(
+  elementId,
+  label,
+  value
+) {
+  const element =
+    document.getElementById(elementId);
 
-  if (!element) return;
+  if (!element) {
+    return;
+  }
 
   element.replaceChildren();
 
-  if (!value) return;
+  if (!value) {
+    return;
+  }
 
-  const paragraph = document.createElement("p");
-  const labelElement = document.createElement("strong");
+  const paragraph =
+    document.createElement("p");
+
+  const labelElement =
+    document.createElement("strong");
 
   labelElement.textContent = `${label} `;
 
   paragraph.appendChild(labelElement);
+
   paragraph.appendChild(
     document.createTextNode(value)
   );
@@ -123,23 +155,69 @@ function setMetadata(elementId, label, value) {
 }
 
 /* =========================================================
-   DOWNLOAD LINK
+   PROCESSED DATA DOWNLOAD
 ========================================================= */
 
 function configureDownloadLink(url) {
   const downloadLink =
     document.getElementById("download");
 
-  if (!downloadLink) return;
+  configureOptionalLink(
+    downloadLink,
+    url
+  );
+}
 
-  if (!url) {
-    downloadLink.hidden = true;
-    downloadLink.removeAttribute("href");
+/* =========================================================
+   DASHBOARD LINK
+========================================================= */
+
+function configureDashboardLink(url) {
+  const dashboardLink =
+    document.getElementById("dashboard-link");
+
+  configureOptionalLink(
+    dashboardLink,
+    url
+  );
+}
+
+/* =========================================================
+   SOURCE DATA DOWNLOAD
+========================================================= */
+
+function configureSourceDataLink(url) {
+  const sourceDataLink =
+    document.getElementById(
+      "source-data-download"
+    );
+
+  configureOptionalLink(
+    sourceDataLink,
+    url
+  );
+}
+
+/* =========================================================
+   OPTIONAL LINK HELPER
+========================================================= */
+
+function configureOptionalLink(
+  link,
+  url
+) {
+  if (!link) {
     return;
   }
 
-  downloadLink.href = url;
-  downloadLink.hidden = false;
+  if (!url) {
+    link.hidden = true;
+    link.removeAttribute("href");
+    return;
+  }
+
+  link.href = url;
+  link.hidden = false;
 }
 
 /* =========================================================
@@ -151,13 +229,20 @@ function renderNotFound(id) {
     ".dataset-page .container"
   );
 
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   container.replaceChildren();
 
-  const heading = document.createElement("h1");
-  const message = document.createElement("p");
-  const backLink = document.createElement("a");
+  const heading =
+    document.createElement("h1");
+
+  const message =
+    document.createElement("p");
+
+  const backLink =
+    document.createElement("a");
 
   heading.textContent = "Dataset not found";
 
@@ -179,15 +264,23 @@ function renderLoadError() {
     ".dataset-page .container"
   );
 
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   container.replaceChildren();
 
-  const heading = document.createElement("h1");
-  const message = document.createElement("p");
-  const backLink = document.createElement("a");
+  const heading =
+    document.createElement("h1");
 
-  heading.textContent = "Unable to load dataset";
+  const message =
+    document.createElement("p");
+
+  const backLink =
+    document.createElement("a");
+
+  heading.textContent =
+    "Unable to load dataset";
 
   message.textContent =
     "The dataset information could not be loaded. Please try again.";
@@ -206,14 +299,20 @@ function renderLoadError() {
 ========================================================= */
 
 function renderFieldsTable(fields = []) {
-  const table = document.getElementById("fields");
+  const table =
+    document.getElementById("fields");
 
-  if (!table) return;
+  if (!table) {
+    return;
+  }
 
   table.replaceChildren();
 
-  const tableHead = document.createElement("thead");
-  const headingRow = document.createElement("tr");
+  const tableHead =
+    document.createElement("thead");
+
+  const headingRow =
+    document.createElement("tr");
 
   const headings = [
     "Field name",
@@ -234,13 +333,18 @@ function renderFieldsTable(fields = []) {
   tableHead.appendChild(headingRow);
   table.appendChild(tableHead);
 
-  const tableBody = document.createElement("tbody");
+  const tableBody =
+    document.createElement("tbody");
 
-  if (!fields.length) {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
+  if (!Array.isArray(fields) || !fields.length) {
+    const row =
+      document.createElement("tr");
+
+    const cell =
+      document.createElement("td");
 
     cell.colSpan = headings.length;
+
     cell.textContent =
       "No field definitions are available.";
 
@@ -248,11 +352,24 @@ function renderFieldsTable(fields = []) {
     tableBody.appendChild(row);
   } else {
     fields.forEach(field => {
-      const row = document.createElement("tr");
+      const row =
+        document.createElement("tr");
 
-      appendTableCell(row, field.name);
-      appendTableCell(row, field.label);
-      appendTableCell(row, field.type);
+      appendTableCell(
+        row,
+        field.name
+      );
+
+      appendTableCell(
+        row,
+        field.description ||
+        field.label
+      );
+
+      appendTableCell(
+        row,
+        field.type
+      );
 
       tableBody.appendChild(row);
     });
@@ -261,10 +378,15 @@ function renderFieldsTable(fields = []) {
   table.appendChild(tableBody);
 }
 
-function appendTableCell(row, value) {
-  const cell = document.createElement("td");
+function appendTableCell(
+  row,
+  value
+) {
+  const cell =
+    document.createElement("td");
 
   cell.textContent = value ?? "";
+
   row.appendChild(cell);
 }
 
@@ -272,42 +394,22 @@ function appendTableCell(row, value) {
    RELATED CONTENT
 ========================================================= */
 
-function renderRelatedContent(
-  dashboard,
-  relatedLinks
-) {
+function renderRelatedContent(relatedLinks) {
   const container =
     document.getElementById("relatedlinks");
 
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   container.replaceChildren();
 
-  const list = document.createElement("ul");
+  const items =
+    normalizeRelatedLinks(relatedLinks);
 
-  list.className = "related-links-list";
-
-  renderDashboardListItem(list, dashboard);
-
-  const items = normalizeRelatedLinks(relatedLinks);
-
-  items.forEach(item => {
-    const listItem = document.createElement("li");
-
-    if (
-      typeof item === "object" &&
-      item !== null
-    ) {
-      renderRelatedLinkObject(listItem, item);
-    } else {
-      listItem.textContent = String(item);
-    }
-
-    list.appendChild(listItem);
-  });
-
-  if (!list.children.length) {
-    const message = document.createElement("p");
+  if (!items.length) {
+    const message =
+      document.createElement("p");
 
     message.textContent =
       "No related content is available.";
@@ -316,33 +418,32 @@ function renderRelatedContent(
     return;
   }
 
+  const list =
+    document.createElement("ul");
+
+  list.className = "related-links-list";
+
+  items.forEach(item => {
+    const listItem =
+      document.createElement("li");
+
+    if (
+      typeof item === "object" &&
+      item !== null
+    ) {
+      renderRelatedLinkObject(
+        listItem,
+        item
+      );
+    } else {
+      listItem.textContent =
+        String(item);
+    }
+
+    list.appendChild(listItem);
+  });
+
   container.appendChild(list);
-}
-
-/* =========================================================
-   DASHBOARD LIST ITEM
-========================================================= */
-
-function renderDashboardListItem(list, dashboard) {
-  const dashboardUrl =
-    dashboard?.pageUrl || dashboard?.embedUrl;
-
-  if (!dashboardUrl) return;
-
-  const listItem = document.createElement("li");
-  const link = document.createElement("a");
-
-  link.href = dashboardUrl;
-
-  link.textContent =
-    dashboard.title || "Dashboard";
-
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.className = "dashboard-list-link";
-
-  listItem.appendChild(link);
-  list.appendChild(listItem);
 }
 
 /* =========================================================
@@ -377,7 +478,10 @@ function normalizeRelatedLinks(relatedLinks) {
    RELATED LINK OBJECTS
 ========================================================= */
 
-function renderRelatedLinkObject(listItem, item) {
+function renderRelatedLinkObject(
+  listItem,
+  item
+) {
   const label =
     item.title ||
     item.label ||
@@ -385,11 +489,14 @@ function renderRelatedLinkObject(listItem, item) {
     item.url;
 
   if (!item.url) {
-    listItem.textContent = label || "";
+    listItem.textContent =
+      label || "";
+
     return;
   }
 
-  const anchor = document.createElement("a");
+  const anchor =
+    document.createElement("a");
 
   anchor.href = item.url;
 
@@ -418,11 +525,15 @@ async function loadPreview(url) {
   const previewTable =
     document.getElementById("preview");
 
-  if (!previewTable) return;
+  if (!previewTable) {
+    return;
+  }
 
   try {
     const text = await fetchText(url);
-    const cleanedText = cleanText(text);
+
+    const cleanedText =
+      cleanText(text);
 
     if (!cleanedText) {
       renderPreviewMessage(
@@ -436,7 +547,10 @@ async function loadPreview(url) {
       detectDelimiter(cleanedText);
 
     const rows =
-      parseDelimited(cleanedText, delimiter);
+      parseDelimited(
+        cleanedText,
+        delimiter
+      );
 
     renderPreviewTable(rows);
   } catch (error) {
@@ -483,7 +597,8 @@ function cleanText(text) {
 ========================================================= */
 
 function detectDelimiter(text) {
-  const firstLine = text.split("\n")[0];
+  const firstLine =
+    text.split("\n")[0];
 
   const delimiterCounts = {
     "|": countOccurrences(firstLine, "|"),
@@ -493,7 +608,10 @@ function detectDelimiter(text) {
 
   return Object.entries(delimiterCounts)
     .reduce(
-      (bestDelimiter, currentDelimiter) => {
+      (
+        bestDelimiter,
+        currentDelimiter
+      ) => {
         return currentDelimiter[1] >
           bestDelimiter[1]
           ? currentDelimiter
@@ -502,7 +620,10 @@ function detectDelimiter(text) {
     )[0];
 }
 
-function countOccurrences(text, character) {
+function countOccurrences(
+  text,
+  character
+) {
   return text.split(character).length - 1;
 }
 
@@ -510,11 +631,17 @@ function countOccurrences(text, character) {
    DELIMITED TEXT PARSING
 ========================================================= */
 
-function parseDelimited(text, delimiter) {
+function parseDelimited(
+  text,
+  delimiter
+) {
   return text
     .split("\n")
     .map(row => {
-      return parseDelimitedRow(row, delimiter);
+      return parseDelimitedRow(
+        row,
+        delimiter
+      );
     })
     .filter(row => {
       return row.some(cell => {
@@ -523,7 +650,10 @@ function parseDelimited(text, delimiter) {
     });
 }
 
-function parseDelimitedRow(row, delimiter) {
+function parseDelimitedRow(
+  row,
+  delimiter
+) {
   const cells = [];
 
   let currentCell = "";
@@ -534,8 +664,11 @@ function parseDelimitedRow(row, delimiter) {
     index < row.length;
     index += 1
   ) {
-    const character = row[index];
-    const nextCharacter = row[index + 1];
+    const character =
+      row[index];
+
+    const nextCharacter =
+      row[index + 1];
 
     if (
       character === "\"" &&
@@ -556,15 +689,21 @@ function parseDelimitedRow(row, delimiter) {
       character === delimiter &&
       !insideQuotes
     ) {
-      cells.push(currentCell.trim());
+      cells.push(
+        currentCell.trim()
+      );
+
       currentCell = "";
+
       continue;
     }
 
     currentCell += character;
   }
 
-  cells.push(currentCell.trim());
+  cells.push(
+    currentCell.trim()
+  );
 
   return cells;
 }
@@ -574,9 +713,12 @@ function parseDelimitedRow(row, delimiter) {
 ========================================================= */
 
 function renderPreviewTable(rows) {
-  const table = document.getElementById("preview");
+  const table =
+    document.getElementById("preview");
 
-  if (!table) return;
+  if (!table) {
+    return;
+  }
 
   table.replaceChildren();
 
@@ -588,7 +730,8 @@ function renderPreviewTable(rows) {
     return;
   }
 
-  const previewRows = rows.slice(0, 10);
+  const previewRows =
+    rows.slice(0, 10);
 
   const tableHead =
     document.createElement("thead");
@@ -596,47 +739,58 @@ function renderPreviewTable(rows) {
   const tableBody =
     document.createElement("tbody");
 
-  previewRows.forEach((row, rowIndex) => {
-    const tableRow =
-      document.createElement("tr");
+  previewRows.forEach(
+    (row, rowIndex) => {
+      const tableRow =
+        document.createElement("tr");
 
-    row.forEach(cellValue => {
-      const cell = document.createElement(
-        rowIndex === 0 ? "th" : "td"
-      );
+      row.forEach(cellValue => {
+        const cell =
+          document.createElement(
+            rowIndex === 0
+              ? "th"
+              : "td"
+          );
 
-      cell.textContent = cellValue;
+        cell.textContent = cellValue;
+
+        if (rowIndex === 0) {
+          cell.scope = "col";
+        }
+
+        tableRow.appendChild(cell);
+      });
 
       if (rowIndex === 0) {
-        cell.scope = "col";
+        tableHead.appendChild(tableRow);
+      } else {
+        tableBody.appendChild(tableRow);
       }
-
-      tableRow.appendChild(cell);
-    });
-
-    if (rowIndex === 0) {
-      tableHead.appendChild(tableRow);
-    } else {
-      tableBody.appendChild(tableRow);
     }
-  });
+  );
 
   table.appendChild(tableHead);
   table.appendChild(tableBody);
 }
 
 function renderPreviewMessage(message) {
-  const table = document.getElementById("preview");
+  const table =
+    document.getElementById("preview");
 
-  if (!table) return;
+  if (!table) {
+    return;
+  }
 
   table.replaceChildren();
 
   const tableBody =
     document.createElement("tbody");
 
-  const row = document.createElement("tr");
-  const cell = document.createElement("td");
+  const row =
+    document.createElement("tr");
+
+  const cell =
+    document.createElement("td");
 
   cell.textContent = message;
 
@@ -654,18 +808,24 @@ function bindDatasetTabs() {
     ".dataset-tabs .tab"
   );
 
-  const tabContents = document.querySelectorAll(
-    ".tab-content"
-  );
+  const tabContents =
+    document.querySelectorAll(
+      ".tab-content"
+    );
 
   tabs.forEach(tab => {
     tab.addEventListener("click", () => {
-      const selectedTabId = tab.dataset.tab;
+      const selectedTabId =
+        tab.dataset.tab;
 
       const selectedContent =
-        document.getElementById(selectedTabId);
+        document.getElementById(
+          selectedTabId
+        );
 
-      if (!selectedContent) return;
+      if (!selectedContent) {
+        return;
+      }
 
       tabs.forEach(currentTab => {
         const isSelected =
@@ -710,7 +870,10 @@ function initializeTabAccessibility(
     const isActive =
       tab.classList.contains("active");
 
-    tab.setAttribute("role", "tab");
+    tab.setAttribute(
+      "role",
+      "tab"
+    );
 
     tab.setAttribute(
       "aria-selected",
@@ -732,13 +895,51 @@ function initializeTabAccessibility(
 }
 
 /* =========================================================
+   DATE FORMATTING
+========================================================= */
+
+function formatDate(dateValue) {
+  if (!dateValue) {
+    return "";
+  }
+
+  const originalValue =
+    String(dateValue);
+
+  const normalizedValue =
+    /^\d{4}-\d{2}-\d{2}$/.test(
+      originalValue
+    )
+      ? `${originalValue}T00:00:00`
+      : originalValue;
+
+  const date =
+    new Date(normalizedValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return originalValue;
+  }
+
+  return date.toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }
+  );
+}
+
+/* =========================================================
    SMALL UTILITIES
 ========================================================= */
 
 function setText(id, value) {
-  const element = document.getElementById(id);
+  const element =
+    document.getElementById(id);
 
   if (element) {
-    element.textContent = value ?? "";
+    element.textContent =
+      value ?? "";
   }
 }
