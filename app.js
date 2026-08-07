@@ -211,12 +211,15 @@ function scoreDataset(dataset, query) {
     return 1;
   }
 
+  //NEXT: this is where to add the multiple panels / cards?
   const title = String(dataset.title || "");
   const agency = String(dataset.agency || "");
   const description = String(dataset.description || "");
   const context = String(
     dataset.contextstatement || ""
   );
+
+  //Handles missing tags
   const tags = getDatasetTags(dataset).join(" ");
 
   const searchableText = `
@@ -225,6 +228,7 @@ function scoreDataset(dataset, query) {
     ${description}
     ${context}
     ${tags}
+    //NEXT: universalTags?
   `.toLowerCase();
 
   let score = 0;
@@ -706,6 +710,12 @@ function renderFilters() {
     )
   ].sort();
 
+const units = [...new Set(datasets.map(d => d.unit).filter(Boolean))].sort();
+const universalTags = [...new Set(datasets.flatMap(d => d.universalTags || []))].sort();
+
+renderFilterGroup("unitFilters", units, state.unit, setUnit);
+renderFilterGroup("universalTagFilters", universalTags, state.universalTag, setUniversalTag);
+
   const tags = [
     ...new Set(
       datasets.flatMap(dataset => {
@@ -735,9 +745,11 @@ function renderFilterGroup(
   activeValue,
   handler
 ) {
-  const container = document.getElementById(
-    containerId
-  );
+  const isActive = (item) => Array.isArray(activeValue)
+  ? activeValue.includes(item)
+  : activeValue === item;
+
+  const container = document.getElementById(containerId);
 
   if (!container) {
     return;
@@ -763,16 +775,14 @@ function renderFilterGroup(
       </span>
     `;
 
-    const isActive = activeValue === item;
-
     button.classList.toggle(
       "active",
-      isActive
+      isActive(item)
     );
 
     button.setAttribute(
       "aria-pressed",
-      String(isActive)
+      String(isActive(item))
     );
 
     button.addEventListener("click", () => {
