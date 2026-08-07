@@ -4,10 +4,13 @@
 
 let datasets = [];
 
+/*multi select filters*/
 const state = {
   search: "",
   agency: null,
-  tag: null
+  unit: null,
+  tag: [],
+  universalTag: []
 };
 
 /* =========================================================
@@ -130,7 +133,9 @@ function bindMobileFilterToggle() {
 function resetState() {
   state.search = "";
   state.agency = null;
-  state.tag = null;
+  state.tag = [];
+  state.universalTag = [];
+  state.unit = null;
 
   const searchInput = document.getElementById("search");
 
@@ -163,6 +168,21 @@ function getFilteredResults() {
       }
 
       return true;
+      if (
+            state.unit && dataset.unit !== state.unit
+        ) 
+            return false;
+    if (
+        state.tag.length > 0 && !state.tag.every(t => getDatasetTags(dataset).includes(t))
+        ) {
+        return false;
+        }
+    if (
+        state.universalTag.length > 0 && !state.universalTag.every(t => (dataset.universalTags || []).includes(t))
+    ) {
+        return false;
+}
+
     })
 
     // Add a search score.
