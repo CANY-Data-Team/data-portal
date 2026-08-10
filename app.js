@@ -492,6 +492,8 @@ function createDatasetCard(dataset) {
 ========================================================= */
 
 function createCatalogActionLinks(dataset) {
+//checking if dashboard url exists
+
   const dashboardURL =
     dataset.dashboard?.pageUrl ||
     dataset.dashboard?.embedUrl;
