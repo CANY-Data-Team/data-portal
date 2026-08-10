@@ -622,12 +622,28 @@ function renderActiveFilters() {
     });
   }
 
-  if (state.tag) {
-    activeFilters.push({
-      type: "tag",
-      label: `Tag: ${state.tag}`
-    });
-  }
+  state.tag.forEach(t => {
+  activeFilters.push({
+    type: "tag",
+    value: t,
+    label: `Tag: ${t}`
+  });
+});
+
+state.universalTag.forEach(t => {
+  activeFilters.push({
+    type: "universalTag",
+    value: t,
+    label: `Universal Tag: ${t}`
+  });
+});
+
+if (state.unit) {
+  activeFilters.push({
+    type: "unit",
+    label: `Unit: ${state.unit}`
+  });
+}
 
   if (state.search) {
     activeFilters.push({
@@ -661,7 +677,7 @@ function renderActiveFilters() {
     );
 
     button.addEventListener("click", () => {
-      removeActiveFilter(filter.type);
+      removeActiveFilter(filter.type, filter.value);
     });
 
     container.appendChild(button);
@@ -673,13 +689,21 @@ function renderActiveFilters() {
   }
 }
 
-function removeActiveFilter(filterType) {
+function removeActiveFilter(filterType, value) {
   if (filterType === "agency") {
     state.agency = null;
   }
 
   if (filterType === "tag") {
-    state.tag = null;
+    state.tag = state.tag.filter(t => t !== value);
+  }
+
+  if (filterType === "universalTag") {
+    state.universalTag = state.universalTag.filter(t => t !== value);
+  }
+
+  if (filterType === "unit") {
+    state.unit = null;
   }
 
   if (filterType === "search") {
@@ -713,6 +737,26 @@ function renderFilters() {
 const units = [...new Set(datasets.map(d => d.unit).filter(Boolean))].sort();
 const universalTags = [...new Set(datasets.flatMap(d => d.universalTags || []))].sort();
 
+function setUnit(value) {
+  state.unit = (state.unit === value) ? null : value;
+  renderAll();
+}
+
+function setTag(value) {
+  state.tag = state.tag.includes(value)
+    ? state.tag.filter(t => t !== value)
+    : [...state.tag, value];
+  renderAll();
+}
+
+function setUniversalTag(value) {
+  state.universalTag = state.universalTag.includes(value)
+    ? state.universalTag.filter(t => t !== value)
+    : [...state.universalTag, value];
+  renderAll();
+}
+
+//NEXT: add <div id="unitFilters"> and <div id="universalTagFilters"> to sidebar in index.html
 renderFilterGroup("unitFilters", units, state.unit, setUnit);
 renderFilterGroup("universalTagFilters", universalTags, state.universalTag, setUniversalTag);
 
