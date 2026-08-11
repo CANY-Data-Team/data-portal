@@ -7,7 +7,33 @@
     "howitsgenerated": "This data is derived from DOCCS’ incarcerated individual movement system, which the agency employs for operational purposes, including transfers.CANY obtains the data through a monthly data-sharing agreement with DOCCS. ",
     "limitations": "Because this dataset consists of snapshot data, rows representing the same individuals will be repeated from month to month. The data does not include individuals who are adjudicated as youth or individuals who are housed in DOCCS facilities as incarcerated parolees.",
     "whypublish": "By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many people are incarcerated in the state? Where are they incarcerated? What are the characteristics of the individuals who are incarcerated? What charges were they convicted of? And how have these answers changed over time?",
-    "relatedlinks": "    - DOCCS Under Custody Profile: A monthly report on the under custody population by facility, disaggregated by characteristics such as age, religious affiliation, and education level. \n    - DOCCS Open Data NY Data Portal: Annual data on DOCCS admissions, releases, recidivism, and the under custody population from 2008 onwards, published in a downloadable format. \n    - CANY Prison Map: An interactive map of operational and recently closed prisons in New York State, with information on each facility including population, capacity, and staff vacancy rates. \n    - CANY Distance Analysis: An analysis of distance between incarcerated people’s facilities and commitment counties using under custody data. \n    - Data Collaborative for Justice: Trends in the New York State Prison Population: An analysis of the DOCCS under custody population between 2008 and 2023, including trends by latest admission type, commitment county, and demographic categories.",
+      "relatedlinks": [
+      {
+        "title": "DOCCS Under Custody Profile",
+        "description": "A monthly report on the under custody population by facility, disaggregated by characteristics such as age, religious affiliation, and education level.",
+        "url": ""
+      },
+      {
+        "title": "DOCCS Open Data NY Data Portal",
+        "description": "Annual data on DOCCS admissions, releases, recidivism, and the under custody population from 2008 onwards, published in a downloadable format.",
+        "url": ""
+      },
+      {
+        "title": "CANY Prison Map",
+        "description": "An interactive map of operational and recently closed prisons in New York State, with information on each facility including population, capacity, and staff vacancy rates.",
+        "url": ""
+      },
+      {
+        "title": "CANY Distance Analysis",
+        "description": "An analysis of distance between incarcerated people’s facilities and commitment counties using under custody data.",
+        "url": ""
+      },
+      {
+        "title": "Data Collaborative for Justice",
+        "description": "Trends in the New York State Prison Population: An analysis of the DOCCS under custody population between 2008 and 2023, including trends by latest admission type, commitment county, and demographic categories.",
+        "url": ""
+      }
+    ],
     "agency": "DOCCS",
     "unit": "Individual",
     "tags": [
@@ -146,12 +172,38 @@
   {
     "id": "omh-self-harm",
     "title": "OMH Self-Harm",
-    "description": "Data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm, suicide attempts, and deaths from suicide.",
+    "description": "Data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm with monthly data starting in 2020 and annual starting in 2014.",
     "whatsincluded": "The dashboard below includes statistical data compiled by the Office of Mental Health (OMH) regarding incidents of self-harm, suicide attempts, and deaths from suicide. OMH defines self-harm as 'self-injurious behavior with a nonfatal outcome with no evidence (either explicit or implicit) that the person intended to die.' OMH defines suicide attempt as 'self-injurious behavior with a nonfatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die, which may require medical and/or security intervention to reduce likelihood of death or serious injury.' Lastly, OMH defies suicide as 'self-injurious behavior with a fatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die.'\nData on self-harm is monthly starting in 2020, data on suicide attempts is monthly starting from January 2014, and data on suicides is annual starting in 2014.",
     "howitsgenerated": "OMH classifies incidents based on clinical assessment and review of documentation from both OMH and the Department of Corrections and Community Supervision (DOCCS). In some cases, OMH consults with the Central New York Psychiatric Center (CNYPC) Suicide Prevention Department. Final classifications are reviewed and compiled by the OMH Suicide Prevention Workgroup (SPWG).",
     "limitations": "OMH and DOCCS maintain separate classification systems for self-injury, the numbers shown here are from OMH. Although DOCCS may defer to OMH’s clinical determinations in some cases, it does not revise Unusual Incident Repoorts (UIRs) to reflect those reclassifications, resulting in discrepancies in the number of incidents between the two data sources. For suicides, OMH and DOCCS classifications typically align.",
     "whypublish": "By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many instances of self-harm, suicide attempts, and completed suicides occurred across New York State prisons? What facilities did these incidents take place in? Which methods were used? And how have these answers changed over time?",
-    "relatedlinks": "    - New York State Office of Mental Health – 988 Suicide and Crisis Lifeline Report (2023–2024):  Documents a rise in crisis call volume and mobile crisis referrals, reflecting increased demands for suicide prevention and emergency mental health response across NYS. Incarcerated individuals may be able to access this lifeline, depending on facility policy. \n    - New York State Office of Mental Health – 2024 Suicide Prevention Report : Outlines targeted initiatives to reduce suicide risk among high-need populations, including expanded crisis infrastructure and clinical training efforts within and beyond carceral settings \n    - NYS Attorney General’s Office of Special Investigation (OSI) Annual Reports: Annual reports on the OSI’s investigations into deaths potentially caused by police officers and corrections officers. Data tables accompanying the reports, which include data on deaths by suicide, are available here. \n    - Correctional Association of New York – Unusual Incident Reports Dashboard: presents data reported by DOCCS on a range of incidents in NYS prisons, including violence, self-injury, and other events that may reflect mental health concerns. Note that this data does not necessarily reflect the same number of incidents of self-harm reported by OMH. \n    - New York State Department of Corrections and Community Supervision – 2023 Annual Mortality Report: Provides data on deaths in custody by cause and facility, with classifications based on preliminary autopsy findings ",
+     "relatedlinks": [
+      {
+        "title": "New York State Office of Mental Health – 988 Suicide and Crisis Lifeline Report (2023–2024)",
+        "description": "Documents a rise in crisis call volume and mobile crisis referrals, reflecting increased demands for suicide prevention and emergency mental health response across NYS. Incarcerated individuals may be able to access this lifeline, depending on facility policy.",
+        "url": ""
+      },
+      {
+        "title": "New York State Office of Mental Health – 2024 Suicide Prevention Report",
+        "description": "Outlines targeted initiatives to reduce suicide risk among high-need populations, including expanded crisis infrastructure and clinical training efforts within and beyond carceral settings",
+        "url": ""
+      },
+      {
+        "title": "NYS Attorney General’s Office of Special Investigation (OSI) Annual Reports",
+        "description": "Annual reports on the OSI’s investigations into deaths potentially caused by police officers and corrections officers. Data tables accompanying the reports, which include data on deaths by suicide, are available here.",
+        "url": ""
+      },
+      {
+        "title": "Correctional Association of New York – Unusual Incident Reports Dashboard",
+        "description": "presents data reported by DOCCS on a range of incidents in NYS prisons, including violence, self-injury, and other events that may reflect mental health concerns. Note that this data does not necessarily reflect the same number of incidents of self-harm reported by OMH.",
+        "url": ""
+      },
+      {
+        "title": "New York State Department of Corrections and Community Supervision – 2023 Annual Mortality Report",
+        "description": "Provides data on deaths in custody by cause and facility, with classifications based on preliminary autopsy findings",
+        "url": ""
+      }
+    ],
     "agency": "OMH",
     "unit": "Facility",
     "tags": [
@@ -165,7 +217,7 @@
     "updatedt": "2026-05-01",
     "source": {
       "type": "csv",
-      "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-self-harm-extract?sp=r&st=2026-06-12T20:50:29Z&se=2027-06-13T05:05:29Z&spr=https&sv=2026-02-06&sr=b&sig=RvWJDoF9s1qFXsuiJgH8BNX29FZwYa2qUe%2BaEYh%2FPJU%3D"
+      "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-self-injury-extract.csv"    
     },
     "fields": [
       {
@@ -281,28 +333,165 @@
   {
     "id": "releases-from-custody",
     "title": "Releases from Custody",
-    "description": "",
+    "description": "This dataset is a derivative of DOCCS' Releases dataset and contains data from January 2016 to the present. It represents data associated with incarcerated individuals only; incarcerated parolee releases, youthful offenders, and court-ordered discharges are excluded. The dataset represents release transactions, not individuals released. If an individual is released or discharged multiple times on the same incarceration sentence, multiple records will be included in the dataset. The dataset includes information on the demographics of each individual released in addition to the assigned facility at release, commitment county, release type, and agency released to (if applicable).",
     "whatsincluded": "Covers people released or discharged from DOCCS custody starting January 2015. Only individuals incarcerated in DOCCS facilities are included — releases of incarcerated parolees, youthful offenders, and court-ordered discharges are excluded. Each row is a release transaction rather than a person, so someone released more than once within the same sentence appears more than once. Fields cover the released individual's demographics along with their facility at release, county of commitment, type of release, and (where applicable) the agency they were released to.",
     "howitsgenerated": "Sourced from DOCCS' internal movement-tracking system, which the agency uses for operational purposes such as transfers. CANY receives this data monthly from DOCCS. Because Correction Law §9 limits how long release records may be retained and shared (as of a November 2024 update), each monthly file DOCCS provides only contains release transactions from roughly the prior three years; CANY stitches together just under a year of new data from each file to build a continuous record running from January 2016 forward. To comply with Correction Law §9, an advisory opinion from the state Committee on Open Government (case FOI-AO-18823), and New York's data privacy statutes including the Clean Slate Act, CANY strips names and DIN numbers, publishes only a subset of the available fields, and coarsens some fields (for example, date of birth becomes an age range).",
     "limitations": "This is not a full count of every DOCCS release or discharge — it reflects only what's in the files DOCCS shares with CANY, subject to the exclusions above (youth adjudications, court-ordered discharges, and incarcerated parolees are all left out). Any corrections DOCCS later makes to historical records won't be reflected here, since the dataset isn't retroactively refreshed.",
     "whypublish": "CANY publishes this to give the public a basic picture of who is leaving DOCCS custody, from where, under what circumstances, and how that has shifted over time.",
-    "relatedlinks": "    - DOCCS Releases and Discharges from Incarceration Report (2021-2023): A report describing the characteristics of individuals released or discharged from DOCCS custody. https://doccs.ny.gov/system/files/documents/2025/11/2021-2023-releases-and-discharges-report-04142025_-final.pdf\n    - DOCCS Open Data NY Data Portal: Annual data on DOCCS admissions, releases, recidivism, and the under-custody population from 2008 onward. https://data.ny.gov/browse?q=&sortBy=relevance&Dataset-Information_Agency=Corrections+and+Community+Supervision%2C+Department+of\n    - CANY Prison Map: An interactive map of operational and recently closed NY prisons, with facility-level population, capacity, and vacancy data. https://www.correctionalassociation.org/prison-map\n    - DOCCS Releases from Custody: Three Year Post-Release Follow-Up: An analysis of recidivism by demographic and sentencing characteristics for people released in 2021. https://doccs.ny.gov/system/files/documents/2026/01/2021-releases_three-year-post-release-follow-up_final.pdf\n    - DOCCS Admissions and Releases Report: A comparison of 2025 admissions and releases data. https://doccs.ny.gov/admissions-and-releases-2025\n    - Legislative Report on Reentry Planning and Access to Social Services: A legislatively required DOCCS report on reentry planning practices and available social services. https://doccs.ny.gov/system/files/documents/2023/02/final-reentry-report-s3550-a710_12.22.22.pdf",
+      "relatedlinks": [
+      {
+        "title": "DOCCS Releases and Discharges from Incarceration Report (2021-2023)",
+        "description": "A report describing the characteristics of individuals released or discharged from DOCCS custody.",
+        "url": "https://doccs.ny.gov/system/files/documents/2025/11/2021-2023-releases-and-discharges-report-04142025_-final.pdf"
+      },
+      {
+        "title": "DOCCS Open Data NY Data Portal",
+        "description": "Annual data on DOCCS admissions, releases, recidivism, and the under-custody population from 2008 onward.",
+        "url": "https://data.ny.gov/browse?q=&sortBy=relevance&Dataset-Information_Agency=Corrections+and+Community+Supervision%2C+Department+of"
+      },
+      {
+        "title": "CANY Prison Map",
+        "description": "An interactive map of operational and recently closed NY prisons, with facility-level population, capacity, and vacancy data.",
+        "url": "https://www.correctionalassociation.org/prison-map"
+      },
+      {
+        "title": "DOCCS Releases from Custody: Three Year Post-Release Follow-Up",
+        "description": "An analysis of recidivism by demographic and sentencing characteristics for people released in 2021.",
+        "url": "https://doccs.ny.gov/system/files/documents/2026/01/2021-releases_three-year-post-release-follow-up_final.pdf"
+      },
+      {
+        "title": "DOCCS Admissions and Releases Report",
+        "description": "A comparison of 2025 admissions and releases data.",
+        "url": "https://doccs.ny.gov/admissions-and-releases-2025"
+      },
+      {
+        "title": "Legislative Report on Reentry Planning and Access to Social Services",
+        "description": "A legislatively required DOCCS report on reentry planning practices and available social services.",
+        "url": "https://doccs.ny.gov/system/files/documents/2023/02/final-reentry-report-s3550-a710_12.22.22.pdf"
+      }
+    ],
     "agency": "DOCCS",
     "unit": "Individual",
     "tags": [
-      "release",
-      "reentry"
+      "Release",
+      "Reentry"
     ],
     "universalTags": [
       "Individual-Level Records",
       "Demographics Included"
     ],
-    "updatedt": "",
+    "updatedt": "2026-07-01",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/released-extract.csv"
     },
-    "fields": [],
+     "fields": [
+      {
+        "name": "RAW_FACILITY_OR_UNIT_NAME",
+        "label": "Name of facility and unit (if applicable) in which the incident of self-harm took place, as it appears on the report.",
+        "type": "string"
+      },
+      {
+        "name": "FACILITY_NAME",
+        "label": "Facility in which the incarcerated individual was housed at the time of the incident, defined using the first two digits of the DOCCS facility code. This name represents the commonplace naming for facilities and excludes references to specific buildings or units seen in RAW_FACILITY_OR_UNIT_NAME.",
+        "type": "string"
+      },
+      {
+        "name": "FACILITY_REGION_NAME",
+        "label": "Facility region, with regions defined by DOCCS as groups of adjacent counties.",
+        "type": "string"
+      },
+      {
+        "name": "FACILITY_HUB_NAME",
+        "label": "Facility hub, with hubs defined by DOCCS as groups of facilities which are in close proximity. Hubs have an administrative function in DOCCS operations.",
+        "type": "string"
+      },
+      {
+        "name": "FACILITY_SECURITY_LEVEL",
+        "label": "Security level of the facility, as designated in DOCCS public reporting or, if unavailable, in the NY Codes Rules and Regulations, Title 7. If there are multiple security levels for a given facility, the highest is reported here (Minimum, Medium, Maximum, Drug Treatment Center).",
+        "type": "string"
+      },
+      {
+        "name": "FACILITY_STATUS",
+        "label": "Indicates if a facility is open or closed as of the publication of this data (Open, Closed).",
+        "type": "string"
+      },
+      {
+        "name": "FACILITY_GENDER",
+        "label": "Gender-designation for the facility (Male, Female, Mixed).",
+        "type": "string"
+      },
+      {
+        "name": "INCIDENT_MONTH_YEAR_D",
+        "label": "Month and year in which the incident took place, in the format YYYY-MM.",
+        "type": "string"
+      },
+      {
+        "name": "LOCATION",
+        "label": "Location in which the incident took place",
+        "type": "string"
+      },
+      {
+        "name": "METHOD",
+        "label": "Method used by the individual to commit self-harm.",
+        "type": "string"
+      },
+      {
+        "name": "LAST_MH_CONTACT_DATE",
+        "label": "Date of most recent contact with mental health providers.",
+        "type": "date"
+      },
+      {
+        "name": "IS_METHOD_LACERATION",
+        "label": "Boolean indicator for whether the method of self-harm was laceration (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_SUPERFICIAL_CUTTING",
+        "label": "Boolean indicator for whether the method of self-harm was superficial cutting (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_BURNING_FIRE_SETTING",
+        "label": "Boolean indicator for whether the method of self-harm was fire setting (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_HANGING",
+        "label": "Boolean indicator for whether the method of self-harm was hanging (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_STRANGULATION",
+        "label": "Boolean indicator for whether the method of self-harm was strangulation (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_SUFFOCATION",
+        "label": "Boolean indicator for whether the method of self-harm was suffocation or asphyxiation (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_OVERDOSE",
+        "label": "Boolean indicator for whether the method of self-harm was an overdose (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_INGEST_FOREIGN_SUBSTANCE_BODY",
+        "label": "Boolean indicator for whether the method of self-harm was ingestion of a foreign body or substance (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_INSERT_FOREIGN_SUBSTANCE_BODY",
+        "label": "Boolean indicator for whether the method of self-harm was insertion of a foreign body or substance (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      },
+      {
+        "name": "IS_METHOD_OTHER",
+        "label": "Boolean indicator for whether the method of self-harm was not one of the aforementioned categories (1 = Yes, 0 = No, -99 = Missing).",
+        "type": "number"
+      }
+    ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-releases"
     }
@@ -310,12 +499,28 @@
   {
     "id": "unusual-incident-reports",
     "title": "Unusual Incident Reports",
-    "description": "",
+    "description": "An unusual incident report can include multiple incidents; this dataset is structured to have one row per incident. DOCCS defines an unusual incident in Directive 4004 as a serious occurrence that (1) may impact upon or disrupt facility operations, or (2) has the potential for affecting the Department’s public image, or (3) might arouse widespread public interest. In general, any incident shall be reportable under the provisions of this directive which (1) satisfies the definition (above) of ’unusual incident,’ or (2) involves use of chemical agents, or (3) involves staff use of a weapon, or (4) results in moderate or serious injury to any incarcerated individual/releasee or staff. More detail about these reports can be found in DOCCS' Directive 4004. ",
     "whatsincluded": "Tracks unusual incidents at DOCCS facilities starting in January 2014. DOCCS Directive 4004 defines an unusual incident as a serious occurrence that could disrupt facility operations, affect the department's public image, or draw significant public attention — covering things like assaults, staff use of weapons, contraband, deaths, disruptive behavior, accidents, escapes, self-harm, and suicide attempts. The directive also requires reporting of any incident involving chemical agents, staff weapon use, or moderate-to-serious injury, regardless of whether it fits the general definition; the full incident-category list and reporting rules are in Appendix A of the directive.\n\nTwo things worth knowing before using this data: first, incident counts here won't exactly match DOCCS' own internal totals or annual reports, partly because some incidents CANY receives through FOIL are redacted and some may still be pending approval when CANY's quarterly request is processed (DOCCS' 2023 annual report counted 16,060 incidents that year versus 16,048 shown here, a difference under 0.01%). Second, counts may not line up with figures from other agencies because of differing reporting standards — for instance, death counts here can differ from those reported by the State Commission of Correction. See Limitations below for more.",
     "howitsgenerated": "Per Directive 4004, facility staff phone incidents in to DOCCS' Communications Control Center, which logs them in a computerized reporting system. The directive and an accompanying manual set reporting deadlines and required narrative and documentary content. A single report can cover more than one incident tied to the same event; these can be grouped using the facility log number, CCC number, and incident date-time fields. Sample source reports that CANY obtains through FOIL are available for reference.",
     "limitations": "The two main caveats are (1) this dataset likely undercounts incidents relative to DOCCS' own internal figures, and (2) differing reporting rules mean incident counts here won't always match other DOCCS datasets or external agencies' records.\n\nShifts in reported incident volume over time may reflect changed reporting policy rather than a real change in incident rates. For example, DOCCS altered how it counted drug contraband incidents in August 2021, requiring outside lab confirmation before counting a find as an unusual incident, and reported contraband incidents dropped sharply afterward — though it's hard to separate how much of that drop reflects the policy change versus an actual decline in contraband found.\n\nSome incident codes only appear in more recent years of data. Narcan use, for instance, isn't recorded before 2019, even though DOCCS facilities have operated under a statewide standing order for Narcan since at least 2015; earlier uses likely weren't categorized as unusual incidents under the reporting rules of the time.\n\nStaff use of force can show up three different ways in this data: a report-level flag, an incident-level flag, and a distinct 'staff use of weapons' incident type. The two flag-level fields capture force more broadly, including force without a weapon, so they give a fuller picture of use of force than the narrower weapons-incident category shown on the dashboard; the processed data available for download allows comparison across all three.\n\nIncidents tied to Central Office or Community Supervision aren't shown on the dashboard, but are present in the underlying source and processed data.",
     "whypublish": "This dataset gives the public visibility into out-of-the-ordinary occurrences inside correctional facilities and how often they happen, which is useful for spotting patterns or shifts over time, whether at a single facility or across the system.",
-    "relatedlinks": "    - DOCCS 2023 Unusual Incident Report: An annual report covering ten years of incident trends (figures may differ slightly from CANY's data, as explained above). https://doccs.ny.gov/system/files/documents/2024/08/annual-ui-report-2023_final.pdf\n    - DOCCS 2023 Prison Violence Task Force Report: Findings and recommendations from a departmental task force on prison violence convened December 2021-April 2023. https://doccs.ny.gov/system/files/documents/2023/06/prison-violence-task-force-report_june-2023_final.pdf\n    - NYS Inspector General Report on DOCCS Contraband Drug Testing Program: Background on the August 2021 contraband reporting policy change. https://ig.ny.gov/system/files/documents/2023/11/doccs-drug-testing-program-report.pdf",
+      "relatedlinks": [
+      {
+        "title": "DOCCS 2023 Unusual Incident Report",
+        "description": "An annual report covering ten years of incident trends (figures may differ slightly from CANY's data, as explained above).",
+        "url": "https://doccs.ny.gov/system/files/documents/2024/08/annual-ui-report-2023_final.pdf"
+      },
+      {
+        "title": "DOCCS 2023 Prison Violence Task Force Report",
+        "description": "Findings and recommendations from a departmental task force on prison violence convened December 2021-April 2023.",
+        "url": "https://doccs.ny.gov/system/files/documents/2023/06/prison-violence-task-force-report_june-2023_final.pdf"
+      },
+      {
+        "title": "NYS Inspector General Report on DOCCS Contraband Drug Testing Program",
+        "description": "Background on the August 2021 contraband reporting policy change.",
+        "url": "https://ig.ny.gov/system/files/documents/2023/11/doccs-drug-testing-program-report.pdf"
+      }
+    ],
     "agency": "DOCCS",
     "unit": "Facility",
     "tags": [
@@ -324,12 +529,278 @@
       "Violence"
     ],
     "universalTags": [],
-    "updatedt": "",
+    "updatedt": "2025-02-18",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/unusual-incident-extract.csv"
     },
-    "fields": [],
+      "fields": [
+      {
+        "name": "FACILITY_CODE",
+        "type": "string",
+        "label": "DOCCS code for the facility; the first two digits are believed to identify the facility, with the third indicating building or unit."
+      },
+      {
+        "name": "FACILITY_NAME",
+        "type": "string",
+        "label": "Facility name based on the first two digits of the DOCCS facility code; excludes unit-level detail."
+      },
+      {
+        "name": "IS_DOCCS_CORRECTIONAL_FACILITY",
+        "type": "integer",
+        "label": "1 if the incident occurred in DOCCS custody at a correctional facility, 0 if not (e.g. community supervision or central office)."
+      },
+      {
+        "name": "FACILITY_REGION_NAME",
+        "type": "string",
+        "label": "DOCCS-defined region of the facility, grouping adjacent counties."
+      },
+      {
+        "name": "FACILITY_HUB_NAME",
+        "type": "string",
+        "label": "DOCCS-defined operational hub grouping of nearby facilities."
+      },
+      {
+        "name": "FACILITY_SECURITY_LEVEL",
+        "type": "string",
+        "label": "Highest security classification of the facility (Minimum, Medium, Maximum, Drug Treatment Center)."
+      },
+      {
+        "name": "FACILITY_STATUS",
+        "type": "string",
+        "label": "Whether the facility was open or closed as of the data's September 2023 publication."
+      },
+      {
+        "name": "FACILITY_GENDER",
+        "type": "string",
+        "label": "Gender designation of the facility (Male, Female, Mixed), where available."
+      },
+      {
+        "name": "CCC_NUMBER",
+        "type": "string",
+        "label": "Communications Control Center report ID; a single report can cover multiple incidents, so this can repeat across rows."
+      },
+      {
+        "name": "FACILITY_LOG_NUMBER",
+        "type": "string",
+        "label": "Facility-specific report number; can also repeat across rows since one report may cover multiple incidents."
+      },
+      {
+        "name": "INCIDENT_DATETIME",
+        "type": "date",
+        "label": "Date and time the incident took place."
+      },
+      {
+        "name": "TELEPHONE_DATETIME",
+        "type": "date",
+        "label": "Date and time the incident was phoned in to be reported."
+      },
+      {
+        "name": "REPORT_DATE",
+        "type": "date",
+        "label": "Date the unusual incident report was filed; only available for some years, with INCIDENT_DATETIME usable as an alternative."
+      },
+      {
+        "name": "REPORT_LOCATION_CAT",
+        "type": "string",
+        "label": "Generalized location category derived from REPORT_LOCATION_DETAIL (e.g. any cell number becomes 'Cell'); categorization has known edge cases and overlaps."
+      },
+      {
+        "name": "REPORT_LOCATION_DETAIL",
+        "type": "string",
+        "label": "Incident location exactly as written in the source report."
+      },
+      {
+        "name": "NUMBER_INCIDENTS_IN_REPORT",
+        "type": "integer",
+        "label": "Number of incidents included in the report (equivalent to the number of incident codes per CCC number)."
+      },
+      {
+        "name": "IS_REPORT_WORKPLACE_VIOLENCE",
+        "type": "integer",
+        "label": "1 if the report was labeled workplace violence, 0 if not."
+      },
+      {
+        "name": "IS_REPORT_USE_OF_WEAPON_INC_IND",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used a weapon or force in any incident in the report, 0 if not."
+      },
+      {
+        "name": "IS_REPORT_USE_OF_FORCE_STAFF",
+        "type": "integer",
+        "label": "1 if a staff member used a weapon or force in any incident in the report, 0 if not."
+      },
+      {
+        "name": "INCIDENT_CODE",
+        "type": "string",
+        "label": "Combined category and subcategory code for the incident."
+      },
+      {
+        "name": "CATEGORY_CODE",
+        "type": "string",
+        "label": "Category code for the incident."
+      },
+      {
+        "name": "CATEGORY_DESCR",
+        "type": "string",
+        "label": "Plain-text description of the category code."
+      },
+      {
+        "name": "SUBCATEGORY_CODE",
+        "type": "string",
+        "label": "Subcategory code for the incident."
+      },
+      {
+        "name": "SUBCATEGORY_DESCR",
+        "type": "string",
+        "label": "Plain-text description of the subcategory code."
+      },
+      {
+        "name": "NUMBER_INC_IND_INVOLVED",
+        "type": "integer",
+        "label": "Number of incarcerated individuals involved in the incident."
+      },
+      {
+        "name": "INC_IND_INVOLVED",
+        "type": "string",
+        "label": "Unique roles of the incarcerated individuals involved in the incident."
+      },
+      {
+        "name": "IS_INC_IND_VICTIM",
+        "type": "integer",
+        "label": "1 if any incarcerated individual is reported as a victim, 0 if not."
+      },
+      {
+        "name": "IS_INC_IND_PERP",
+        "type": "integer",
+        "label": "1 if any incarcerated individual is reported as a perpetrator, 0 if not."
+      },
+      {
+        "name": "IS_INC_IND_BYSTANDER",
+        "type": "integer",
+        "label": "1 if any incarcerated individual is reported as a bystander, 0 if not."
+      },
+      {
+        "name": "IS_INC_IND_PARTICIPANT",
+        "type": "integer",
+        "label": "1 if any incarcerated individual is reported as a participant, 0 if not."
+      },
+      {
+        "name": "IS_INC_IND_SUSPECT",
+        "type": "integer",
+        "label": "1 if any incarcerated individual is reported as a suspect, 0 if not."
+      },
+      {
+        "name": "IS_INC_IND_WITNESS",
+        "type": "integer",
+        "label": "1 if any incarcerated individual is reported as a witness, 0 if not."
+      },
+      {
+        "name": "IS_INC_IND_OTHER_UNKNOWN",
+        "type": "integer",
+        "label": "1 if any incarcerated individual played a role not covered by the other role indicators, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_USED_INC_IND",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used a weapon in the incident, 0 if not."
+      },
+      {
+        "name": "WEAPONS_USED_INC_IND",
+        "type": "string",
+        "label": "Unique weapons used by incarcerated individuals in the incident, if any."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_HUMAN_WASTE",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used human waste or bodily fluids as a weapon, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_BODY",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used their body (e.g. martial arts) as a weapon, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_CHEMICAL",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used a chemical agent or caustic/combustible substance as a weapon, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_SHARP",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used a sharp implement (e.g. shank, razor, broken glass) as a weapon, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_HEAVY",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used a hard or heavy object (e.g. metal pipe, chair) as a weapon, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_GUN",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used a manufactured gun in the incident, 0 if not."
+      },
+      {
+        "name": "IS_WEAPON_INC_IND_OTHER",
+        "type": "integer",
+        "label": "1 if an incarcerated individual used an unknown or uncategorized weapon, 0 if not."
+      },
+      {
+        "name": "NUMBER_OF_NON_INC_IND_INVOLVED",
+        "type": "integer",
+        "label": "Number of non-incarcerated individuals involved (e.g. DOCCS staff, visitors, medical professionals)."
+      },
+      {
+        "name": "IS_FORCE_USED_STAFF",
+        "type": "integer",
+        "label": "1 if a staff member used force in the incident, 0 if not."
+      },
+      {
+        "name": "FORCE_USED_STAFF",
+        "type": "string",
+        "label": "Unique types of force used by staff in the incident, if any."
+      },
+      {
+        "name": "IS_FORCE_STAFF_BODY_HOLD",
+        "type": "integer",
+        "label": "1 if a staff member used a body hold as force, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_CHEMICAL_AGENT",
+        "type": "integer",
+        "label": "1 if a staff member used a chemical agent as force, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_MECH_RESTRAINT",
+        "type": "integer",
+        "label": "1 if a staff member used mechanical restraint as force, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_BATON",
+        "type": "integer",
+        "label": "1 if a staff member used a baton as force, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_STRIKE",
+        "type": "integer",
+        "label": "1 if a staff member is reported as striking an individual, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_SHIELD",
+        "type": "integer",
+        "label": "1 if a staff member used a shield as force, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_TASER",
+        "type": "integer",
+        "label": "1 if a staff member used a conducted energy device (taser) as force, 0 if not."
+      },
+      {
+        "name": "IS_FORCE_STAFF_OTHER_UNKNOWN",
+        "type": "integer",
+        "label": "1 if a staff member used an unknown or uncategorized type of force, 0 if not."
+      }
+    ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-unusual-incidents"
     }
@@ -337,12 +808,48 @@
   {
     "id": "deaths-in-custody",
     "title": "Deaths in Custody",
-    "description": "",
+    "description": "DOCCS data reporting the death of a person in custody compiled by the SCOC from M187 reports.",
     "whatsincluded": "A record of deaths in DOCCS custody starting January 2020, based on reports filed with the State Commission of Correction (SCOC). A death in custody is the death of anyone in DOCCS custody, whether it occurred at the facility itself or elsewhere, such as an outside hospital. Includes the deceased individual's demographics (age, gender, ethnicity, race), date of death, terminal incident location, and the facility they were assigned to at the time. CANY generalizes Date of Birth to Birth Year and Death Date/Time to Death Date to protect privacy.",
     "howitsgenerated": "Under 9 NYCRR §7022.4, DOCCS facilities must notify SCOC of an incarcerated person's death within six hours of pronouncement, followed by a detailed follow-up (M187) report on medical history and circumstances within ten days. SCOC compiles this data from those filings, and CANY receives it monthly under a data-sharing agreement with SCOC.",
     "limitations": "SCOC's data doesn't include cause or manner of death. CANY points to other sources for that information, including DOCCS' annual mortality reports and the Attorney General's Office of Special Investigation data tables, both linked below.",
     "whypublish": "This gives the public a baseline for tracking deaths in custody over time; paired with the individual-level reports linked below, it documents both how often deaths occur and the circumstances surrounding them.",
-    "relatedlinks": "    - DOCCS Incarcerated Deaths: DOCCS' required public notice of in-custody deaths, posted within 48 hours of family notification (records start December 2025). https://doccs.ny.gov/incarcerated-deaths\n    - DOCCS 2023 Annual Mortality Report: Summarizes deaths recorded in DOCCS' unusual-incident data, including demographics and manner of death. https://doccs.ny.gov/system/files/documents/2024/09/2023-annual-mortality-report_final.pdf\n    - NYS Attorney General's Office of Special Investigation (OSI) Annual Reports: Covers OSI investigations into deaths potentially caused by police or corrections officers, with accompanying data tables. https://ag.ny.gov/office-special-investigation/annual-reports\n    - SCOC Incarcerated Mortality Reports: Individual-level investigation reports on deaths at state prisons and local jails. https://scoc.ny.gov/incarcerated-mortality-reports-0\n    - Columbia University Center for Justice – New York State's New Death Penalty: Analysis of deaths in DOCCS facilities from 1976-2020, with policy recommendations. https://centerforjustice.columbia.edu/sites/default/files/content/New%20York's%20New%20Death%20Penalty%20Report.pdf\n    - UCLA Law COVID Behind Bars Data Project: Nationwide tracking of deaths in state and federal prisons, with a focus on COVID-19. https://uclacovidbehindbars.org/intro-carceral-mortality/\n    - Incarceration Transparency: State-by-state resources on deaths in custody, including a county-level repository for some states. https://www.incarcerationtransparency.org/",
+       "relatedlinks": [
+      {
+        "title": "DOCCS Incarcerated Deaths",
+        "description": "DOCCS' required public notice of in-custody deaths, posted within 48 hours of family notification (records start December 2025).",
+        "url": "https://doccs.ny.gov/incarcerated-deaths"
+      },
+      {
+        "title": "DOCCS 2023 Annual Mortality Report",
+        "description": "Summarizes deaths recorded in DOCCS' unusual-incident data, including demographics and manner of death.",
+        "url": "https://doccs.ny.gov/system/files/documents/2024/09/2023-annual-mortality-report_final.pdf"
+      },
+      {
+        "title": "NYS Attorney General's Office of Special Investigation (OSI) Annual Reports",
+        "description": "Covers OSI investigations into deaths potentially caused by police or corrections officers, with accompanying data tables.",
+        "url": "https://ag.ny.gov/office-special-investigation/annual-reports"
+      },
+      {
+        "title": "SCOC Incarcerated Mortality Reports",
+        "description": "Individual-level investigation reports on deaths at state prisons and local jails.",
+        "url": "https://scoc.ny.gov/incarcerated-mortality-reports-0"
+      },
+      {
+        "title": "Columbia University Center for Justice – New York State's New Death Penalty",
+        "description": "Analysis of deaths in DOCCS facilities from 1976-2020, with policy recommendations.",
+        "url": "https://centerforjustice.columbia.edu/sites/default/files/content/New%20York's%20New%20Death%20Penalty%20Report.pdf"
+      },
+      {
+        "title": "UCLA Law COVID Behind Bars Data Project",
+        "description": "Nationwide tracking of deaths in state and federal prisons, with a focus on COVID-19.",
+        "url": "https://uclacovidbehindbars.org/intro-carceral-mortality/"
+      },
+      {
+        "title": "Incarceration Transparency",
+        "description": "State-by-state resources on deaths in custody, including a county-level repository for some states.",
+        "url": "https://www.incarcerationtransparency.org/"
+      }
+    ],
     "agency": "DOCCS",
     "unit": "Individual",
     "tags": [
@@ -353,7 +860,7 @@
       "Individual-Level Records",
       "Demographics Included"
     ],
-    "updatedt": "",
+    "updatedt": "2026-07-30",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/DEATHS-IN-CUSTODY-EXTRACT.CSV"
@@ -432,12 +939,33 @@
   {
     "id": "staffing-levels",
     "title": "Staffing Levels",
-    "description": "",
+    "description": "An overview of budgeted and actual fill levels, in full-time equivalents, for staff positions at DOCCS facilities from 2022 to the present. This data is divided into four categories (security staff, health services, program services, support services), and fill levels for security staff are further divided by position (corrections officers, lieutenants, sergeants, captains, deputy superintendents, civilian security staff).",
     "whatsincluded": "Tracks budgeted versus actual staffing (in full-time equivalents) at DOCCS facilities from 2022 forward, broken into four categories — security, health services, program services, and support services — with security staff further broken down by role (corrections officers, sergeants, lieutenants, captains, deputy superintendents, and civilian security staff). Total fill levels, though not budgeted levels or category breakdowns, are also included for 2020 and 2021. Central Office, Community Supervision, and other non-facility staff aren't covered.",
     "howitsgenerated": "Figures from 2022 onward come from a biweekly staffing report produced by the DOCCS budget office, obtained by CANY through FOIL. The 2020-2021 figures come from separate facility fill-count reports that only tally total staff per facility, not staffing categories.",
     "limitations": "Fill levels and vacancy rates are only part of the picture — actual day-to-day staffing also depends on how many employees are out on workers' compensation, vacation, sick leave, or other absences, none of which this data captures.",
     "whypublish": "Staffing levels and vacancies shape how a facility actually runs day to day. CANY publishes this as a starting point for understanding DOCCS' staffing situation, while recognizing there's much more to the department's staffing challenges than what's visualized here.",
-    "relatedlinks": "    - DOCCS 2025 Security Staffing Report: Legislatively mandated annual report on corrections officer and sergeant staffing, closed posts, and security overtime (Correction Law §29.4). https://doccs.ny.gov/system/files/documents/2026/02/2025-doccs-report-of-sisu-legislative-report-final-002.pdf\n    - DOCCS Diversity, Equity, and Inclusion Five Year Strategic Plan (2021-2025): DOCCS' workforce diversity framework under Executive Order 187, with staff racial composition data by county. https://doccs.ny.gov/system/files/documents/2022/04/diversity-equity-and-inclusion-five-year-strategic-plan-2021-2025.pdf\n    - NYS Department of Civil Service Workers' Compensation Claims Report (FY 2024-25): Statewide workers'-comp claim rates by agency, including DOCCS; see also a related 2023 Inspector General report. https://www.cs.ny.gov/pio/WorkersCompAnnualReport2024-2025.pdf\n    - CANY Prison Map: Facility-level data on capacity and staff vacancy rates. https://www.correctionalassociation.org/prison-map",
+      "relatedlinks": [
+      {
+        "title": "DOCCS 2025 Security Staffing Report",
+        "description": "Legislatively mandated annual report on corrections officer and sergeant staffing, closed posts, and security overtime (Correction Law §29.4).",
+        "url": "https://doccs.ny.gov/system/files/documents/2026/02/2025-doccs-report-of-sisu-legislative-report-final-002.pdf"
+      },
+      {
+        "title": "DOCCS Diversity, Equity, and Inclusion Five Year Strategic Plan (2021-2025)",
+        "description": "DOCCS' workforce diversity framework under Executive Order 187, with staff racial composition data by county.",
+        "url": "https://doccs.ny.gov/system/files/documents/2022/04/diversity-equity-and-inclusion-five-year-strategic-plan-2021-2025.pdf"
+      },
+      {
+        "title": "NYS Department of Civil Service Workers' Compensation Claims Report (FY 2024-25)",
+        "description": "Statewide workers'-comp claim rates by agency, including DOCCS; see also a related 2023 Inspector General report.",
+        "url": "https://www.cs.ny.gov/pio/WorkersCompAnnualReport2024-2025.pdf"
+      },
+      {
+        "title": "CANY Prison Map",
+        "description": "Facility-level data on capacity and staff vacancy rates.",
+        "url": "https://www.correctionalassociation.org/prison-map"
+      }
+    ],
     "agency": "DOCCS",
     "unit": "Facility",
     "tags": [
@@ -447,7 +975,7 @@
     "universalTags": [
       "Point-in-Time Snapshot"
     ],
-    "updatedt": "",
+    "updatedt": "2026-04-03",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/STAFFING-LEVELS-EXTRACT.CSV"
@@ -531,12 +1059,33 @@
   {
     "id": "workers-compensation",
     "title": "Workers' Compensation",
-    "description": "",
+    "description": "This data is from annual reports to the Workers' Compensation Board contains information on the number, type, cost, and outcomes of incidents filed by facility as well as the average number of Full Time Equivalents (FTE) at each facility during the fiscal year.",
     "whatsincluded": "Drawn from the annual New York State Government Employees' Workers' Compensation Claims reports for fiscal years 2019-2025 (which include records back to FY2015). Those reports cover work-related incidents reported to the Workers' Compensation Board and the New York State Insurance Fund (NYSIF) by Classified Service employees in certain Executive Branch agencies, including staff represented by CSEA, PEF, NYSCOPBA, Council 82, PBANYS, and Management/Confidential. This dataset narrows that down to DOCCS facilities only, and includes the number, type, cost, and outcome of claims by facility, plus each facility's average full-time-equivalent (FTE) staffing for the fiscal year.",
     "howitsgenerated": "Chapter 171, Section 7 of the Laws of New York (2007) requires the President of the NYS Civil Service Commission to file an annual report on workplace injuries, illnesses, and comp claims across Executive Branch agencies. The Department of Civil Service gathers incident data through its Accident Reporting System (ARS), while NYSIF supplies the claims data; incidents dated within the fiscal year (April 1-March 31) are counted through the following June 30 to reduce the effect of processing delays. FTE figures come from the Department of Civil Service's NYSTEP personnel system.",
     "limitations": "This data can be affected by underreporting, claims-processing delays, and inconsistency in how specific injuries get reported. When comparing facilities, account for differences in facility size and population makeup.",
     "whypublish": "DOCCS security staff, as Security Services Unit employees, receive more generous workers' compensation benefits than most state employees. Over the period covered, work-related incidents have risen sharply, adding pressure to DOCCS' existing staffing shortages and driving up costs to the state through both compensation payouts and overtime. CANY publishes this data to increase transparency around how the system is used, which it sees as necessary for spotting patterns of abuse and supporting reforms that protect both employees and taxpayers.",
-    "relatedlinks": "    - NYS Department of Civil Service, Annual Report of New York State Government Employee's Workers' Compensation Claims, FY 2024-2025. https://www.cs.ny.gov/pio/WorkersCompAnnualReport2024-2025.pdf\n    - NYS Inspector General, Review of the Lost Wage Benefit Provided to Security Services Unit Employees Within DOCCS, May 2023. https://ig.ny.gov/system/files/documents/2023/05/report-on-ssu-lost-wage-benefit-and-doccs-wc.pdf\n    - Office of the State Comptroller, Department of Correctional Services Administration of Workers' Compensation Leave (2002-S-35), 2002. https://web.osc.state.ny.us/audits/allaudits/093003/093003-h/02s35.pdf\n    - Security Services Unit 2023-2026 Agreement Between the State of New York and NYSCOPBA, 2023. https://oer.ny.gov/system/files/documents/2024/09/2023-2026-security-services-unit-contract-agreement.pdf",
+     "relatedlinks": [
+      {
+        "title": "NYS Department of Civil Service, Annual Report of New York State Government Employee's Workers' Compensation Claims, FY 2024-2025.",
+        "description": "",
+        "url": "https://www.cs.ny.gov/pio/WorkersCompAnnualReport2024-2025.pdf"
+      },
+      {
+        "title": "NYS Inspector General, Review of the Lost Wage Benefit Provided to Security Services Unit Employees Within DOCCS, May 2023.",
+        "description": "",
+        "url": "https://ig.ny.gov/system/files/documents/2023/05/report-on-ssu-lost-wage-benefit-and-doccs-wc.pdf"
+      },
+      {
+        "title": "Office of the State Comptroller, Department of Correctional Services Administration of Workers' Compensation Leave (2002-S-35), 2002.",
+        "description": "",
+        "url": "https://web.osc.state.ny.us/audits/allaudits/093003/093003-h/02s35.pdf"
+      },
+      {
+        "title": "Security Services Unit 2023-2026 Agreement Between the State of New York and NYSCOPBA, 2023.",
+        "description": "",
+        "url": "https://oer.ny.gov/system/files/documents/2024/09/2023-2026-security-services-unit-contract-agreement.pdf"
+      }
+    ],
     "agency": "DOCCS",
     "unit": "Facility",
     "tags": [
@@ -544,7 +1093,7 @@
       "Costs"
     ],
     "universalTags": [],
-    "updatedt": "",
+    "updatedt": "2025",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/WORKERS-COMP-EXTRACT.CSV"
@@ -658,12 +1207,12 @@
   {
     "id": "omh-suicide-attempts",
     "title": "OMH Suicide Attempts",
-    "description": "",
-    "whatsincluded": "",
-    "howitsgenerated": "",
-    "limitations": "",
-    "whypublish": "",
-    "relatedlinks": "",
+    "description": "Data compiled by the Office of Mental Health (OMH) regarding incidents of suicide attempts, monthly data startin in 2014. Numbers do not align with DOCCS reports, OMH numbers may be higher.",
+    "whatsincluded": "This dataset contains records of suicide attempts in DOCCS custody from January 1, 2014 to July 31, 2024 as reported by OMH. Note that the number of suicide attempts in this dataset may differ significantly from other data sources such as DOCCS' unusual incident data due to different reporting methods. Some facilities are split by unit and reported separately on different rows, reflecting the structure of the source data. To sum by facility, you can aggregate based on FACILITY_NAME. Please see the context statement above the dashboard for more detailed information. The source data was obtained from OMH through the Freedom of Information Act Law (FOIL)",
+    "howitsgenerated": "OMH classifies incidents based on clinical assessment and review of documentation from both OMH and the Department of Corrections and Community Supervision (DOCCS). In some cases, OMH consults with the Central New York Psychiatric Center (CNYPC) Suicide Prevention Department. Final classifications are reviewed and compiled by the OMH Suicide Prevention Workgroup (SPWG).",
+    "limitations": "OMH and DOCCS maintain separate classification systems for self-injury, the numbers shown here are from OMH. Although DOCCS may defer to OMH’s clinical determinations in some cases, it does not revise Unusual Incident Repoorts (UIRs) to reflect those reclassifications, resulting in discrepancies in the number of incidents between the two data sources. For suicides, OMH and DOCCS classifications typically align.",
+    "whypublish": "By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many instances of self-harm, suicide attempts, and completed suicides occurred across New York State prisons? What facilities did these incidents take place in? Which methods were used? And how have these answers changed over time?",
+    "relatedlinks": "    - New York State Office of Mental Health – 988 Suicide and Crisis Lifeline Report (2023–2024):  Documents a rise in crisis call volume and mobile crisis referrals, reflecting increased demands for suicide prevention and emergency mental health response across NYS. Incarcerated individuals may be able to access this lifeline, depending on facility policy. \n    - New York State Office of Mental Health – 2024 Suicide Prevention Report : Outlines targeted initiatives to reduce suicide risk among high-need populations, including expanded crisis infrastructure and clinical training efforts within and beyond carceral settings \n    - NYS Attorney General’s Office of Special Investigation (OSI) Annual Reports: Annual reports on the OSI’s investigations into deaths potentially caused by police officers and corrections officers. Data tables accompanying the reports, which include data on deaths by suicide, are available here. \n    - Correctional Association of New York – Unusual Incident Reports Dashboard: presents data reported by DOCCS on a range of incidents in NYS prisons, including violence, self-injury, and other events that may reflect mental health concerns. Note that this data does not necessarily reflect the same number of incidents of self-harm reported by OMH. \n    - New York State Department of Corrections and Community Supervision – 2023 Annual Mortality Report: Provides data on deaths in custody by cause and facility, with classifications based on preliminary autopsy findings ",
     "agency": "OMH",
     "unit": "Facility",
     "tags": [
@@ -674,7 +1223,7 @@
     "universalTags": [
       "Mental Health"
     ],
-    "updatedt": "",
+    "updatedt": "2026-02",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-suicide-attempts-extract.csv"
@@ -793,12 +1342,12 @@
   {
     "id": "omh-suicides",
     "title": "OMH Suicides",
-    "description": "",
-    "whatsincluded": "",
-    "howitsgenerated": "",
-    "limitations": "",
-    "whypublish": "",
-    "relatedlinks": "",
+    "description": "Data compiled by the Office of Mental Health (OMH) regarding incidents of suicide, monthly data startin in 2014.",
+    "whatsincluded": "The dashboard below includes statistical data compiled by the Office of Mental Health (OMH) regarding incidents of suicide, from suicide. OMH defines self-harm as 'self-injurious behavior with a nonfatal outcome with no evidence (either explicit or implicit) that the person intended to die.' OMH defines suicide attempt as 'self-injurious behavior with a nonfatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die, which may require medical and/or security intervention to reduce likelihood of death or serious injury.' Lastly, OMH defies suicide as 'self-injurious behavior with a fatal outcome accompanied by evidence (either explicit or implicit) that the person intended to die.'\nData on self-harm is monthly starting in 2020, data on suicide attempts is monthly starting from January 2014, and data on suicides is annual starting in 2014.",
+    "howitsgenerated": "OMH classifies incidents based on clinical assessment and review of documentation from both OMH and the Department of Corrections and Community Supervision (DOCCS). In some cases, OMH consults with the Central New York Psychiatric Center (CNYPC) Suicide Prevention Department. Final classifications are reviewed and compiled by the OMH Suicide Prevention Workgroup (SPWG).",
+    "limitations": "OMH and DOCCS maintain separate classification systems for self-injury, the numbers shown here are from OMH. Although DOCCS may defer to OMH’s clinical determinations in some cases, it does not revise Unusual Incident Repoorts (UIRs) to reflect those reclassifications, resulting in discrepancies in the number of incidents between the two data sources. For suicides, OMH and DOCCS classifications typically align.",
+    "whypublish": "By making this information publicly available, CANY seeks to promote a shared understanding of basic questions regarding the incarcerated population in New York State: How many instances of self-harm, suicide attempts, and completed suicides occurred across New York State prisons? What facilities did these incidents take place in? Which methods were used? And how have these answers changed over time?",
+    "relatedlinks": "    - New York State Office of Mental Health – 988 Suicide and Crisis Lifeline Report (2023–2024):  Documents a rise in crisis call volume and mobile crisis referrals, reflecting increased demands for suicide prevention and emergency mental health response across NYS. Incarcerated individuals may be able to access this lifeline, depending on facility policy. \n    - New York State Office of Mental Health – 2024 Suicide Prevention Report : Outlines targeted initiatives to reduce suicide risk among high-need populations, including expanded crisis infrastructure and clinical training efforts within and beyond carceral settings \n    - NYS Attorney General’s Office of Special Investigation (OSI) Annual Reports: Annual reports on the OSI’s investigations into deaths potentially caused by police officers and corrections officers. Data tables accompanying the reports, which include data on deaths by suicide, are available here. \n    - Correctional Association of New York – Unusual Incident Reports Dashboard: presents data reported by DOCCS on a range of incidents in NYS prisons, including violence, self-injury, and other events that may reflect mental health concerns. Note that this data does not necessarily reflect the same number of incidents of self-harm reported by OMH. \n    - New York State Department of Corrections and Community Supervision – 2023 Annual Mortality Report: Provides data on deaths in custody by cause and facility, with classifications based on preliminary autopsy findings ",
     "agency": "OMH",
     "unit": "Facility",
     "tags": [
@@ -810,7 +1359,7 @@
     "universalTags": [
       "Mental Health"
     ],
-    "updatedt": "",
+    "updatedt": "2025",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-suicides-extract.csv"
@@ -914,17 +1463,33 @@
   {
     "id": "omh-caseload",
     "title": "Office of Mental Health (OMH) Caseload",
-    "description": "",
+    "description": "Includes people receiving psychiatric services while incarcerated as reported to the CNYPC. Excludes informal, short term, DOCCS prescribed, and non-psychiatricic medication.",
     "whatsincluded": "Statistical data compiled by the NYS Office of Mental Health (OMH) on people receiving psychiatric services while incarcerated in DOCCS facilities. This entry covers the Facility Caseload Census — everyone on the OMH mental health caseload — as monthly data starting January 2022; it's drawn from the same combined OMH source as the Program Census dataset. Prescribed-medication figures only reflect psychiatric medications prescribed by OMH psychiatrists, not medications prescribed by DOCCS medical staff or non-psychiatric prescriptions.",
     "howitsgenerated": "Facility staff report caseload figures monthly to the Central New York Psychiatric Center (CNYPC), which compiles and aggregates them on OMH's behalf.",
     "limitations": "Medication counts shouldn't be read as a measure of overall treatment volume — they exclude DOCCS-prescribed and non-psychiatric medications. The data also only reflects people formally on the OMH caseload, not those receiving informal or short-term mental health support.",
     "whypublish": "CANY publishes this to give the public a shared basis for understanding the OMH population within DOCCS: what share of the incarcerated population is on the OMH caseload, their medication status and caseload designations, and how these figures have trended over time.",
-    "relatedlinks": "    - Partnership for the Public's Health, Health Indicators in New York Jails and Prisons (2024): Data on deaths in custody by cause and facility. https://p2ph.org/wp-content/uploads/2024/12/Fact_Sheet_Health_Indicators_NY_Jails_Prisons_Final_Website.12.9.2024.pdf\n    - NYS Office of Mental Health, CNYPC Satellite and Mental Health Unit Directory: Overview of mental-health and substance-use needs among incarcerated New Yorkers. https://omh.ny.gov/omhweb/facilities/cnpc/satellite.pdf\n    - CANY NYS Prison Map: Lists prison-based mental health units where OMH provides psychiatric services. https://www.correctionalassociation.org/prison-map",
+     "relatedlinks": [
+      {
+        "title": "Partnership for the Public's Health, Health Indicators in New York Jails and Prisons (2024)",
+        "description": "Data on deaths in custody by cause and facility.",
+        "url": "https://p2ph.org/wp-content/uploads/2024/12/Fact_Sheet_Health_Indicators_NY_Jails_Prisons_Final_Website.12.9.2024.pdf"
+      },
+      {
+        "title": "NYS Office of Mental Health, CNYPC Satellite and Mental Health Unit Directory",
+        "description": "Overview of mental-health and substance-use needs among incarcerated New Yorkers.",
+        "url": "https://omh.ny.gov/omhweb/facilities/cnpc/satellite.pdf"
+      },
+      {
+        "title": "CANY NYS Prison Map",
+        "description": "Lists prison-based mental health units where OMH provides psychiatric services.",
+        "url": "https://www.correctionalassociation.org/prison-map"
+      }
+    ],
     "agency": "OMH",
     "unit": "Facility",
-    "tags": [],
+    "tags": ["Mental Health"],
     "universalTags": [],
-    "updatedt": "",
+    "updatedt": "2026-05-29",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/facility-caseload-extract"
@@ -1033,17 +1598,35 @@
   {
     "id": "omh-program-census",
     "title": "Office of Mental Health (OMH) Program Census",
-    "description": "",
+    "description": "DOCCS OMH data regarding those housed in specialized mental health units (BHU, ICP, RMHU).",
     "whatsincluded": "Statistical data compiled by the NYS Office of Mental Health (OMH) on people receiving psychiatric services while incarcerated in DOCCS facilities. This entry covers the Program Census — people housed specifically in specialized mental health units, such as Behavioral Health Units (BHU), Intermediate Care Programs (ICP), and the Residential Mental Health Unit (RMHU) — as monthly data starting January 2022, drawn from the same combined OMH source as the Facility Caseload dataset. Everyone counted in the Program Census is also part of the broader OMH mental health caseload. Prescribed-medication figures only reflect psychiatric medications prescribed by OMH psychiatrists, not medications prescribed by DOCCS medical staff or non-psychiatric prescriptions.",
     "howitsgenerated": "Facility staff report program census figures monthly to the Central New York Psychiatric Center (CNYPC), which compiles and aggregates them on OMH's behalf.",
     "limitations": "Medication counts shouldn't be read as a measure of overall treatment volume — they exclude DOCCS-prescribed and non-psychiatric medications. The data also only reflects people formally on the OMH caseload, not those receiving informal or short-term mental health support.",
     "whypublish": "CANY publishes this to give the public a shared basis for understanding the OMH population within DOCCS: how many people are housed in specialized mental health programs, their designations, and how these figures have trended over time.",
-    "relatedlinks": "    - Partnership for the Public's Health, Health Indicators in New York Jails and Prisons (2024): Data on deaths in custody by cause and facility. https://p2ph.org/wp-content/uploads/2024/12/Fact_Sheet_Health_Indicators_NY_Jails_Prisons_Final_Website.12.9.2024.pdf\n    - NYS Office of Mental Health, CNYPC Satellite and Mental Health Unit Directory: Overview of mental-health and substance-use needs among incarcerated New Yorkers. https://omh.ny.gov/omhweb/facilities/cnpc/satellite.pdf\n    - CANY NYS Prison Map: Lists prison-based mental health units where OMH provides psychiatric services. https://www.correctionalassociation.org/prison-map",
+        "relatedlinks": [
+      {
+        "title": "Partnership for the Public's Health, Health Indicators in New York Jails and Prisons (2024)",
+        "description": "Data on deaths in custody by cause and facility.",
+        "url": "https://p2ph.org/wp-content/uploads/2024/12/Fact_Sheet_Health_Indicators_NY_Jails_Prisons_Final_Website.12.9.2024.pdf"
+      },
+      {
+        "title": "NYS Office of Mental Health, CNYPC Satellite and Mental Health Unit Directory",
+        "description": "Overview of mental-health and substance-use needs among incarcerated New Yorkers.",
+        "url": "https://omh.ny.gov/omhweb/facilities/cnpc/satellite.pdf"
+      },
+      {
+        "title": "CANY NYS Prison Map",
+        "description": "Lists prison-based mental health units where OMH provides psychiatric services.",
+        "url": "https://www.correctionalassociation.org/prison-map"
+      }
+    ],
     "agency": "OMH",
     "unit": "Facility",
-    "tags": [],
+    "tags": [
+        "Mental Health"
+    ],
     "universalTags": [],
-    "updatedt": "",
+    "updatedt": "2026-05-29",
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/program-census-extract"

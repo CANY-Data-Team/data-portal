@@ -150,39 +150,26 @@ function resetState() {
 
 function getFilteredResults() {
   return datasets
-
-    // Apply agency and tag filters.
     .filter(dataset => {
-      if (
-        state.agency &&
-        dataset.agency !== state.agency
-      ) {
+      if (state.agency && dataset.agency !== state.agency) {
         return false;
       }
 
-      if (
-        state.tag &&
-        !getDatasetTags(dataset).includes(state.tag)
-      ) {
+      if (state.unit && dataset.unit !== state.unit) {
         return false;
       }
 
-      return true;
-      if (
-            state.unit && dataset.unit !== state.unit
-        ) 
-            return false;
-    if (
-        state.tag.length > 0 && !state.tag.every(t => getDatasetTags(dataset).includes(t))
-        ) {
+      if (state.tag.length > 0 &&
+          !state.tag.every(t => getDatasetTags(dataset).includes(t))) {
         return false;
-        }
-    if (
-        state.universalTag.length > 0 && !state.universalTag.every(t => (dataset.universalTags || []).includes(t))
-    ) {
-        return false;
-}
+      }
 
+      if (state.universalTag.length > 0 &&
+          !state.universalTag.every(t => (dataset.universalTags || []).includes(t))) {
+        return false;
+      }
+
+      return true;   // now this is the last thing, once everything else passed
     })
 
     // Add a search score.
@@ -739,25 +726,6 @@ function renderFilters() {
 const units = [...new Set(datasets.map(d => d.unit).filter(Boolean))].sort();
 const universalTags = [...new Set(datasets.flatMap(d => d.universalTags || []))].sort();
 
-function setUnit(value) {
-  state.unit = (state.unit === value) ? null : value;
-  renderAll();
-}
-
-function setTag(value) {
-  state.tag = state.tag.includes(value)
-    ? state.tag.filter(t => t !== value)
-    : [...state.tag, value];
-  renderAll();
-}
-
-function setUniversalTag(value) {
-  state.universalTag = state.universalTag.includes(value)
-    ? state.universalTag.filter(t => t !== value)
-    : [...state.universalTag, value];
-  renderAll();
-}
-
 //NEXT: add <div id="unitFilters"> and <div id="universalTagFilters"> to sidebar in index.html
 renderFilterGroup("unitFilters", units, state.unit, setUnit);
 renderFilterGroup("universalTagFilters", universalTags, state.universalTag, setUniversalTag);
@@ -852,12 +820,27 @@ function setAgency(value) {
   renderAll();
 }
 
-function setTag(value) {
-  state.tag =
-    state.tag === value
-      ? null
-      : value;
+function setUnit(value) {
+  state.unit = (state.unit === value) ? null : value;
+  renderAll();
+}
 
+function setTag(value) {
+  state.tag = state.tag.includes(value)
+    ? state.tag.filter(t => t !== value)
+    : [...state.tag, value];
+  renderAll();
+}
+
+function setUniversalTag(value) {
+  state.universalTag = state.universalTag.includes(value)
+    ? state.universalTag.filter(t => t !== value)
+    : [...state.universalTag, value];
+  renderAll();
+}
+
+function setUnit(value) {
+  state.unit = (state.unit === value) ? null : value;
   renderAll();
 }
 

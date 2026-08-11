@@ -7,7 +7,8 @@ initDatasetPage();
 function initDatasetPage() {
   const id = getDatasetIdFromURL();
 
-  bindDatasetTabs();
+  console.log("URL ID:", id);
+
   loadDataset(id);
 }
 
@@ -16,45 +17,24 @@ function initDatasetPage() {
 ========================================================= */
 
 async function loadDataset(id) {
-  try {
-    const datasets = await fetchDatasets();
+  const data = await fetchDatasets();
 
-    const dataset = datasets.find(currentDataset => {
-      return currentDataset.id === id;
-    });
+  const dataset = data.find(d => d.id === id);
 
-    if (!dataset) {
-      renderNotFound(id);
-      return;
-    }
+  console.log("DATASET FOUND:", dataset);
 
-    renderDataset(dataset);
-
-    if (dataset.source?.url) {
-      loadPreview(dataset.source.url);
-    }
-  } catch (error) {
-    console.error(
-      "Unable to load the dataset:",
-      error
-    );
-
-    renderLoadError();
+  if (!dataset) {
+    renderNotFound(id);
+    return;
   }
+
+  renderDataset(dataset);
+  loadPreview(dataset.source.url);
 }
 
 async function fetchDatasets() {
-  const response = await fetch(
-    "./data/datasets.json"
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Unable to load datasets.json: ${response.status}`
-    );
-  }
-
-  return response.json();
+  const res = await fetch("./data/datasets.json");
+  return await res.json();
 }
 
 /* =========================================================
@@ -62,507 +42,117 @@ async function fetchDatasets() {
 ========================================================= */
 
 function getDatasetIdFromURL() {
-  const parameters = new URLSearchParams(
-    window.location.search
-  );
-
-  return parameters.get("id");
+  return new URLSearchParams(window.location.search).get("id");
 }
 
 /* =========================================================
-   RENDER MAIN DATASET PAGE
+   RENDER: MAIN DATASET PAGE
 ========================================================= */
 
-function renderDataset(dataset) {
-  setText("title", dataset.title);
-  setText("description", dataset.description);
-  setText("whatsincluded", dataset.whatsincluded);
-  setText("howitsgenerated", dataset.howitsgenerated);
-  setText("limitations", dataset.limitations);
-  setText("whypublish", dataset.whypublish);
+function renderDataset(d) {
+  setText("title", d.title);
+  setText("description", d.description);
+  setText("whatsincluded", d.whatsincluded);
+  setText("howitsgenerated", d.howitsgenerated);
+  setText("limitations", d.limitations);
+  setText("whypublish", d.whypublish);
+  renderRelatedLinks(d.relatedlinks);
 
-  setMetadata(
-    "agency",
-    "Source Agency:",
-    dataset.agency
-  );
+  setHTML("agency", `
+    <p><b>Source Agency:</b> ${d.agency}</p>
+  `);
 
-  setMetadata(
-    "updatedt",
-    "Updated:",
-    formatDate(dataset.updatedt)
-  );
+  setHTML("updatedt", `
+    <p><b>Updated:</b> ${d.updatedt}</p>
+  `);
 
-  // Processed CANY dataset download
-  configureDownloadLink(
-    dataset.source?.url
-  );
+  const download = document.getElementById("download");
+  if (download) download.href = d.source.url;
 
-  // CANY dashboard
-  configureDashboardLink(
-    dataset.dashboard?.pageUrl ||
-    dataset.dashboard?.embedUrl
-  );
-
-  // Original source-data ZIP archive
-  configureSourceDataLink(
-    dataset.sourceData?.url
-  );
-
-  renderFieldsTable(dataset.fields);
-
-  // Dashboard is no longer passed into Related Content.
-  renderRelatedContent(dataset.relatedlinks);
+  renderFieldsTable(d.fields);
 }
 
 /* =========================================================
-   DATASET METADATA
+   RELATED LINKS
 ========================================================= */
 
-function setMetadata(
-  elementId,
-  label,
-  value
-) {
-  const element =
-    document.getElementById(elementId);
+function renderRelatedLinks(links = []) {
+  const container = document.getElementById("relatedlinks");
+  if (!container) return;
 
-  if (!element) {
+  if (!Array.isArray(links) || links.length === 0) {
+    container.innerText = "No related resources listed.";
     return;
   }
 
-  element.replaceChildren();
+  container.innerHTML = links.map(link => {
+    const title = link.title || "Untitled resource";
+    const description = link.description
+      ? ` \u2014 ${link.description}`
+      : "";
 
-  if (!value) {
-    return;
-  }
+    if (link.url) {
+      return `
+        <p>
+          <a href="${link.url}" target="_blank" rel="noopener noreferrer">
+            ${title}
+          </a>${description}
+        </p>
+      `;
+    }
 
-  const paragraph =
-    document.createElement("p");
-
-  const labelElement =
-    document.createElement("strong");
-
-  labelElement.textContent = `${label} `;
-
-  paragraph.appendChild(labelElement);
-
-  paragraph.appendChild(
-    document.createTextNode(value)
-  );
-
-  element.appendChild(paragraph);
+    // No URL available yet -- show as plain text rather than a dead link.
+    return `<p><strong>${title}</strong>${description}</p>`;
+  }).join("");
 }
 
 /* =========================================================
-   PROCESSED DATA DOWNLOAD
-========================================================= */
-
-function configureDownloadLink(url) {
-  const downloadLink =
-    document.getElementById("download");
-
-  configureOptionalLink(
-    downloadLink,
-    url
-  );
-}
-
-/* =========================================================
-   DASHBOARD LINK
-========================================================= */
-
-function configureDashboardLink(url) {
-  const dashboardLink =
-    document.getElementById("dashboard-link");
-
-  configureOptionalLink(
-    dashboardLink,
-    url
-  );
-}
-
-/* =========================================================
-   SOURCE DATA DOWNLOAD
-========================================================= */
-
-function configureSourceDataLink(url) {
-  const sourceDataLink =
-    document.getElementById(
-      "source-data-download"
-    );
-
-  configureOptionalLink(
-    sourceDataLink,
-    url
-  );
-}
-
-/* =========================================================
-   OPTIONAL LINK HELPER
-========================================================= */
-
-function configureOptionalLink(
-  link,
-  url
-) {
-  if (!link) {
-    return;
-  }
-
-  if (!url) {
-    link.hidden = true;
-    link.removeAttribute("href");
-    return;
-  }
-
-  link.href = url;
-  link.hidden = false;
-}
-
-/* =========================================================
-   ERROR STATES
+   RENDER: ERROR STATE
 ========================================================= */
 
 function renderNotFound(id) {
-  const container = document.querySelector(
-    ".dataset-page .container"
-  );
-
-  if (!container) {
-    return;
-  }
-
-  container.replaceChildren();
-
-  const heading =
-    document.createElement("h1");
-
-  const message =
-    document.createElement("p");
-
-  const backLink =
-    document.createElement("a");
-
-  heading.textContent = "Dataset not found";
-
-  message.textContent = id
-    ? `No dataset was found with the ID "${id}".`
-    : "No dataset ID was provided in the URL.";
-
-  backLink.href = "index.html";
-  backLink.className = "back-link";
-  backLink.textContent = "← Back to datasets";
-
-  container.appendChild(heading);
-  container.appendChild(message);
-  container.appendChild(backLink);
-}
-
-function renderLoadError() {
-  const container = document.querySelector(
-    ".dataset-page .container"
-  );
-
-  if (!container) {
-    return;
-  }
-
-  container.replaceChildren();
-
-  const heading =
-    document.createElement("h1");
-
-  const message =
-    document.createElement("p");
-
-  const backLink =
-    document.createElement("a");
-
-  heading.textContent =
-    "Unable to load dataset";
-
-  message.textContent =
-    "The dataset information could not be loaded. Please try again.";
-
-  backLink.href = "index.html";
-  backLink.className = "back-link";
-  backLink.textContent = "← Back to datasets";
-
-  container.appendChild(heading);
-  container.appendChild(message);
-  container.appendChild(backLink);
+  document.body.innerHTML = `
+    <div class="container">
+      <h2>Dataset not found</h2>
+      <p><b>ID:</b> ${id}</p>
+    </div>
+  `;
 }
 
 /* =========================================================
-   FIELDS / DATA DICTIONARY
+   FIELDS TABLE (SCHEMA)
 ========================================================= */
 
 function renderFieldsTable(fields = []) {
-  const table =
-    document.getElementById("fields");
+  const table = document.getElementById("fields");
+  if (!table) return;
 
-  if (!table) {
-    return;
-  }
-
-  table.replaceChildren();
-
-  const tableHead =
-    document.createElement("thead");
-
-  const headingRow =
-    document.createElement("tr");
-
-  const headings = [
-    "Field name",
-    "Description",
-    "Data type"
-  ];
-
-  headings.forEach(heading => {
-    const tableHeading =
-      document.createElement("th");
-
-    tableHeading.scope = "col";
-    tableHeading.textContent = heading;
-
-    headingRow.appendChild(tableHeading);
-  });
-
-  tableHead.appendChild(headingRow);
-  table.appendChild(tableHead);
-
-  const tableBody =
-    document.createElement("tbody");
-
-  if (!Array.isArray(fields) || !fields.length) {
-    const row =
-      document.createElement("tr");
-
-    const cell =
-      document.createElement("td");
-
-    cell.colSpan = headings.length;
-
-    cell.textContent =
-      "No field definitions are available.";
-
-    row.appendChild(cell);
-    tableBody.appendChild(row);
-  } else {
-    fields.forEach(field => {
-      const row =
-        document.createElement("tr");
-
-      appendTableCell(
-        row,
-        field.name
-      );
-
-      appendTableCell(
-        row,
-        field.description ||
-        field.label
-      );
-
-      appendTableCell(
-        row,
-        field.type
-      );
-
-      tableBody.appendChild(row);
-    });
-  }
-
-  table.appendChild(tableBody);
-}
-
-function appendTableCell(
-  row,
-  value
-) {
-  const cell =
-    document.createElement("td");
-
-  cell.textContent = value ?? "";
-
-  row.appendChild(cell);
+  table.innerHTML = fields.map(f => `
+    <tr>
+      <td>${f.name}</td>
+      <td>${f.label}</td>
+      <td>${f.type}</td>
+    </tr>
+  `).join("");
 }
 
 /* =========================================================
-   RELATED CONTENT
-========================================================= */
-
-function renderRelatedContent(relatedLinks) {
-  const container =
-    document.getElementById("relatedlinks");
-
-  if (!container) {
-    return;
-  }
-
-  container.replaceChildren();
-
-  const items =
-    normalizeRelatedLinks(relatedLinks);
-
-  if (!items.length) {
-    const message =
-      document.createElement("p");
-
-    message.textContent =
-      "No related content is available.";
-
-    container.appendChild(message);
-    return;
-  }
-
-  const list =
-    document.createElement("ul");
-
-  list.className = "related-links-list";
-
-  items.forEach(item => {
-    const listItem =
-      document.createElement("li");
-
-    if (
-      typeof item === "object" &&
-      item !== null
-    ) {
-      renderRelatedLinkObject(
-        listItem,
-        item
-      );
-    } else {
-      listItem.textContent =
-        String(item);
-    }
-
-    list.appendChild(listItem);
-  });
-
-  container.appendChild(list);
-}
-
-/* =========================================================
-   NORMALIZE RELATED LINKS
-========================================================= */
-
-function normalizeRelatedLinks(relatedLinks) {
-  if (!relatedLinks) {
-    return [];
-  }
-
-  if (Array.isArray(relatedLinks)) {
-    return relatedLinks.filter(item => {
-      if (
-        typeof item === "object" &&
-        item !== null
-      ) {
-        return true;
-      }
-
-      return String(item).trim() !== "";
-    });
-  }
-
-  return String(relatedLinks)
-    .split(/(?:^|\s+)-\s+/)
-    .map(item => item.trim())
-    .filter(Boolean);
-}
-
-/* =========================================================
-   RELATED LINK OBJECTS
-========================================================= */
-
-function renderRelatedLinkObject(
-  listItem,
-  item
-) {
-  const label =
-    item.title ||
-    item.label ||
-    item.name ||
-    item.url;
-
-  if (!item.url) {
-    listItem.textContent =
-      label || "";
-
-    return;
-  }
-
-  const anchor =
-    document.createElement("a");
-
-  anchor.href = item.url;
-
-  anchor.textContent =
-    label || "View related content";
-
-  anchor.target = "_blank";
-  anchor.rel = "noopener noreferrer";
-
-  listItem.appendChild(anchor);
-
-  if (item.description) {
-    listItem.appendChild(
-      document.createTextNode(
-        `: ${item.description}`
-      )
-    );
-  }
-}
-
-/* =========================================================
-   DATA PREVIEW
+   PREVIEW PIPELINE
 ========================================================= */
 
 async function loadPreview(url) {
-  const previewTable =
-    document.getElementById("preview");
+  const text = await fetchText(url);
 
-  if (!previewTable) {
-    return;
-  }
+  const cleaned = cleanText(text);
+  const delimiter = detectDelimiter(cleaned);
 
-  try {
-    const text = await fetchText(url);
+  console.log("DETECTED DELIMITER:", delimiter);
 
-    const cleanedText =
-      cleanText(text);
+  const rows = parseDelimited(cleaned, delimiter);
 
-    if (!cleanedText) {
-      renderPreviewMessage(
-        "No preview data is available."
-      );
+  console.log("FIRST ROW:", rows[0]);
 
-      return;
-    }
-
-    const delimiter =
-      detectDelimiter(cleanedText);
-
-    const rows =
-      parseDelimited(
-        cleanedText,
-        delimiter
-      );
-
-    renderPreviewTable(rows);
-  } catch (error) {
-    console.error(
-      "Unable to load data preview:",
-      error
-    );
-
-    renderPreviewMessage(
-      "The data preview could not be loaded."
-    );
-  }
+  renderPreviewTable(rows);
 }
 
 /* =========================================================
@@ -570,15 +160,8 @@ async function loadPreview(url) {
 ========================================================= */
 
 async function fetchText(url) {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(
-      `Unable to load preview data: ${response.status}`
-    );
-  }
-
-  return response.text();
+  const res = await fetch(url);
+  return await res.text();
 }
 
 /* =========================================================
@@ -587,347 +170,66 @@ async function fetchText(url) {
 
 function cleanText(text) {
   return text
-    .replace(/^\uFEFF/, "")
-    .replace(/\r/g, "")
+    .replace(/^\uFEFF/, "") // BOM
+    .replace(/\r/g, "")     // Windows line endings
     .trim();
 }
 
 /* =========================================================
-   DELIMITER DETECTION
+   DELIMITED PARSING
 ========================================================= */
 
 function detectDelimiter(text) {
-  const firstLine =
-    text.split("\n")[0];
+  const line = text.split("\n")[0];
 
-  const delimiterCounts = {
-    "|": countOccurrences(firstLine, "|"),
-    ",": countOccurrences(firstLine, ","),
-    "\t": countOccurrences(firstLine, "\t")
+  const counts = {
+    "|": (line.match(/\|/g) || []).length,
+    ",": (line.match(/,/g) || []).length,
+    "\t": (line.match(/\t/g) || []).length
   };
 
-  return Object.entries(delimiterCounts)
-    .reduce(
-      (
-        bestDelimiter,
-        currentDelimiter
-      ) => {
-        return currentDelimiter[1] >
-          bestDelimiter[1]
-          ? currentDelimiter
-          : bestDelimiter;
-      }
+  return Object.entries(counts)
+    .reduce((best, current) =>
+      current[1] > best[1] ? current : best
     )[0];
 }
 
-function countOccurrences(
-  text,
-  character
-) {
-  return text.split(character).length - 1;
-}
-
-/* =========================================================
-   DELIMITED TEXT PARSING
-========================================================= */
-
-function parseDelimited(
-  text,
-  delimiter
-) {
+function parseDelimited(text, delimiter) {
   return text
     .split("\n")
-    .map(row => {
-      return parseDelimitedRow(
-        row,
-        delimiter
-      );
-    })
-    .filter(row => {
-      return row.some(cell => {
-        return cell.trim() !== "";
-      });
-    });
-}
-
-function parseDelimitedRow(
-  row,
-  delimiter
-) {
-  const cells = [];
-
-  let currentCell = "";
-  let insideQuotes = false;
-
-  for (
-    let index = 0;
-    index < row.length;
-    index += 1
-  ) {
-    const character =
-      row[index];
-
-    const nextCharacter =
-      row[index + 1];
-
-    if (
-      character === "\"" &&
-      insideQuotes &&
-      nextCharacter === "\""
-    ) {
-      currentCell += "\"";
-      index += 1;
-      continue;
-    }
-
-    if (character === "\"") {
-      insideQuotes = !insideQuotes;
-      continue;
-    }
-
-    if (
-      character === delimiter &&
-      !insideQuotes
-    ) {
-      cells.push(
-        currentCell.trim()
-      );
-
-      currentCell = "";
-
-      continue;
-    }
-
-    currentCell += character;
-  }
-
-  cells.push(
-    currentCell.trim()
-  );
-
-  return cells;
+    .map(r => r.split(delimiter))
+    .filter(r => r.length > 1);
 }
 
 /* =========================================================
-   PREVIEW TABLE RENDERING
+   TABLE RENDERING (PREVIEW)
 ========================================================= */
 
 function renderPreviewTable(rows) {
-  const table =
-    document.getElementById("preview");
+  const table = document.createElement("table");
 
-  if (!table) {
-    return;
-  }
+  rows.slice(0, 10).forEach((row, i) => {
+    const tr = document.createElement("tr");
 
-  table.replaceChildren();
-
-  if (!rows.length) {
-    renderPreviewMessage(
-      "No preview data is available."
-    );
-
-    return;
-  }
-
-  const previewRows =
-    rows.slice(0, 10);
-
-  const tableHead =
-    document.createElement("thead");
-
-  const tableBody =
-    document.createElement("tbody");
-
-  previewRows.forEach(
-    (row, rowIndex) => {
-      const tableRow =
-        document.createElement("tr");
-
-      row.forEach(cellValue => {
-        const cell =
-          document.createElement(
-            rowIndex === 0
-              ? "th"
-              : "td"
-          );
-
-        cell.textContent = cellValue;
-
-        if (rowIndex === 0) {
-          cell.scope = "col";
-        }
-
-        tableRow.appendChild(cell);
-      });
-
-      if (rowIndex === 0) {
-        tableHead.appendChild(tableRow);
-      } else {
-        tableBody.appendChild(tableRow);
-      }
-    }
-  );
-
-  table.appendChild(tableHead);
-  table.appendChild(tableBody);
-}
-
-function renderPreviewMessage(message) {
-  const table =
-    document.getElementById("preview");
-
-  if (!table) {
-    return;
-  }
-
-  table.replaceChildren();
-
-  const tableBody =
-    document.createElement("tbody");
-
-  const row =
-    document.createElement("tr");
-
-  const cell =
-    document.createElement("td");
-
-  cell.textContent = message;
-
-  row.appendChild(cell);
-  tableBody.appendChild(row);
-  table.appendChild(tableBody);
-}
-
-/* =========================================================
-   DATASET NAVIGATION TABS
-========================================================= */
-
-function bindDatasetTabs() {
-  const tabs = document.querySelectorAll(
-    ".dataset-tabs .tab"
-  );
-
-  const tabContents =
-    document.querySelectorAll(
-      ".tab-content"
-    );
-
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      const selectedTabId =
-        tab.dataset.tab;
-
-      const selectedContent =
-        document.getElementById(
-          selectedTabId
-        );
-
-      if (!selectedContent) {
-        return;
-      }
-
-      tabs.forEach(currentTab => {
-        const isSelected =
-          currentTab === tab;
-
-        currentTab.classList.toggle(
-          "active",
-          isSelected
-        );
-
-        currentTab.setAttribute(
-          "aria-selected",
-          String(isSelected)
-        );
-      });
-
-      tabContents.forEach(content => {
-        const isSelected =
-          content === selectedContent;
-
-        content.classList.toggle(
-          "active",
-          isSelected
-        );
-
-        content.hidden = !isSelected;
-      });
+    row.forEach(cell => {
+      const td = document.createElement(i === 0 ? "th" : "td");
+      td.textContent = cell;
+      tr.appendChild(td);
     });
+
+    table.appendChild(tr);
   });
 
-  initializeTabAccessibility(
-    tabs,
-    tabContents
-  );
-}
+  const wrapper = document.createElement("div");
+  wrapper.className = "table-wrapper";
+  wrapper.appendChild(table);
 
-function initializeTabAccessibility(
-  tabs,
-  tabContents
-) {
-  tabs.forEach(tab => {
-    const isActive =
-      tab.classList.contains("active");
+  const preview = document.getElementById("preview");
 
-    tab.setAttribute(
-      "role",
-      "tab"
-    );
-
-    tab.setAttribute(
-      "aria-selected",
-      String(isActive)
-    );
-  });
-
-  tabContents.forEach(content => {
-    const isActive =
-      content.classList.contains("active");
-
-    content.setAttribute(
-      "role",
-      "tabpanel"
-    );
-
-    content.hidden = !isActive;
-  });
-}
-
-/* =========================================================
-   DATE FORMATTING
-========================================================= */
-
-function formatDate(dateValue) {
-  if (!dateValue) {
-    return "";
+  if (preview) {
+    preview.innerHTML = "";
+    preview.appendChild(wrapper);
   }
-
-  const originalValue =
-    String(dateValue);
-
-  const normalizedValue =
-    /^\d{4}-\d{2}-\d{2}$/.test(
-      originalValue
-    )
-      ? `${originalValue}T00:00:00`
-      : originalValue;
-
-  const date =
-    new Date(normalizedValue);
-
-  if (Number.isNaN(date.getTime())) {
-    return originalValue;
-  }
-
-  return date.toLocaleDateString(
-    "en-US",
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    }
-  );
 }
 
 /* =========================================================
@@ -935,11 +237,11 @@ function formatDate(dateValue) {
 ========================================================= */
 
 function setText(id, value) {
-  const element =
-    document.getElementById(id);
+  const el = document.getElementById(id);
+  if (el) el.innerText = value ?? "";
+}
 
-  if (element) {
-    element.textContent =
-      value ?? "";
-  }
+function setHTML(id, html) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = html ?? "";
 }
