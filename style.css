@@ -1,5 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap");
+
 /* =========================================================
-   BASE RESET + GLOBAL SETTINGS
+   COLOR VARIABLES
+========================================================= */
+
+:root {
+  --teal-left: #3f5e62;
+  --teal-middle: #34636b;
+  --teal-right: #26798a;
+  --teal: #3690aa;
+  --teal-dark: #2c7c94;
+  --teal-light: #a9e0ec;
+
+  --page-gray: #f3f5f5;
+  --light-gray: #f7f8f8;
+  --medium-gray: #e1e5e6;
+
+  --dark-text: #172326;
+  --muted-text: #5d696c;
+  --white: #ffffff;
+  --black: #000000;
+  --border-gray: #cbd2d4;
+}
+
+/* =========================================================
+   BASE
 ========================================================= */
 
 *,
@@ -8,263 +33,1796 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #ffffff;
-  color: #1f2937;
-  line-height: 1.5;
+
+  background: var(--page-gray);
+  color: var(--dark-text);
+
+  font-family:
+    "Work Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+
+  white-space: nowrap;
+  border: 0;
 }
 
 /* =========================================================
    TYPOGRAPHY
 ========================================================= */
 
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+}
+
 h1 {
-  font-size: 28px;
-  margin: 0 0 10px;
+  margin: 0 0 16px;
+  font-size: clamp(34px, 5vw, 62px);
+  font-weight: 700;
 }
 
 h2 {
+  margin: 0 0 24px;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700;
+}
+
+h3 {
+  margin: 0 0 14px;
   font-size: 20px;
-  margin: 30px 0 10px;
+  font-weight: 700;
+}
+
+p {
+  margin-top: 0;
+}
+
+a {
+  color: inherit;
 }
 
 /* =========================================================
-   PAGE LAYOUTS
+   GENERAL BUTTON
 ========================================================= */
 
-/* Dataset detail page */
-.dataset-page {
-  background: #fff;
+.button {
+  display: inline-block;
+  padding: 13px 22px;
+
+  background: var(--teal);
+  color: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 5px;
+
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
-.dataset-page .container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 24px;
-}
-
-/* Search / catalog page */
-.search-page .layout {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  padding: 0 20px;
-}
-
-.search-page .sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  padding: 24px;
-}
-
-.search-page main {
-  flex: 1;
-  padding: 24px;
-  min-width: 0;
+.button:hover {
+  background: var(--teal-dark);
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
 /* =========================================================
-   SEARCH INPUT
+   CATALOG PAGE
 ========================================================= */
 
-#search {
+.search-page {
+  min-height: 100vh;
+  background: var(--page-gray);
+}
+
+/* =========================================================
+   CATALOG HEADER
+========================================================= */
+
+.catalog-hero {
   width: 100%;
-  padding: 14px 18px;
-  font-size: 16px;
+  padding: 52px 5vw;
 
-  border: 1px solid #d1d5db;
-  border-radius: 14px;
-  background: #fff;
+  background:
+    linear-gradient(
+      90deg,
+      var(--teal-left) 0%,
+      var(--teal-middle) 50%,
+      var(--teal-right) 100%
+    );
 
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-  outline: none;
+  color: var(--white);
 }
 
-#search:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+.catalog-hero-inner {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+}
+
+.catalog-hero h1 {
+  max-width: 950px;
+  margin: 0;
+
+  color: var(--white);
+
+  font-size: clamp(38px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.catalog-hero-description {
+  max-width: 780px;
+  margin: 18px 0 0;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 /* =========================================================
-   FILTER SYSTEM (SIDEBAR FACETS)
+   CATALOG LAYOUT
 ========================================================= */
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 255px minmax(0, 1fr);
+  align-items: start;
+
+  width: min(1380px, calc(100% - 80px));
+  margin: 38px auto 0;
+  padding-bottom: 75px;
+
+  background: var(--white);
+
+  border: 1px solid var(--border-gray);
+  border-radius: 3px;
+
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+.catalog-main {
+  min-width: 0;
+  padding: 34px 38px 48px;
+}
+
+/* =========================================================
+   CATALOG SIDEBAR
+========================================================= */
+
+.catalog-sidebar {
+  align-self: stretch;
+
+  min-height: 100%;
+  padding-bottom: 32px;
+
+  background: var(--white);
+  color: var(--dark-text);
+
+  border-right: 1px solid var(--border-gray);
+}
+
+.sidebar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  min-height: 72px;
+  padding: 19px 24px;
+
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.sidebar-heading h2 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.mobile-filter-toggle {
+  display: none;
+  padding: 4px 8px;
+
+  background: transparent;
+  color: var(--teal-dark);
+
+  border: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+#filter-content {
+  padding: 24px;
+}
+
+.filter-group {
+  margin-bottom: 30px;
+}
+
+.filter-group h3 {
+  margin: 0 0 13px;
+
+  color: var(--dark-text);
+
+  font-size: 17px;
+  font-weight: 700;
+}
 
 #agencyFilters,
 #tagFilters {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 18px;
+  gap: 7px;
 }
 
-/* Filter item (default state) */
-.search-page .filter-item {
+/* =========================================================
+   FILTER ITEMS
+========================================================= */
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  width: 100%;
+  padding: 7px 4px;
+
+  background: transparent;
+  color: #334145;
+
+  border: 0;
+  border-radius: 3px;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.filter-item:hover {
+  background: #edf3f4;
+  color: var(--teal-dark);
+}
+
+.filter-circle {
+  position: relative;
+
   display: block;
-  padding: 8px 10px;
+  flex-shrink: 0;
 
-  background: #e5e7eb;
-  color: #111827;
+  width: 21px;
+  height: 21px;
 
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
+  background: var(--white);
 
-  user-select: none;
-  transition: background 0.15s ease;
+  border: 2px solid #788589;
+  border-radius: 50%;
 }
 
-/* Hover state */
-.search-page .filter-item:hover {
-  background: #dbeafe;
+.filter-item.active {
+  color: var(--teal-dark);
+  font-weight: 700;
 }
 
-/* Active / selected state */
-.search-page .filter-item.active {
-  background: #2563eb;
-  color: #ffffff;
+.filter-item.active .filter-circle {
+  border-color: var(--teal-middle);
 }
 
-/* Keep active stable on hover */
-.search-page .filter-item.active:hover {
-  background: #2563eb;
+.filter-item.active .filter-circle::after {
+  content: "";
+
+  position: absolute;
+  inset: 4px;
+
+  background: var(--teal-middle);
+
+  border-radius: 50%;
+}
+
+.filter-item:focus-visible {
+  outline: 3px solid rgba(54, 144, 170, 0.22);
+  outline-offset: 2px;
+}
+
+.filter-item-label {
+  overflow-wrap: anywhere;
+}
+
+.clear-filters-link {
+  display: inline-block;
+
+  color: var(--teal-dark);
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.clear-filters-link:hover {
+  color: var(--dark-text);
+  text-decoration-thickness: 2px;
 }
 
 /* =========================================================
-   BUTTONS (GLOBAL ACTIONS ONLY)
+   CATALOG TOOLBAR
 ========================================================= */
 
-.search-page button {
-  background: #2563eb;
-  color: white;
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
 
-  border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-
-  cursor: pointer;
+  margin-bottom: 36px;
 }
 
-/* =========================================================
-   NAV LINKS (e.g. Clear filters)
-========================================================= */
+.catalog-title {
+  flex-shrink: 0;
+}
 
-.nav-link {
-  color: #0066cc;
-  text-decoration: none;
+.catalog-title h2 {
+  margin: 0 0 5px;
+
+  color: var(--dark-text);
+
+  font-size: clamp(31px, 3vw, 40px);
+  font-weight: 500;
+}
+
+.catalog-title p {
+  margin: 0;
+
+  color: var(--muted-text);
+
   font-size: 14px;
 }
 
-.nav-link:hover {
-  text-decoration: underline;
-}
-
 /* =========================================================
-   DATA CARDS (SEARCH RESULTS)
+   CATALOG SEARCH
 ========================================================= */
 
-.card {
+.catalog-search {
+  position: relative;
+  width: min(470px, 48%);
+}
+
+.catalog-search .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+
+  color: #657174;
+
+  font-size: 18px;
+  line-height: 1;
+
+  pointer-events: none;
+
+  transform: translateY(-50%);
+}
+
+#search {
+  display: block;
+
   width: 100%;
-  background: #fff;
+  padding: 13px 20px 13px 48px;
 
-  border-radius: 14px;
-  border: 1px solid #c9d0dd;
+  background: var(--white);
+  color: var(--dark-text);
 
-  padding: 16px 18px;
-  margin: 14px 0;
+  border: 1px solid #9ba5a8;
+  border-radius: 28px;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  font-size: 16px;
 
-  overflow:hidden;
+  box-shadow: none;
+  outline: none;
 }
 
-.card h1,
-.card h2 {
-  margin-top: 0;
+#search::placeholder {
+  color: #697477;
 }
 
-.card p {
-  margin: 0 0 10px;
+#search:hover {
+  border-color: #69777b;
+}
+
+#search:focus {
+  border-color: var(--teal-dark);
+  box-shadow: 0 0 0 3px rgba(54, 144, 170, 0.18);
+}
+
+#search::-webkit-search-decoration {
+  display: none;
 }
 
 /* =========================================================
-   DATASET PAGE LINKS
+   RESULTS TOOLBAR
 ========================================================= */
 
-.dataset-page a {
-  color: #2563eb;
+.results-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px 20px;
+
+  min-height: 44px;
+  margin-bottom: 22px;
+}
+
+.results-count {
+  color: #3f4d51;
+
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.results-count strong {
+  color: var(--dark-text);
+  font-size: 18px;
+}
+
+.active-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  min-height: 34px;
+  padding: 5px 12px;
+
+  background: var(--white);
+  color: var(--teal-dark);
+
+  border: 1px solid var(--teal-dark);
+  border-radius: 18px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.active-filter-pill:hover {
+  background: var(--teal-dark);
+  color: var(--white);
+}
+
+.remove-filter-icon {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 0.8;
+}
+
+.clear-results-link {
+  color: var(--teal-dark);
+
+  font-size: 14px;
+  font-weight: 700;
   text-decoration: none;
 }
 
-.dataset-page a:hover {
+.clear-results-link:hover {
+  color: var(--dark-text);
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* =========================================================
-   TABLES (DATA PREVIEW)
+   DATASET CATALOG RESULTS
 ========================================================= */
+
+.dataset-list,
+#datasetList {
+  display: grid;
+  gap: 20px;
+}
+
+.catalog-card {
+  overflow: hidden;
+  width: 100%;
+
+  background: var(--white);
+  color: var(--dark-text);
+
+  border: 1px solid var(--border-gray);
+  border-radius: 4px;
+
+  box-shadow: 0 1px 4px rgb(0 0 0 / 5%);
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.catalog-card:hover {
+  border-color: #78989e;
+
+  box-shadow: 0 5px 14px rgb(0 0 0 / 9%);
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   CATALOG CARD HEADER
+========================================================= */
+
+.catalog-card-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  min-height: 70px;
+  padding: 16px 22px;
+
+  background: #fbfcfc;
+
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.catalog-dataset-icon {
+  display: grid;
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+
+  place-items: center;
+
+  background: var(--teal-middle);
+  color: var(--white);
+
+  border-radius: 3px;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.catalog-card-title {
+  color: #254f56;
+
+  font-size: clamp(21px, 2.1vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.catalog-card-title:hover {
+  color: var(--teal-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.catalog-card-title:focus-visible {
+  outline: 3px solid rgba(54, 144, 170, 0.25);
+  outline-offset: 3px;
+}
+
+.catalog-card-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  margin-left: 3px;
+}
+
+.type-badge,
+.agency-badge {
+  display: inline-block;
+  padding: 4px 9px;
+
+  border-radius: 14px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.025em;
+}
+
+.type-badge {
+  background: var(--teal-middle);
+  color: var(--white);
+
+  text-transform: uppercase;
+}
+
+.agency-badge {
+  background: #e4edef;
+  color: #365c62;
+
+  border: 1px solid #c3d1d3;
+}
+
+/* =========================================================
+   CATALOG CARD BODY
+========================================================= */
+
+.catalog-card-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+}
+
+.catalog-card-description {
+  min-width: 0;
+  padding: 24px 25px;
+
+  border-right: 1px solid var(--border-gray);
+}
+
+.catalog-card-description p {
+  display: -webkit-box;
+
+  margin: 0 0 18px;
+
+  overflow: hidden;
+
+  color: #334246;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.view-dataset-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--teal-dark);
+
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.view-dataset-link:hover {
+  color: var(--dark-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.view-dataset-link span {
+  font-size: 19px;
+  line-height: 1;
+}
+
+/* =========================================================
+   CATALOG CARD METADATA
+========================================================= */
+
+.catalog-card-metadata {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+
+  margin: 0;
+  padding: 24px 22px;
+
+  background: #fbfcfc;
+}
+
+.metadata-item {
+  margin: 0;
+}
+
+.metadata-item dt {
+  margin: 0 0 1px;
+
+  color: #687579;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.metadata-item dd {
+  margin: 0;
+
+  color: var(--dark-text);
+
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   CATALOG CARD FOOTER
+========================================================= */
+
+.catalog-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  min-height: 62px;
+  padding: 13px 24px;
+
+  background: #fbfcfc;
+
+  border-top: 1px solid var(--border-gray);
+}
+
+.tags-label {
+  flex-shrink: 0;
+
+  color: #3d4b4f;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.catalog-card-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.dataset-tag {
+  display: inline-block;
+  padding: 4px 10px;
+
+  background: var(--white);
+  color: var(--teal-dark);
+
+  border: 1px solid var(--teal-dark);
+  border-radius: 15px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.dataset-tag:hover {
+  background: var(--teal-dark);
+  color: var(--white);
+}
+
+.dataset-tag:focus-visible {
+  outline: 3px solid rgba(54, 144, 170, 0.22);
+  outline-offset: 2px;
+}
+
+.no-tags {
+  color: #778286;
+
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* =========================================================
+   CATALOG EMPTY AND ERROR STATES
+========================================================= */
+
+.empty-results {
+  padding: 42px 28px;
+
+  background: var(--white);
+
+  border: 1px solid var(--border-gray);
+  border-radius: 4px;
+
+  text-align: center;
+}
+
+.empty-results h3 {
+  margin: 0 0 9px;
+
+  color: var(--dark-text);
+  font-size: 23px;
+}
+
+.empty-results p {
+  margin: 0 0 20px;
+  color: var(--muted-text);
+}
+
+.empty-clear-button {
+  display: inline-block;
+  padding: 9px 16px;
+
+  background: var(--teal-middle);
+  color: var(--white);
+
+  border: 1px solid var(--teal-middle);
+  border-radius: 4px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.empty-clear-button:hover {
+  background: var(--teal-left);
+}
+
+.error-message {
+  border-left: 5px solid #9c3e3e;
+}
+
+/* =========================================================
+   DATASET DETAIL PAGE
+========================================================= */
+
+.dataset-page {
+  min-height: 100vh;
+  background: #e3e9eb;
+}
+
+.dataset-page .container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================================
+   DATASET DETAIL HEADER
+========================================================= */
+
+.dataset-top {
+  position: relative;
+
+  width: 100%;
+  padding:
+    34px
+    max(5vw, calc((100vw - 1200px) / 2))
+    0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--teal-left) 0%,
+      var(--teal-middle) 50%,
+      var(--teal-right) 100%
+    );
+
+  color: var(--white);
+}
+
+.dataset-top::after {
+  content: "";
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
+  margin-top: 40px;
+
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 38px;
+
+  color: var(--white);
+
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.dataset-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+
+  width: min(1200px, 100%);
+}
+
+.dataset-heading-text {
+  flex: 1 1 480px;
+  min-width: 0;
+}
+
+.dataset-heading h1 {
+  max-width: 900px;
+
+  color: var(--white);
+
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+#description {
+  max-width: 850px;
+  margin-bottom: 18px;
+
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.dataset-page .dataset-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 30px;
+
+  margin-top: 18px;
+}
+
+.dataset-page .dataset-metadata p {
+  margin: 0;
+}
+
+/* =========================================================
+   DATASET HEADER ACTION BUTTONS
+========================================================= */
+
+.dataset-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  max-width: 620px;
+  margin-bottom: 5px;
+}
+
+.dataset-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 52px;
+  padding: 13px 22px;
+
+  background: transparent;
+  color: var(--white);
+
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.dataset-action-button:hover {
+  background: var(--white);
+  color: var(--teal-left);
+
+  border-color: var(--white);
+
+  text-decoration: none;
+
+  box-shadow: 0 5px 12px rgb(0 0 0 / 18%);
+  transform: translateY(-2px);
+}
+
+.dataset-action-button:focus-visible {
+  outline: 3px solid var(--teal-light);
+  outline-offset: 3px;
+}
+
+.primary-action {
+  min-height: 58px;
+  padding: 16px 29px;
+
+  background: var(--white);
+  color: var(--teal-left);
+
+  border-color: var(--white);
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.primary-action:hover {
+  background: var(--teal-light);
+  color: var(--dark-text);
+
+  border-color: var(--teal-light);
+}
+
+.secondary-action {
+  background: transparent;
+  color: var(--white);
+
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================================
+   DATASET TABS
+========================================================= */
+
+.dataset-tabs {
+  display: flex;
+  gap: 8px;
+
+  width: min(1200px, 100%);
+  margin-top: 42px;
+}
+
+.dataset-tabs .tab {
+  position: relative;
+
+  padding: 14px 24px;
+
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+
+  border: 0;
+  border-bottom: 4px solid transparent;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.dataset-tabs .tab:hover {
+  color: var(--white);
+}
+
+.dataset-tabs .tab.active {
+  color: var(--white);
+  border-bottom-color: var(--white);
+}
+
+.dataset-tabs .tab:focus-visible {
+  outline: 3px solid var(--teal-light);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   TAB CONTENT
+========================================================= */
+
+.tab-content {
+  display: none;
+
+  width: min(1200px, calc(100% - 100px));
+  margin: 0 auto;
+  padding: 58px 0 80px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* =========================================================
+   EXPANDED ABOUT SECTIONS
+========================================================= */
+
+.about-sections {
+  width: 100%;
+
+  border-top: 1px solid var(--white);
+}
+
+.about-section {
+  width: 100%;
+  padding: 38px 0 42px;
+
+  border-bottom: 1px solid var(--white);
+}
+
+.about-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+
+  margin: 0 0 20px;
+
+  color: var(--dark-text);
+
+  font-size: clamp(23px, 2.4vw, 33px);
+  font-weight: 700;
+}
+
+.section-number {
+  flex-shrink: 0;
+
+  color: var(--teal-dark);
+
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.about-section-content {
+  max-width: 1050px;
+  padding-left: 48px;
+
+  color: var(--dark-text);
+
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.about-section-content p {
+  margin-top: 0;
+}
+
+.about-section-content > p:last-child {
+  margin-bottom: 0;
+}
+
+.data-dictionary-section .about-section-content {
+  max-width: none;
+}
+
+.data-dictionary-section .section-introduction {
+  margin-bottom: 22px;
+  padding: 0;
+
+  color: var(--muted-text);
+}
+
+/* =========================================================
+   DATA SECTION
+========================================================= */
+
+.data-section {
+  margin-bottom: 54px;
+}
+
+.data-section:last-child {
+  margin-bottom: 0;
+}
+
+.data-section h2 {
+  margin-bottom: 12px;
+  color: #465e62;
+}
+
+.section-introduction {
+  max-width: 800px;
+  margin-bottom: 22px;
+
+  font-size: 17px;
+}
+
+/* =========================================================
+   FIELDS / DATA DICTIONARY
+========================================================= */
+
+.fields-wrapper {
+  width: 100%;
+  height: 400px;
+
+  overflow-x: auto;
+  overflow-y: auto;
+
+  background: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 4px;
+}
 
 .fields-wrapper table {
   width: 100%;
-  table-layout: fixed;
+  min-width: 700px;
+
   border-collapse: collapse;
-  font-size: 13px;
+  table-layout: fixed;
+
+  font-size: 14px;
 }
 
-.fields-wrapper th,
-.fields-wrapper td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #dbe2ea;
+.fields-wrapper thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.fields-wrapper th {
+  padding: 13px 14px;
+
+  background: var(--teal-dark);
+  color: var(--white);
+
+  border-bottom: 1px solid var(--black);
+
+  font-weight: 700;
   text-align: left;
+}
+
+.fields-wrapper td {
+  padding: 12px 14px;
+
+  background: var(--white);
+
+  border-bottom: 1px solid #d4dcde;
+
+  text-align: left;
+  vertical-align: top;
 
   white-space: normal;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
+.fields-wrapper tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.fields-wrapper th:nth-child(1),
 .fields-wrapper td:nth-child(1) {
   width: 25%;
 }
 
+.fields-wrapper th:nth-child(2),
 .fields-wrapper td:nth-child(2) {
-  width: 65%;
+  width: 60%;
 }
 
+.fields-wrapper th:nth-child(3),
 .fields-wrapper td:nth-child(3) {
-  width: 10%;
-}
-
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.table-wrapper table {
-  border-collapse: collapse;
-  font-size: 13px;
-  min-width: 600px; /* force overflow if needed */
-}
-
-
-.table-wrapper th,
-.table-wrapper td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #dbe2ea;
-  text-align: left;
-  white-space: nowrap;  /* keep preview horizontal scroll */
+  width: 15%;
 }
 
 /* =========================================================
-   CODE / RAW PREVIEW BLOCKS
+   DATA PREVIEW
+========================================================= */
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  background: var(--white);
+
+  border: 1px solid var(--black);
+  border-radius: 4px;
+}
+
+.table-wrapper table,
+#preview {
+  width: 100%;
+  min-width: 800px;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+}
+
+.table-wrapper th,
+.table-wrapper td,
+#preview th,
+#preview td {
+  padding: 11px 13px;
+
+  border-bottom: 1px solid #d4dcde;
+
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table-wrapper th,
+#preview th {
+  background: var(--teal-dark);
+  color: var(--white);
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   RELATED CONTENT
+========================================================= */
+
+.related-section {
+  width: 100%;
+}
+
+.related-links {
+  max-width: 1050px;
+
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.related-links-list {
+  margin: 0;
+  padding-left: 28px;
+}
+
+.related-links-list li {
+  margin-bottom: 14px;
+  padding-left: 8px;
+}
+
+.related-links-list li:last-child {
+  margin-bottom: 0;
+}
+
+.related-links-list li::marker {
+  color: var(--teal-dark);
+}
+
+.related-links-list a {
+  color: var(--teal-dark);
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.related-links-list a:hover {
+  color: var(--dark-text);
+}
+
+/* =========================================================
+   DETAIL-PAGE ERROR STATES
+========================================================= */
+
+.dataset-page .container > h1:first-child {
+  width: min(1200px, calc(100% - 100px));
+  margin: 60px auto 20px;
+}
+
+.dataset-page .container > h1:first-child ~ p,
+.dataset-page .container > h1:first-child ~ .back-link {
+  display: block;
+
+  width: min(1200px, calc(100% - 100px));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.dataset-page .container > h1:first-child ~ .back-link {
+  margin-top: 25px;
+  color: var(--teal-dark);
+}
+
+/* =========================================================
+   CODE BLOCKS
 ========================================================= */
 
 pre {
+  padding: 16px;
+
   background: #0b1220;
   color: #e5e7eb;
 
-  padding: 14px;
-  border-radius: 12px;
+  border-radius: 4px;
 
   overflow-x: auto;
-  font-size: 12px;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   TABLE SCROLLBARS
+========================================================= */
+
+.fields-wrapper,
+.table-wrapper {
+  scrollbar-color: var(--teal-dark) #d3dcde;
+  scrollbar-width: thin;
+}
+
+.fields-wrapper::-webkit-scrollbar,
+.table-wrapper::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.fields-wrapper::-webkit-scrollbar-track,
+.table-wrapper::-webkit-scrollbar-track {
+  background: #d3dcde;
+}
+
+.fields-wrapper::-webkit-scrollbar-thumb,
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--teal-dark);
+
+  border: 2px solid #d3dcde;
+  border-radius: 8px;
+}
+
+/* =========================================================
+   SMALL DESKTOP / TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+  .catalog-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+    width: calc(100% - 48px);
+  }
+
+  .catalog-main {
+    padding: 28px 25px 40px;
+  }
+
+  .catalog-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .catalog-search {
+    width: 100%;
+  }
+
+  .catalog-card-body {
+    grid-template-columns: minmax(0, 1fr) 190px;
+  }
+
+  .dataset-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .dataset-heading-text {
+    flex: none;
+    width: 100%;
+  }
+
+  .dataset-actions {
+    justify-content: flex-start;
+
+    width: 100%;
+    max-width: none;
+    margin-bottom: 0;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+  .catalog-hero {
+    padding: 46px 24px;
+  }
+
+  .catalog-hero h1 {
+    font-size: clamp(37px, 8vw, 52px);
+  }
+
+  .catalog-hero-description {
+    font-size: 17px;
+  }
+
+  .catalog-layout {
+    display: block;
+
+    width: calc(100% - 48px);
+    margin-top: 26px;
+  }
+
+  .catalog-sidebar {
+    min-height: 0;
+
+    border-right: 0;
+    border-bottom: 1px solid var(--border-gray);
+  }
+
+  .mobile-filter-toggle {
+    display: inline-block;
+  }
+
+  .catalog-main {
+    padding: 28px 24px 40px;
+  }
+
+  .catalog-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-card-description {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-gray);
+  }
+
+  .catalog-card-metadata {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dataset-top {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .dataset-tabs {
+    overflow-x: auto;
+  }
+
+  .dataset-tabs .tab {
+    flex-shrink: 0;
+  }
+
+  .tab-content {
+    width: calc(100% - 48px);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+  .catalog-hero {
+    padding: 38px 18px;
+  }
+
+  .catalog-hero h1 {
+    font-size: 35px;
+  }
+
+  .catalog-hero-description {
+    font-size: 16px;
+  }
+
+  .catalog-layout {
+    width: calc(100% - 28px);
+    margin-top: 18px;
+    padding-bottom: 0;
+  }
+
+  .sidebar-heading {
+    min-height: 62px;
+    padding: 16px 18px;
+  }
+
+  .sidebar-heading h2 {
+    font-size: 23px;
+  }
+
+  #filter-content {
+    padding: 20px 18px;
+  }
+
+  .catalog-main {
+    padding: 24px 16px 34px;
+  }
+
+  .catalog-title h2 {
+    font-size: 31px;
+  }
+
+  .catalog-title p {
+    font-size: 13px;
+  }
+
+  .catalog-toolbar {
+    margin-bottom: 25px;
+  }
+
+  .results-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .catalog-card-header {
+    align-items: flex-start;
+    padding: 15px 16px;
+  }
+
+  .catalog-dataset-icon {
+    width: 29px;
+    height: 29px;
+
+    font-size: 17px;
+  }
+
+  .catalog-card-title {
+    flex: 1;
+    min-width: calc(100% - 45px);
+
+    font-size: 21px;
+  }
+
+  .catalog-card-badges {
+    width: 100%;
+    margin-left: 39px;
+  }
+
+  .catalog-card-description {
+    padding: 20px 18px;
+  }
+
+  .catalog-card-description p {
+    font-size: 15px;
+  }
+
+  .catalog-card-metadata {
+    grid-template-columns: 1fr;
+    padding: 19px 18px;
+  }
+
+  .catalog-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 15px 18px;
+  }
+
+  .dataset-top {
+    padding: 25px 18px 0;
+  }
+
+  .back-link {
+    margin-bottom: 28px;
+  }
+
+  .dataset-heading h1 {
+    font-size: 36px;
+  }
+
+  #description {
+    font-size: 16px;
+  }
+
+  .dataset-page .dataset-metadata {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .dataset-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 100%;
+  }
+
+  .dataset-action-button {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  .primary-action {
+    min-height: 58px;
+  }
+
+  .dataset-tabs {
+    gap: 0;
+    margin-top: 30px;
+  }
+
+  .dataset-tabs .tab {
+    padding: 13px 15px;
+
+    font-size: 14px;
+  }
+
+  .tab-content {
+    width: calc(100% - 32px);
+    padding: 40px 0 55px;
+  }
+
+  .about-section {
+    padding: 29px 0 32px;
+  }
+
+  .about-section h2 {
+    align-items: flex-start;
+    gap: 10px;
+
+    font-size: 22px;
+  }
+
+  .section-number {
+    padding-top: 4px;
+
+    font-size: 13px;
+  }
+
+  .about-section-content {
+    padding-left: 0;
+
+    font-size: 16px;
+  }
+
+  .fields-wrapper {
+    height: 350px;
+  }
+
+  .related-links {
+    font-size: 16px;
+  }
 }

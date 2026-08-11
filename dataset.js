@@ -1,4 +1,3 @@
-
 /* =========================================================
    ENTRY POINT
 ========================================================= */
@@ -6,12 +5,46 @@
 initDatasetPage();
 
 function initDatasetPage() {
-  const id = getDatasetIdFromURL();
-
-  console.log("URL ID:", id);
-
-  loadDataset(id);
+    bindTabs();
+    
+    const id = getDatasetIdFromURL();
+    
+    console.log("URL ID:", id);
+    
+    loadDataset(id);
 }
+
+
+/* =========================================================
+   TAB SWITCHING
+========================================================= */
+ 
+function bindTabs() {
+  const tabButtons = document.querySelectorAll(".tab");
+ 
+  tabButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      activateTab(button.dataset.tab);
+    });
+  });
+}
+ 
+function activateTab(tabName) {
+  document.querySelectorAll(".tab").forEach(button => {
+    const isActive = button.dataset.tab === tabName;
+ 
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+  });
+ 
+  document.querySelectorAll(".tab-content").forEach(section => {
+    const isActive = section.id === tabName;
+ 
+    section.classList.toggle("active", isActive);
+    section.hidden = !isActive;
+  });
+}
+ 
 
 /* =========================================================
    DATA LOADING
@@ -57,7 +90,7 @@ function renderDataset(d) {
   setText("howitsgenerated", d.howitsgenerated);
   setText("limitations", d.limitations);
   setText("whypublish", d.whypublish);
-  setText("relatedlinks", d.relatedlinks);
+  renderRelatedLinks(d.relatedlinks);
 
   setHTML("agency", `
     <p><b>Source Agency:</b> ${d.agency}</p>
@@ -67,10 +100,67 @@ function renderDataset(d) {
     <p><b>Updated:</b> ${d.updatedt}</p>
   `);
 
-  const download = document.getElementById("download");
-  if (download) download.href = d.source.url;
-
+  renderActionLinks(d);
+ 
   renderFieldsTable(d.fields);
+}
+
+
+/* =========================================================
+   ACTION LINKS (Download / Dashboard / Source Data)
+========================================================= */
+ 
+function renderActionLinks(d) {
+  setActionLink("download", d.source?.url);
+  setActionLink("dashboard-link", d.dashboard?.pageUrl || d.dashboard?.embedUrl);
+  setActionLink("source-data-download", d.sourceData?.url);
+}
+ 
+function setActionLink(id, url) {
+  const link = document.getElementById(id);
+  if (!link) return;
+ 
+  if (url) {
+    link.href = url;
+    link.hidden = false;
+  } else {
+    // hide the button if no URL to point to
+    link.hidden = true;
+  }
+}
+
+/* =========================================================
+   RELATED LINKS
+========================================================= */
+
+function renderRelatedLinks(links = []) {
+  const container = document.getElementById("relatedlinks");
+  if (!container) return;
+
+  if (!Array.isArray(links) || links.length === 0) {
+    container.innerText = "No related resources listed.";
+    return;
+  }
+
+  container.innerHTML = links.map(link => {
+    const title = link.title || "Untitled resource";
+    const description = link.description
+      ? ` \u2014 ${link.description}`
+      : "";
+
+    if (link.url) {
+      return `
+        <p>
+          <a href="${link.url}" target="_blank" rel="noopener noreferrer">
+            ${title}
+          </a>${description}
+        </p>
+      `;
+    }
+
+    // No URL available yet -- show as plain text rather than a dead link.
+    return `<p><strong>${title}</strong>${description}</p>`;
+  }).join("");
 }
 
 /* =========================================================
@@ -108,28 +198,48 @@ function renderFieldsTable(fields = []) {
 ========================================================= */
 
 async function loadPreview(url) {
-  const text = await fetchText(url);
-
+  const text = await fetchPreviewText(url);
+ 
   const cleaned = cleanText(text);
   const delimiter = detectDelimiter(cleaned);
-
+ 
   console.log("DETECTED DELIMITER:", delimiter);
-
+ 
   const rows = parseDelimited(cleaned, delimiter);
-
+ 
   console.log("FIRST ROW:", rows[0]);
-
+ 
   renderPreviewTable(rows);
 }
-
+ 
 /* =========================================================
    FETCH HELPERS
 ========================================================= */
 
+async function fetchPreviewText(url) {
+  // Only request the first ~50KB -- plenty for a header row plus
+  // 10 preview rows, without downloading (and then parsing) a
+  // multi-megabyte file just to throw away 99% of it.
+  try {
+    const res = await fetch(url, {
+      headers: { Range: "bytes=0-50000" }
+    });
+ 
+    if (res.ok || res.status === 206) {
+      return await res.text();
+    }
+  } catch (error) {
+    console.warn("Range request failed, falling back to full fetch:", error);
+  }
+ 
+  return await fetchText(url);
+}
+ 
 async function fetchText(url) {
   const res = await fetch(url);
   return await res.text();
 }
+
 
 /* =========================================================
    TEXT CLEANING
@@ -137,7 +247,7 @@ async function fetchText(url) {
 
 function cleanText(text) {
   return text
-    .replace(/^\uFEFF/, "") // BOM
+    .replace(/^\uFEFF/, "") 
     .replace(/\r/g, "")     // Windows line endings
     .trim();
 }

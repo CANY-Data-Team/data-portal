@@ -1,43 +1,219 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>Data Portal</title>
-  <link rel="stylesheet" href="style.css">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>Data Catalog | CANY</title>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="search-page">
 
-<div class="layout">
+  <!-- =====================================================
+       CANY PAGE HEADER
+  ====================================================== -->
 
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
+  <header class="catalog-hero">
 
-    <h3>Agencies</h3>
-    <div id="agencyFilters"></div>
+    <div class="catalog-hero-inner">
 
-    <h3>Tags</h3>
-    <div id="tagFilters"></div>
+      <h1>
+        Data and documentation for download
+      </h1>
 
-    
-    <p><a href="#" id="clear-all" class="nav-link">Clear all filters</a></p>
-    
+      <p class="catalog-hero-description">
+        Search, explore, and download datasets related to
+        New York’s correctional system.
+      </p>
 
-  </aside>
+    </div>
 
-  <!-- MAIN -->
-  <main>
+  </header>
 
-    <input id="search" type="text" placeholder="Search datasets..." />
+  <!-- =====================================================
+       CATALOG LAYOUT
+  ====================================================== -->
 
-    <div id="resultsMeta"></div>
+  <div class="catalog-layout">
 
-    <div id="datasetList"></div>
+    <!-- ===================================================
+         FILTER SIDEBAR
+    ==================================================== -->
 
-  </main>
+    <aside
+      class="catalog-sidebar"
+      aria-label="Dataset filters"
+    >
 
-</div>
+      <div class="sidebar-heading">
 
-<script src="app.js"></script>
+        <h2>Filters</h2>
+
+        <button
+          type="button"
+          id="mobile-filter-toggle"
+          class="mobile-filter-toggle"
+          aria-expanded="true"
+          aria-controls="filter-content"
+        >
+          Hide
+        </button>
+
+      </div>
+
+      <div id="filter-content">
+
+        <!-- Agency filters -->
+
+        <section
+          class="filter-group"
+          aria-labelledby="agency-filter-heading"
+        >
+
+          <h3 id="agency-filter-heading">
+            Agencies
+          </h3>
+
+          <div id="agencyFilters"></div>
+
+        </section>
+
+        <!-- Tag filters -->
+
+        <section
+          class="filter-group"
+          aria-labelledby="tag-filter-heading"
+        >
+
+          <h3 id="tag-filter-heading">
+            Tags
+          </h3>
+
+          <div id="tagFilters"></div>
+
+        </section>
+
+        <!-- Clear all filters -->
+
+        <a
+          href="#"
+          id="clear-all"
+          class="clear-filters-link"
+        >
+          Clear all filters
+        </a>
+
+      </div>
+
+    </aside>
+
+    <!-- ===================================================
+         MAIN CATALOG
+    ==================================================== -->
+
+    <main
+      id="main-content"
+      class="catalog-main"
+    >
+
+      <!-- Catalog title and search -->
+
+      <div class="catalog-toolbar">
+
+        <div class="catalog-title">
+
+          <h2>Catalog</h2>
+
+          <p>
+            Browse available public datasets and documentation.
+          </p>
+
+        </div>
+
+        <div class="catalog-search">
+
+          <label
+            for="search"
+            class="visually-hidden"
+          >
+            Search the data catalog
+          </label>
+
+          <span
+            class="search-icon"
+            aria-hidden="true"
+          >
+            &#128269;
+          </span>
+
+          <input
+            id="search"
+            type="search"
+            placeholder="Search catalog..."
+            autocomplete="off"
+          />
+
+        </div>
+
+      </div>
+
+      <!-- =================================================
+           RESULT INFORMATION
+      ================================================== -->
+
+      <div class="results-toolbar">
+
+        <div
+          id="resultsMeta"
+          class="results-count"
+          aria-live="polite"
+        >
+          Loading datasets...
+        </div>
+
+        <div
+          id="activeFilters"
+          class="active-filters"
+          aria-live="polite"
+        ></div>
+
+        <a
+          href="#"
+          id="clear-all-results"
+          class="clear-results-link"
+        >
+          Clear all
+        </a>
+
+      </div>
+
+      <!-- =================================================
+           DATASET RESULTS
+      ================================================== -->
+
+      <div
+        id="datasetList"
+        class="dataset-list"
+        aria-label="Dataset search results"
+      ></div>
+
+    </main>
+
+  </div>
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script src="app.js"></script>
+
 </body>
+
 </html>
