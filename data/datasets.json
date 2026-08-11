@@ -53,6 +53,9 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/UNDER-CUSTODY-EXTRACT.CSV"
     },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/DAILY-POP-CAPACITY_FAC_ZIP.zip"
+    },
     "fields": [
       {
         "name": "REPORT_DATE",
@@ -218,6 +221,9 @@
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-self-injury-extract.csv"    
+    },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/SELF-INJURY_REC_ZIP.zip"
     },
     "fields": [
       {
@@ -385,112 +391,137 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/released-extract.csv"
     },
-     "fields": [
-      {
-        "name": "RAW_FACILITY_OR_UNIT_NAME",
-        "label": "Name of facility and unit (if applicable) in which the incident of self-harm took place, as it appears on the report.",
-        "type": "string"
-      },
-      {
-        "name": "FACILITY_NAME",
-        "label": "Facility in which the incarcerated individual was housed at the time of the incident, defined using the first two digits of the DOCCS facility code. This name represents the commonplace naming for facilities and excludes references to specific buildings or units seen in RAW_FACILITY_OR_UNIT_NAME.",
-        "type": "string"
-      },
-      {
-        "name": "FACILITY_REGION_NAME",
-        "label": "Facility region, with regions defined by DOCCS as groups of adjacent counties.",
-        "type": "string"
-      },
-      {
-        "name": "FACILITY_HUB_NAME",
-        "label": "Facility hub, with hubs defined by DOCCS as groups of facilities which are in close proximity. Hubs have an administrative function in DOCCS operations.",
-        "type": "string"
-      },
-      {
-        "name": "FACILITY_SECURITY_LEVEL",
-        "label": "Security level of the facility, as designated in DOCCS public reporting or, if unavailable, in the NY Codes Rules and Regulations, Title 7. If there are multiple security levels for a given facility, the highest is reported here (Minimum, Medium, Maximum, Drug Treatment Center).",
-        "type": "string"
-      },
-      {
-        "name": "FACILITY_STATUS",
-        "label": "Indicates if a facility is open or closed as of the publication of this data (Open, Closed).",
-        "type": "string"
-      },
-      {
-        "name": "FACILITY_GENDER",
-        "label": "Gender-designation for the facility (Male, Female, Mixed).",
-        "type": "string"
-      },
-      {
-        "name": "INCIDENT_MONTH_YEAR_D",
-        "label": "Month and year in which the incident took place, in the format YYYY-MM.",
-        "type": "string"
-      },
-      {
-        "name": "LOCATION",
-        "label": "Location in which the incident took place",
-        "type": "string"
-      },
-      {
-        "name": "METHOD",
-        "label": "Method used by the individual to commit self-harm.",
-        "type": "string"
-      },
-      {
-        "name": "LAST_MH_CONTACT_DATE",
-        "label": "Date of most recent contact with mental health providers.",
-        "type": "date"
-      },
-      {
-        "name": "IS_METHOD_LACERATION",
-        "label": "Boolean indicator for whether the method of self-harm was laceration (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_SUPERFICIAL_CUTTING",
-        "label": "Boolean indicator for whether the method of self-harm was superficial cutting (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_BURNING_FIRE_SETTING",
-        "label": "Boolean indicator for whether the method of self-harm was fire setting (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_HANGING",
-        "label": "Boolean indicator for whether the method of self-harm was hanging (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_STRANGULATION",
-        "label": "Boolean indicator for whether the method of self-harm was strangulation (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_SUFFOCATION",
-        "label": "Boolean indicator for whether the method of self-harm was suffocation or asphyxiation (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_OVERDOSE",
-        "label": "Boolean indicator for whether the method of self-harm was an overdose (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_INGEST_FOREIGN_SUBSTANCE_BODY",
-        "label": "Boolean indicator for whether the method of self-harm was ingestion of a foreign body or substance (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_INSERT_FOREIGN_SUBSTANCE_BODY",
-        "label": "Boolean indicator for whether the method of self-harm was insertion of a foreign body or substance (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      },
-      {
-        "name": "IS_METHOD_OTHER",
-        "label": "Boolean indicator for whether the method of self-harm was not one of the aforementioned categories (1 = Yes, 0 = No, -99 = Missing).",
-        "type": "number"
-      }
+    "fields": [
+  {
+    "name": "REPORT_DATE",
+    "type": "date",
+    "label": "Date the dataset's population snapshot reflects; defaults to the first of the month since the exact extract day isn't available."
+  },
+  {
+    "name": "RELEASE_DISCHARGE_MONTH",
+    "type": "date",
+    "label": "Month the individual was released or discharged from DOCCS custody."
+  },
+  {
+    "name": "RELEASING_FACILITY_NAME",
+    "type": "string",
+    "label": "Releasing facility name based on the first two digits of the DOCCS facility code; excludes unit/building-level detail present in RELEASING_FACILITY_NAME_RAW."
+  },
+  {
+    "name": "RELEASING_FACILITY_CODE",
+    "type": "integer",
+    "label": "DOCCS code for the releasing facility; the first two digits are believed to identify the facility, with the third indicating building or unit."
+  },
+  {
+    "name": "RELEASING_FACILITY_NAME_RAW",
+    "type": "string",
+    "label": "Releasing facility name exactly as reported in DOCCS' releases report, sometimes including unit or building detail."
+  },
+  {
+    "name": "RELEASING_FACILITY_REGION_NAME",
+    "type": "string",
+    "label": "DOCCS-defined region of the releasing facility, grouping adjacent counties."
+  },
+  {
+    "name": "RELEASING_FACILITY_HUB_NAME",
+    "type": "string",
+    "label": "DOCCS-defined operational/administrative hub grouping of facilities near the releasing facility."
+  },
+  {
+    "name": "RELEASING_FACILITY_SECURITY_LEVEL",
+    "type": "string",
+    "label": "Security level of the releasing facility."
+  },
+  {
+    "name": "RELEASING_FACILITY_STATUS",
+    "type": "string",
+    "label": "Whether the releasing facility is open or closed."
+  },
+  {
+    "name": "RELEASING_FACILITY_GENDER",
+    "type": "string",
+    "label": "Gender designation of the releasing facility."
+  },
+  {
+    "name": "SEX",
+    "type": "string",
+    "label": "Sex of the released individual, per DOCCS categories (Male, Female)."
+  },
+  {
+    "name": "AGE_RANGE",
+    "type": "string",
+    "label": "Age range of the released individual as of the report date."
+  },
+  {
+    "name": "ETHNIC_GROUP",
+    "type": "string",
+    "label": "Ethnicity of the released individual, per DOCCS categories (Hispanic, Not Hispanic, Unknown)."
+  },
+  {
+    "name": "RACE",
+    "type": "string",
+    "label": "Race of the released individual, per DOCCS categories (White, Black, American Indian or Alaskan Native, Asian or Pacific Islander, Other, Unknown)."
+  },
+  {
+    "name": "CRIME_1_TYPE",
+    "type": "string",
+    "label": "Type of the most serious offense resulting in commitment (up to the three most serious offenses are recorded; Crime 1 is the most serious)."
+  },
+  {
+    "name": "CRIME_1_CLASS",
+    "type": "string",
+    "label": "Legal class of the Crime 1 offense (A1 through E, with A1 most serious and E least serious)."
+  },
+  {
+    "name": "CRIME_1_COMMITMENT_COUNTY",
+    "type": "string",
+    "label": "County where the individual was convicted for the Crime 1 offense."
+  },
+  {
+    "name": "CRIME_1_COUNTY_IS_NYC",
+    "type": "integer",
+    "label": "Indicator for whether the Crime 1 commitment county is in NYC."
+  },
+  {
+    "name": "AGGREGATE_MINIMUM_SENTENCE_RANGE",
+    "type": "string",
+    "label": "Aggregate minimum time to be served across the individual's crimes, accounting for concurrent vs. consecutive sentencing; grouped into ranges (Less than 1 year, 1-2, 2-5, 5-10, 10-20, More than 20 years)."
+  },
+  {
+    "name": "AGGREGATE_MAXIMUM_SENTENCE_RANGE",
+    "type": "string",
+    "label": "Aggregate maximum time to be served across the individual's crimes, accounting for concurrent vs. consecutive sentencing; grouped into ranges (Less than 1 year, 1-2, 2-5, 5-10, 10-20, More than 20 years)."
+  },
+  {
+    "name": "MOST_SERIOUS_PRIOR",
+    "type": "string",
+    "label": "Most serious prior conviction category, if any (Felony, Misdemeanor conviction, Arrest)."
+  },
+  {
+    "name": "TOTAL_CRIMES_RANGE",
+    "type": "string",
+    "label": "Range for the total number of crimes charged in the current sentence (1; 2-3; 4-5; 6-9; 10 or more; Other)."
+  },
+  {
+    "name": "RELEASE_DISCHARGE_DESCR",
+    "type": "string",
+    "label": "Circumstances of the release, including release type (e.g. parole, temporary release) and who/where the individual was released to (e.g. Division of Parole, U.S. Immigration)."
+  },
+  {
+    "name": "RELEASE_DISCHARGE_TO",
+    "type": "string",
+    "label": "Where or to whom the individual was released (e.g. Division of Parole, U.S. Immigration); a CANY-generated approximation."
+  },
+  {
+    "name": "RELEASE_DISCHARGE_TYPE",
+    "type": "string",
+    "label": "Type of release (e.g. parole, temporary release), derived from DOCCS' internal release/discharge type definitions."
+  },
+  {
+    "name": "RELEASED_DISCHARGED_COUNT",
+    "type": "integer",
+    "label": "Number of release events represented by the row; since rows are grouped by shared attributes (release month, facility, crime characteristics), a single row can represent more than one person."
+  }
     ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-releases"
@@ -533,6 +564,9 @@
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/unusual-incident-extract.csv"
+    },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/UNUSUAL-INCIDENT-REPORTS_REC_ZIP.zip"
     },
       "fields": [
       {
@@ -980,6 +1014,9 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/STAFFING-LEVELS-EXTRACT.CSV"
     },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/STAFFING-LEVELS_FAC_ZIP.zip"
+    },
     "fields": [
       {
         "name": "REPORT_DATE",
@@ -1097,6 +1134,9 @@
     "source": {
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/WORKERS-COMP-EXTRACT.CSV"
+    },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/WORKERS-COMP_FAC_ZIP.zip"
     },
     "fields": [
       {
@@ -1228,112 +1268,115 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-suicide-attempts-extract.csv"
     },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/SUICIDE-ATTEMPTS_REC_ZIP.zip"
+    },
     "fields": [
-      {
-        "name": "RAW_FACILITY_OR_UNIT_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_REGION_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_HUB_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_SECURITY_LEVEL",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_STATUS",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_GENDER",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "INCIDENT_MONTH_YEAR_D",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "HOUSING_AT_TIME_OF_INCIDENT",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "METHOD",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "LAST_MH_CONTACT_DATE",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_LACERATION",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_SUPERFICIAL_CUTTING",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_FIRE_SETTING",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_HANGING",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_STRANGULATION",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_SUFFOCATION",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_OVERDOSE",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_INGEST_FOREIGN_SUBSTANCE_BODY",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_INSERT_FOREIGN_SUBSTANCE_BODY",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_OTHER",
-        "type": "string",
-        "label": ""
-      }
+  {
+    "name": "RAW_FACILITY_OR_UNIT_NAME",
+    "type": "string",
+    "label": "Name of the facility and unit (if applicable) where the suicide attempt took place, as it appears on the report."
+  },
+  {
+    "name": "FACILITY_NAME",
+    "type": "string",
+    "label": "Facility where the individual was housed at the time of the attempt, based on the first two digits of the DOCCS facility code; excludes unit/building-level detail present in RAW_FACILITY_OR_UNIT_NAME."
+  },
+  {
+    "name": "FACILITY_REGION_NAME",
+    "type": "string",
+    "label": "DOCCS-defined region of the facility, grouping adjacent counties."
+  },
+  {
+    "name": "FACILITY_HUB_NAME",
+    "type": "string",
+    "label": "DOCCS-defined operational hub grouping of nearby facilities."
+  },
+  {
+    "name": "FACILITY_SECURITY_LEVEL",
+    "type": "string",
+    "label": "Highest security classification of the facility (Minimum, Medium, Maximum, Drug Treatment Center)."
+  },
+  {
+    "name": "FACILITY_STATUS",
+    "type": "string",
+    "label": "Whether the facility was open or closed as of the data's publication."
+  },
+  {
+    "name": "FACILITY_GENDER",
+    "type": "string",
+    "label": "Gender designation of the facility (Male, Female, Mixed)."
+  },
+  {
+    "name": "INCIDENT_MONTH_YEAR_D",
+    "type": "string",
+    "label": "Month and year the suicide attempt occurred, in YYYY-MM format."
+  },
+  {
+    "name": "HOUSING_AT_TIME_OF_INCIDENT",
+    "type": "string",
+    "label": "Type of housing unit the individual was in at the time of the attempt."
+  },
+  {
+    "name": "METHOD",
+    "type": "string",
+    "label": "Method the individual used in the suicide attempt."
+  },
+  {
+    "name": "LAST_MH_CONTACT_DATE",
+    "type": "date",
+    "label": "Date of the individual's most recent contact with mental health providers."
+  },
+  {
+    "name": "IS_METHOD_LACERATION",
+    "type": "integer",
+    "label": "1 if the attempt method was laceration, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_SUPERFICIAL_CUTTING",
+    "type": "integer",
+    "label": "1 if the attempt method was superficial cutting, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_FIRE_SETTING",
+    "type": "integer",
+    "label": "1 if the attempt method was fire setting, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_HANGING",
+    "type": "integer",
+    "label": "1 if the attempt method was hanging, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_STRANGULATION",
+    "type": "integer",
+    "label": "1 if the attempt method was strangulation, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_SUFFOCATION",
+    "type": "integer",
+    "label": "1 if the attempt method was suffocation or asphyxiation, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_OVERDOSE",
+    "type": "integer",
+    "label": "1 if the attempt method was an overdose, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_INGEST_FOREIGN_SUBSTANCE_BODY",
+    "type": "integer",
+    "label": "1 if the attempt method was ingesting a foreign body or substance, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_INSERT_FOREIGN_SUBSTANCE_BODY",
+    "type": "integer",
+    "label": "1 if the attempt method was inserting a foreign body or substance, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_OTHER",
+    "type": "integer",
+    "label": "1 if the attempt method was not one of the categories above, 0 if not, -99 if missing."
+  }
     ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-self-harm-data"
@@ -1364,97 +1407,100 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/omh-suicides-extract.csv"
     },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/SUICIDES_IND_ZIP.zip"
+    },
     "fields": [
-      {
-        "name": "RAW_FACILITY_OR_UNIT_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_REGION_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_HUB_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_SECURITY_LEVEL",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_STATUS",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_GENDER",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "SUICIDE_YEAR",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "HOUSING_AT_TIME_OF_DEATH",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "METHOD",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "SUICIDE_NOTE",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "LAST_MH_CONTACT_DATE",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_LACERATION",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_BURNING_FIRE_SETTING",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_HANGING",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_STRANGULATION",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_SUFFOCATION",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "IS_METHOD_OTHER",
-        "type": "string",
-        "label": ""
-      }
+  {
+    "name": "RAW_FACILITY_OR_UNIT_NAME",
+    "type": "string",
+    "label": "Name of the facility and unit (if applicable) where the suicide took place, as it appears on the report."
+  },
+  {
+    "name": "FACILITY_NAME",
+    "type": "string",
+    "label": "Facility where the individual was housed at the time of the suicide, based on the first two digits of the DOCCS facility code; excludes unit/building-level detail present in RAW_FACILITY_OR_UNIT_NAME."
+  },
+  {
+    "name": "FACILITY_REGION_NAME",
+    "type": "string",
+    "label": "DOCCS-defined region of the facility, grouping adjacent counties."
+  },
+  {
+    "name": "FACILITY_HUB_NAME",
+    "type": "string",
+    "label": "DOCCS-defined operational hub grouping of nearby facilities."
+  },
+  {
+    "name": "FACILITY_SECURITY_LEVEL",
+    "type": "string",
+    "label": "Highest security classification of the facility (Minimum, Medium, Maximum, Drug Treatment Center)."
+  },
+  {
+    "name": "FACILITY_STATUS",
+    "type": "string",
+    "label": "Whether the facility was open or closed as of the data's publication."
+  },
+  {
+    "name": "FACILITY_GENDER",
+    "type": "string",
+    "label": "Gender designation of the facility (Male, Female, Mixed)."
+  },
+  {
+    "name": "SUICIDE_YEAR",
+    "type": "integer",
+    "label": "Year the suicide took place."
+  },
+  {
+    "name": "HOUSING_AT_TIME_OF_DEATH",
+    "type": "string",
+    "label": "Type of housing unit the individual was in at the time of death."
+  },
+  {
+    "name": "METHOD",
+    "type": "string",
+    "label": "Method the individual used to die by suicide."
+  },
+  {
+    "name": "SUICIDE_NOTE",
+    "type": "string",
+    "label": "Whether the individual left a note."
+  },
+  {
+    "name": "LAST_MH_CONTACT_DATE",
+    "type": "date",
+    "label": "Date of the individual's most recent contact with mental health providers."
+  },
+  {
+    "name": "IS_METHOD_LACERATION",
+    "type": "integer",
+    "label": "1 if the method was laceration, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_BURNING_FIRE_SETTING",
+    "type": "integer",
+    "label": "1 if the method was burning or fire setting, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_HANGING",
+    "type": "integer",
+    "label": "1 if the method was hanging, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_STRANGULATION",
+    "type": "integer",
+    "label": "1 if the method was strangulation, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_SUFFOCATION",
+    "type": "integer",
+    "label": "1 if the method was suffocation or asphyxiation, 0 if not, -99 if missing."
+  },
+  {
+    "name": "IS_METHOD_OTHER",
+    "type": "integer",
+    "label": "1 if the method was not one of the categories above, 0 if not, -99 if missing."
+  }
     ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-self-harm-data"
@@ -1494,102 +1540,105 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/facility-caseload-extract"
     },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/FACILITY-CASELOAD-CENSUS_FAC_ZIP.zip"
+    },
     "fields": [
-      {
-        "name": "RAW_FACILITY_OR_UNIT_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_CODE_OMH",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_REGION_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_HUB_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_SECURITY_LEVEL",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_STATUS",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_GENDER",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "REPORT_DATE_D",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "MHL_1",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "MHL_2",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "MHL_3",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "MHL_4",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "TOTAL_CASELOAD",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "S_DESIGNATED",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "SOLE_DIAGNOSIS_SUBSTANCE_USE",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "PRESCRIBED_MEDICATIONS",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "PRESCRIBED_MULITPLE_MEDICATIONS",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "DOCCS_CENSUS",
-        "type": "string",
-        "label": ""
-      }
+  {
+    "name": "RAW_FACILITY_OR_UNIT_NAME",
+    "type": "string",
+    "label": "Name of the facility and unit (if applicable) the caseload record applies to, as it appears on the report."
+  },
+  {
+    "name": "FACILITY_NAME",
+    "type": "string",
+    "label": "Facility housing the individuals counted, based on the first two digits of the DOCCS facility code; excludes unit/building-level detail present in RAW_FACILITY_OR_UNIT_NAME."
+  },
+  {
+    "name": "FACILITY_CODE_OMH",
+    "type": "string",
+    "label": "OMH's own three-digit code for the DOCCS facility, distinct from the DOCCS facility code."
+  },
+  {
+    "name": "FACILITY_REGION_NAME",
+    "type": "string",
+    "label": "DOCCS-defined region of the facility, grouping adjacent counties."
+  },
+  {
+    "name": "FACILITY_HUB_NAME",
+    "type": "string",
+    "label": "DOCCS-defined operational hub grouping of nearby facilities."
+  },
+  {
+    "name": "FACILITY_SECURITY_LEVEL",
+    "type": "string",
+    "label": "Highest security classification of the facility (Minimum, Medium, Maximum, Drug Treatment Center)."
+  },
+  {
+    "name": "FACILITY_STATUS",
+    "type": "string",
+    "label": "Whether the facility was open or closed as of the data's publication."
+  },
+  {
+    "name": "FACILITY_GENDER",
+    "type": "string",
+    "label": "Gender designation of the facility (Male, Female, Mixed)."
+  },
+  {
+    "name": "REPORT_DATE_D",
+    "type": "date",
+    "label": "Date the data was extracted, per the source file."
+  },
+  {
+    "name": "MHL_1",
+    "type": "integer",
+    "label": "Number on the OMH caseload designated Level 1 -- the most intensive tier, for people needing frequent psychiatric care and possible Observation Cell placement, served by full-time OMH staff."
+  },
+  {
+    "name": "MHL_2",
+    "type": "integer",
+    "label": "Number on the OMH caseload designated Level 2 -- people needing regular psychiatric treatment for a major mental disorder, housed where full-time OMH staff are present."
+  },
+  {
+    "name": "MHL_3",
+    "type": "integer",
+    "label": "Number on the OMH caseload designated Level 3 -- people needing treatment and medication for a moderate disorder, or in remission and stable enough for part-time OMH staffing."
+  },
+  {
+    "name": "MHL_4",
+    "type": "integer",
+    "label": "Number on the OMH caseload designated Level 4 -- the lightest tier, for people who may need non-medication mental health support, served by part-time OMH staff."
+  },
+  {
+    "name": "TOTAL_CASELOAD",
+    "type": "integer",
+    "label": "Total number of individuals actively receiving OMH services."
+  },
+  {
+    "name": "S_DESIGNATED",
+    "type": "integer",
+    "label": "Number designated as having a Serious Mental Illness (SMI) under DOCCS/OMH criteria -- covering specific diagnoses (e.g. schizophrenia spectrum, bipolar, major depressive, severe personality disorder), recent serious suicide risk, or significant functional impairment from conditions like Organic Brain Syndrome or deterioration in segregated confinement."
+  },
+  {
+    "name": "SOLE_DIAGNOSIS_SUBSTANCE_USE",
+    "type": "integer",
+    "label": "Number whose only mental health diagnosis is substance-use related."
+  },
+  {
+    "name": "PRESCRIBED_MEDICATIONS",
+    "type": "integer",
+    "label": "Number on the OMH caseload prescribed medication for a mental health condition."
+  },
+  {
+    "name": "PRESCRIBED_MULITPLE_MEDICATIONS",
+    "type": "integer",
+    "label": "Number on the OMH caseload prescribed more than one medication for a mental health condition."
+  },
+  {
+    "name": "DOCCS_CENSUS",
+    "type": "integer",
+    "label": "Total population of the facility at the time of the report, as reported by OMH."
+  }
     ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-omh-census-data"
@@ -1631,82 +1680,85 @@
       "type": "csv",
       "url": "https://canystorage.blob.core.windows.net/cany-data-portal/program-census-extract"
     },
+    "sourceData": {
+  "url": "https://canystorage.blob.core.windows.net/cany-data-portal/source-data-zip-files/PROGRAM-CENSUS-REPORT_FAC_ZIP.zip"
+    },
     "fields": [
-      {
-        "name": "RAW_FACILITY_OR_UNIT_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_REGION_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_HUB_NAME",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_SECURITY_LEVEL",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_STATUS",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "FACILITY_GENDER",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "REPORT_DATE_D",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_BHU_TBU",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_CORP",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_GTP",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_ICP",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_IICP",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_RMHU",
-        "type": "string",
-        "label": ""
-      },
-      {
-        "name": "CENSUS_TRICP",
-        "type": "string",
-        "label": ""
-      }
+  {
+    "name": "RAW_FACILITY_OR_UNIT_NAME",
+    "type": "string",
+    "label": "Name of the facility and unit (if applicable) the census record applies to, as it appears on the report."
+  },
+  {
+    "name": "FACILITY_NAME",
+    "type": "string",
+    "label": "Facility housing the individuals counted, based on the first two digits of the DOCCS facility code; excludes unit/building-level detail present in RAW_FACILITY_OR_UNIT_NAME."
+  },
+  {
+    "name": "FACILITY_REGION_NAME",
+    "type": "string",
+    "label": "DOCCS-defined region of the facility, grouping adjacent counties."
+  },
+  {
+    "name": "FACILITY_HUB_NAME",
+    "type": "string",
+    "label": "DOCCS-defined operational hub grouping of nearby facilities."
+  },
+  {
+    "name": "FACILITY_SECURITY_LEVEL",
+    "type": "string",
+    "label": "Highest security classification of the facility (Minimum, Medium, Maximum, Drug Treatment Center)."
+  },
+  {
+    "name": "FACILITY_STATUS",
+    "type": "string",
+    "label": "Whether the facility was open or closed as of the data's publication."
+  },
+  {
+    "name": "FACILITY_GENDER",
+    "type": "string",
+    "label": "Gender designation of the facility (Male, Female, Mixed)."
+  },
+  {
+    "name": "REPORT_DATE_D",
+    "type": "date",
+    "label": "Date the data was extracted, per the source file."
+  },
+  {
+    "name": "CENSUS_BHU_TBU",
+    "type": "integer",
+    "label": "Number in the Behavioral Health Unit (BHU) or its equivalent for women, the Therapeutic Behavioral Unit (TBU) -- separate housing for people with serious mental illness and a history of poor custodial adjustment who would otherwise be in disciplinary segregation, focused on cognitive/behavioral treatment."
+  },
+  {
+    "name": "CENSUS_CORP",
+    "type": "integer",
+    "label": "Number in the Community Orientation and Re-entry Program (CORP) -- intensive discharge-planning mental health services for OMH Level 1-2 patients returning to the NYC area."
+  },
+  {
+    "name": "CENSUS_GTP",
+    "type": "integer",
+    "label": "Number in the SHU Group Therapy Program (GTP) -- for people with serious mental illness serving SHU sanctions over 30 days who are an exception for safety/security reasons, aimed at eventual return to general population."
+  },
+  {
+    "name": "CENSUS_ICP",
+    "type": "integer",
+    "label": "Number in the Intermediate Care Program (ICP) -- a jointly run OMH/DOCCS residential treatment community, in separate housing, for people with serious mental illness unable to function in general population; length of stay varies."
+  },
+  {
+    "name": "CENSUS_IICP",
+    "type": "integer",
+    "label": "Number in the Intensive Intermediate Care Program (IICP) -- for people with serious mental illness on long-term keeplock or removed from a standard ICP for poor adjustment, with added programming on behavioral control."
+  },
+  {
+    "name": "CENSUS_RMHU",
+    "type": "integer",
+    "label": "Number in the Residential Mental Health Unit (RMHU) -- separate housing for people with serious mental illness who would otherwise be in SHU/keeplock, offering at least four hours of daily structured treatment on non-holiday weekdays."
+  },
+  {
+    "name": "CENSUS_TRICP",
+    "type": "integer",
+    "label": "Number in the Transitional Intermediate Care Program (TrICP) -- OMH case management for people with serious mental illness living in general population, including twice-weekly adjustment-focused group sessions."
+  }
     ],
     "dashboard": {
       "pageUrl": "https://www.correctionalassociation.org/data/dashboard-omh-census-data"
