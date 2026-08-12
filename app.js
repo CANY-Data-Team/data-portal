@@ -401,6 +401,7 @@ function createDatasetCard(dataset) {
 
         <!-- Explanation of the detail page -->
 
+        <!---
         <div class="dataset-details-notice">
 
           <div class="details-notice-text">
@@ -415,6 +416,7 @@ function createDatasetCard(dataset) {
             </span>
 
           </div>
+          ---->
 
           <a
             class="dataset-details-link"
