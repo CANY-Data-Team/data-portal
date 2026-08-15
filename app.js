@@ -401,22 +401,9 @@ function createDatasetCard(dataset) {
 
         <!-- Explanation of the detail page -->
 
-        <!---
+        
         <div class="dataset-details-notice">
-
-          <div class="details-notice-text">
-
-            <strong>
-              Dataset detail page
-            </strong>
-
-            <span>
-              View methodology, limitations, field definitions,
-              a data preview, and related resources.
-            </span>
-
-          </div>
-          ---->
+    
 
           <a
             class="dataset-details-link"
@@ -430,6 +417,7 @@ function createDatasetCard(dataset) {
           </a>
 
         </div>
+        
 
         <!-- Direct resource links -->
 
