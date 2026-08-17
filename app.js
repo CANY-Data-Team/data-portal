@@ -8,9 +8,7 @@ let datasets = [];
 const state = {
   search: "",
   agency: null,
-  unit: null,
   tag: [],
-  universalTag: []
 };
 
 /* =========================================================
@@ -58,13 +56,18 @@ function bindEvents() {
 }
 
 function bindSearch() {
+
+/// Find the HTML element with id="search":
   const searchInput = document.getElementById("search");
 
+/// If element does not exist, stop this function so JavaScript does not produce an error.
   if (!searchInput) {
     return;
   }
-
+/// Attaches an event listener to the search box (searchInput); "input" means the listener runs every time the search-box value changes
   searchInput.addEventListener("input", event => {
+
+/// takes the current value from the search box and stores it in your program’s state object.    
     state.search = event.target.value
       .trim()
       .toLowerCase();
@@ -134,8 +137,7 @@ function resetState() {
   state.search = "";
   state.agency = null;
   state.tag = [];
-  state.universalTag = [];
-  state.unit = null;
+
 
   const searchInput = document.getElementById("search");
 
@@ -146,93 +148,85 @@ function resetState() {
 
 /* =========================================================
    FILTERING AND SEARCH SCORING
-========================================================= */
+=========================================================
+getFilteredResults() starts with all datasets and returns a new array 
+containing the datasets that match the current filters and search text, ordered by relevance. */
 
 function getFilteredResults() {
-  return datasets
-    .filter(dataset => {
-      if (state.agency && dataset.agency !== state.agency) {
-        return false;
-      }
 
-      if (state.unit && dataset.unit !== state.unit) {
-        return false;
-      }
+  // Apply the agency and tag filters before running the search.
+  const filteredDatasets = datasets
+    .filter(dataset =>
+      !state.agency ||
+      dataset.agency === state.agency
+    )
 
-      if (state.tag.length > 0 &&
-          !state.tag.every(t => getDatasetTags(dataset).includes(t))) {
-        return false;
-      }
+    .filter(dataset =>
+      state.tag.length === 0 ||
+      state.tag.some(t =>
+        (dataset.tags || []).includes(t)
+      )
+    );
 
-      if (state.universalTag.length > 0 &&
-          !state.universalTag.every(t => (dataset.universalTags || []).includes(t))) {
-        return false;
-      }
+  // If there is no search query, return the filtered datasets alphabetically.
+  if (!state.search) {
 
-      return true;   // now this is the last thing, once everything else passed
-    })
-
-    // Add a search score.
-    .map(dataset => ({
-      ...dataset,
-      score: scoreDataset(dataset, state.search)
-    }))
-
-    // Remove datasets that do not match.
-    .filter(dataset => dataset.score > 0)
-
-    // Sort strongest matches first.
-    .sort((a, b) => {
-      if (b.score !== a.score) {
-        return b.score - a.score;
-      }
-
-      return String(a.title || "").localeCompare(
+    // The return sends the final result back to the code that called the function.
+    return [...filteredDatasets].sort((a, b) =>
+      String(a.title || "").localeCompare(
         String(b.title || "")
-      );
-    });
-}
-
-function scoreDataset(dataset, query) {
-  if (!query) {
-    return 1;
+      )
+    );
   }
 
-  //NEXT: this is where to add the multiple panels / cards?
-  const title = String(dataset.title || "");
-  const agency = String(dataset.agency || "");
-  const description = String(dataset.description || "");
-  const context = String(
-    dataset.contextstatement || ""
+  // Configure Fuse to perform approximate matching.
+  const fuse = new Fuse(filteredDatasets, {
+
+    // Include Fuse's relevance score in each search result.
+    includeScore: true,
+
+    // A higher threshold allows less exact matches.
+    threshold: 0.6,
+
+    // Search for the query anywhere within each field.
+    ignoreLocation: true,
+
+    // Reduce the effect that different field lengths have on the score.
+    ignoreFieldNorm: true,
+
+    // Do not match a single query character.
+    minMatchCharLength: 2,
+
+    // Give title matches the greatest importance.
+    keys: [
+      { name: "title", weight: 0.85 },
+      { name: "tags", weight: 0.08 },
+      { name: "description", weight: 0.05 },
+      { name: "agency", weight: 0.02 }
+    ]
+  });
+
+  // Run the approximate search.
+  const fuseResults = fuse.search(state.search);
+
+  // Temporarily use this to inspect Fuse's results in the browser console.
+  console.log("Search query:", state.search);
+  console.log(
+    "Datasets sent to Fuse:",
+    filteredDatasets.map(dataset => dataset.title)
   );
+  console.log("Fuse results:", fuseResults);
 
-  //Handles missing tags
-  const tags = getDatasetTags(dataset).join(" ");
+  // Return the matching datasets from strongest to weakest.
+  return fuseResults.map(result => ({
 
-  const searchableText = `
-    ${title}
-    ${agency}
-    ${description}
-    ${context}
-    ${tags}
-    //NEXT: universalTags?
-  `.toLowerCase();
+    // Copy all properties from the original dataset.
+    ...result.item,
 
-  let score = 0;
-
-  if (title.toLowerCase().includes(query)) {
-    score += 5;
-  }
-
-  if (agency.toLowerCase().includes(query)) {
-    score += 3;
-  }
-
-  if (searchableText.includes(query)) {
-    score += 1;
-  }
-
-  return score;
+    // Add Fuse's relevance score.
+    // A lower Fuse score represents a stronger match.
+    score: result.score
+  }));
 }
 
 /* =========================================================
@@ -248,8 +242,13 @@ function renderAll() {
 /* =========================================================
    DATASET RESULTS
 ========================================================= */
+   /* renderResults() gets the filtered datasets, updates the results count, and clears the old dataset cards from the page. 
+    If there are matches, it creates and displays a card for each dataset; otherwise, it displays an empty-results message.*/
+
 
 function renderResults() {
+
+
   const results = getFilteredResults();
   const container = document.getElementById("datasetList");
 
@@ -619,20 +618,6 @@ function renderActiveFilters() {
   });
 });
 
-state.universalTag.forEach(t => {
-  activeFilters.push({
-    type: "universalTag",
-    value: t,
-    label: `Universal Tag: ${t}`
-  });
-});
-
-if (state.unit) {
-  activeFilters.push({
-    type: "unit",
-    label: `Unit: ${state.unit}`
-  });
-}
 
   if (state.search) {
     activeFilters.push({
@@ -687,14 +672,6 @@ function removeActiveFilter(filterType, value) {
     state.tag = state.tag.filter(t => t !== value);
   }
 
-  if (filterType === "universalTag") {
-    state.universalTag = state.universalTag.filter(t => t !== value);
-  }
-
-  if (filterType === "unit") {
-    state.unit = null;
-  }
-
   if (filterType === "search") {
     state.search = "";
 
@@ -723,12 +700,6 @@ function renderFilters() {
     )
   ].sort();
 
-const units = [...new Set(datasets.map(d => d.unit).filter(Boolean))].sort();
-const universalTags = [...new Set(datasets.flatMap(d => d.universalTags || []))].sort();
-
-//NEXT: add <div id="unitFilters"> and <div id="universalTagFilters"> to sidebar in index.html
-renderFilterGroup("unitFilters", units, state.unit, setUnit);
-renderFilterGroup("universalTagFilters", universalTags, state.universalTag, setUniversalTag);
 
   const tags = [
     ...new Set(
@@ -820,11 +791,6 @@ function setAgency(value) {
   renderAll();
 }
 
-function setUnit(value) {
-  state.unit = (state.unit === value) ? null : value;
-  renderAll();
-}
-
 function setTag(value) {
   state.tag = state.tag.includes(value)
     ? state.tag.filter(t => t !== value)
@@ -832,17 +798,6 @@ function setTag(value) {
   renderAll();
 }
 
-function setUniversalTag(value) {
-  state.universalTag = state.universalTag.includes(value)
-    ? state.universalTag.filter(t => t !== value)
-    : [...state.universalTag, value];
-  renderAll();
-}
-
-function setUnit(value) {
-  state.unit = (state.unit === value) ? null : value;
-  renderAll();
-}
 
 /* =========================================================
    DATASET HELPERS
